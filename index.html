@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 
-<title>كازينو الروليت</title>
+<title>Roulette Casino</title>
 
 <style>
 
@@ -17,76 +17,80 @@ font-family:tahoma;
 
 body{
 background:
-linear-gradient(to bottom,#3d0000,#000);
+radial-gradient(circle,#4d0000,#000);
 overflow:hidden;
 height:100vh;
 color:white;
-display:flex;
-justify-content:center;
-align-items:center;
 }
 
 .container{
 width:100%;
-max-width:430px;
 height:100vh;
-padding:10px;
 display:flex;
 flex-direction:column;
 align-items:center;
-justify-content:flex-start;
+padding:8px;
 overflow:hidden;
 }
 
+/* TITLE */
+
 .title{
-font-size:17vw;
+font-size:14vw;
 font-weight:bold;
 color:white;
 text-shadow:
 0 0 10px red,
 0 0 30px red;
-margin-top:10px;
-margin-bottom:5px;
+margin-top:5px;
 }
 
-.balance{
-font-size:8vw;
-color:gold;
-font-weight:bold;
-margin-bottom:5px;
-}
+/* TOP */
 
-.topBar{
+.top{
 width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:0 10px;
-margin-bottom:5px;
+margin-top:5px;
+}
+
+.balance{
+font-size:8vw;
+font-weight:bold;
+color:gold;
+text-shadow:
+0 0 10px gold;
 }
 
 .timer{
-font-size:11vw;
+font-size:10vw;
 font-weight:bold;
 color:#00ff66;
 text-shadow:
 0 0 10px #00ff66,
-0 0 25px #00ff66;
+0 0 30px #00ff66;
 }
 
+/* HISTORY */
+
 .history{
+width:100%;
 display:flex;
-gap:6px;
-overflow:hidden;
+justify-content:center;
+gap:5px;
+margin-top:5px;
+margin-bottom:5px;
 }
 
 .history div{
-width:30px;
-height:30px;
+width:28px;
+height:28px;
 border-radius:50%;
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 font-size:14px;
 font-weight:bold;
 }
@@ -103,12 +107,14 @@ background:black;
 background:green;
 }
 
+/* WHEEL */
+
 .wheelWrap{
 position:relative;
-width:78vw;
-height:78vw;
-max-width:340px;
-max-height:340px;
+width:74vw;
+height:74vw;
+max-width:330px;
+max-height:330px;
 margin-top:5px;
 }
 
@@ -119,10 +125,10 @@ left:50%;
 transform:translateX(-50%);
 width:0;
 height:0;
-border-left:20px solid transparent;
-border-right:20px solid transparent;
-border-bottom:35px solid yellow;
-z-index:50;
+border-left:18px solid transparent;
+border-right:18px solid transparent;
+border-bottom:32px solid yellow;
+z-index:200;
 filter:drop-shadow(0 0 15px yellow);
 }
 
@@ -130,9 +136,9 @@ filter:drop-shadow(0 0 15px yellow);
 width:100%;
 height:100%;
 border-radius:50%;
-border:10px solid gold;
-position:relative;
+border:8px solid gold;
 overflow:hidden;
+position:relative;
 box-shadow:
 0 0 20px gold,
 0 0 60px orange;
@@ -141,17 +147,29 @@ transform 6s cubic-bezier(.17,.67,.19,1);
 background:black;
 }
 
+.number{
+position:absolute;
+left:50%;
+top:50%;
+transform-origin:0 0;
+font-size:5vw;
+font-weight:bold;
+color:white;
+text-shadow:
+0 0 5px white;
+}
+
 .ball{
 position:absolute;
 width:18px;
 height:18px;
-background:white;
 border-radius:50%;
-top:50%;
+background:white;
 left:50%;
+top:50%;
 margin-left:-9px;
 margin-top:-9px;
-z-index:100;
+z-index:300;
 
 box-shadow:
 0 0 10px white,
@@ -162,51 +180,32 @@ transition:
 transform 6s cubic-bezier(.17,.67,.19,1);
 }
 
-.number{
-position:absolute;
-left:50%;
-top:50%;
-transform-origin:0 0;
-font-size:6vw;
-font-weight:bold;
-color:white;
-text-shadow:0 0 8px white;
-}
+/* BET AREA */
 
-.betGrid{
+.betBoard{
 width:100%;
+margin-top:8px;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:8px;
-margin-top:10px;
 }
 
 .betBox{
-height:70px;
-border-radius:15px;
+height:65px;
+border-radius:14px;
 display:flex;
-align-items:center;
 justify-content:center;
-font-size:8vw;
+align-items:center;
+font-size:7vw;
 font-weight:bold;
 position:relative;
-border:3px solid rgba(255,255,255,.2);
+border:2px solid rgba(255,255,255,.15);
+
 transition:.2s;
 }
 
-.betCount{
-position:absolute;
-top:5px;
-left:5px;
-background:black;
-color:yellow;
-padding:2px 8px;
-border-radius:10px;
-font-size:16px;
-}
-
 .red{
-background:#d9002b;
+background:#ff0033;
 }
 
 .black{
@@ -214,36 +213,59 @@ background:#111;
 }
 
 .green{
-background:#00bb33;
+background:#00bb44;
 }
 
-.betControls{
+.special{
+background:#7c0f26;
+}
+
+.betAmount{
+position:absolute;
+top:4px;
+left:4px;
+background:black;
+color:yellow;
+padding:2px 7px;
+border-radius:10px;
+font-size:15px;
+}
+
+/* CHIPS */
+
+.chips{
 display:flex;
 gap:10px;
-margin-top:12px;
+margin-top:10px;
 }
 
 .chip{
-width:75px;
-height:75px;
+width:68px;
+height:68px;
 border-radius:50%;
 background:white;
-color:black;
 display:flex;
-align-items:center;
 justify-content:center;
-font-size:16px;
+align-items:center;
+font-size:9vw;
 font-weight:bold;
+color:black;
 border:5px solid #ddd;
+
+transition:.2s;
 }
 
 .activeChip{
 border-color:gold;
+
 box-shadow:
 0 0 15px gold,
-0 0 35px gold;
+0 0 30px gold;
+
 transform:scale(1.1);
 }
+
+/* CURRENT BET */
 
 .currentBet{
 margin-top:10px;
@@ -251,30 +273,39 @@ font-size:8vw;
 color:white;
 }
 
+/* SPIN */
+
 .spinBtn{
 width:95%;
-height:80px;
+height:72px;
 border:none;
 border-radius:20px;
-margin-top:12px;
+margin-top:10px;
+
 background:red;
 color:white;
-font-size:12vw;
+
+font-size:10vw;
 font-weight:bold;
+
 box-shadow:
 0 0 20px red,
 0 0 50px red;
 }
 
+/* RESULT */
+
 .result{
-margin-top:10px;
-font-size:9vw;
+margin-top:8px;
+font-size:8vw;
 font-weight:bold;
 color:yellow;
 text-shadow:
 0 0 10px yellow,
-0 0 30px yellow;
+0 0 25px yellow;
 }
+
+/* FLASH */
 
 @keyframes flash{
 
@@ -295,19 +326,19 @@ text-shadow:
 🎰 روليت
 </div>
 
+<div class="top">
+
 <div class="balance" id="balance">
 $5000
 </div>
-
-<div class="topBar">
 
 <div class="timer" id="timer">
 15
 </div>
 
-<div class="history" id="history"></div>
-
 </div>
+
+<div class="history" id="history"></div>
 
 <div class="wheelWrap">
 
@@ -319,47 +350,47 @@ $5000
 
 </div>
 
-<div class="betGrid">
+<div class="betBoard">
 
-<div class="betBox black" onclick="placeBet('black',this)">
-<div class="betCount" id="blackCount">0</div>
+<div class="betBox black"
+onclick="placeBet('black',this)">
+<div class="betAmount" id="blackCount">0</div>
 BLACK
 </div>
 
-<div class="betBox red" onclick="placeBet('red',this)">
-<div class="betCount" id="redCount">0</div>
+<div class="betBox red"
+onclick="placeBet('red',this)">
+<div class="betAmount" id="redCount">0</div>
 RED
 </div>
 
-<div class="betBox" style="background:#8c1025"
+<div class="betBox special"
 onclick="placeBet('even',this)">
-<div class="betCount" id="evenCount">0</div>
+<div class="betAmount" id="evenCount">0</div>
 EVEN
 </div>
 
 <div class="betBox green"
 onclick="placeBet('zero',this)">
-<div class="betCount" id="zeroCount">0</div>
+<div class="betAmount" id="zeroCount">0</div>
 0
 </div>
 
-<div class="betBox"
-style="background:#8c1025"
+<div class="betBox special"
 onclick="placeBet('high',this)">
-<div class="betCount" id="highCount">0</div>
+<div class="betAmount" id="highCount">0</div>
 19-36
 </div>
 
-<div class="betBox"
-style="background:#8c1025"
+<div class="betBox special"
 onclick="placeBet('odd',this)">
-<div class="betCount" id="oddCount">0</div>
+<div class="betAmount" id="oddCount">0</div>
 ODD
 </div>
 
 </div>
 
-<div class="betControls">
+<div class="chips">
 
 <div class="chip"
 onclick="setChip(1000,this)">
@@ -383,7 +414,8 @@ onclick="setChip(10,this)">
 
 </div>
 
-<div class="currentBet" id="currentBet">
+<div class="currentBet"
+id="currentBet">
 الرهان: $0
 </div>
 
@@ -391,7 +423,8 @@ onclick="setChip(10,this)">
 انتظر انتهاء العداد
 </button>
 
-<div class="result" id="result"></div>
+<div class="result"
+id="result"></div>
 
 </div>
 
@@ -402,28 +435,16 @@ src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-wheel-1932.mp3">
 <script>
 
 const numbers=[
-0,32,15,19,4,21,2,25,17,34,6,
-27,13,36,11,30,8,23,10,5,
-24,16,33,1,20,14,31,9,22,
-18,29,7,28,12,35,3,26
+0,32,15,19,4,21,2,25,17,34,
+6,27,13,36,11,30,8,23,10,
+5,24,16,33,1,20,14,31,9,
+22,18,29,7,28,12,35,3,26
 ];
 
 const redNums=[
 1,3,5,7,9,12,14,16,18,
 19,21,23,25,27,30,32,34,36
 ];
-
-let balance=5000;
-let chip=10;
-
-let bets={
-red:0,
-black:0,
-even:0,
-odd:0,
-high:0,
-zero:0
-};
 
 const wheel=document.getElementById("wheel");
 
@@ -437,7 +458,7 @@ const deg=i*(360/numbers.length);
 
 div.style.transform=
 `rotate(${deg}deg)
-translateY(-35vw)
+translateY(-33vw)
 rotate(90deg)`;
 
 div.innerHTML=n;
@@ -446,30 +467,57 @@ wheel.appendChild(div);
 
 });
 
+/* STATE */
+
+let balance=5000;
+
+let currentChip=10;
+
+let bets={
+red:0,
+black:0,
+even:0,
+odd:0,
+high:0,
+zero:0
+};
+
+/* CHIP */
+
 function setChip(v,el){
 
-chip=v;
+currentChip=v;
 
 document
 .querySelectorAll(".chip")
-.forEach(c=>c.classList.remove("activeChip"));
+.forEach(c=>{
+
+c.classList.remove("activeChip");
+
+});
 
 el.classList.add("activeChip");
 
 }
 
+/* BET */
+
 function placeBet(type,el){
 
-bets[type]+=chip;
+if(balance<currentChip) return;
 
-balance-=chip;
+bets[type]+=currentChip;
 
-updateUI();
+balance-=currentChip;
 
 el.style.boxShadow=
 "0 0 20px gold";
 
+updateUI();
+
 }
+
+/* UI */
 
 function updateUI(){
 
@@ -484,31 +532,36 @@ Object.values(bets)
 
 for(let k in bets){
 
-document.getElementById(k+"Count")
-innerHTML=bets[k];
+document
+.getElementById(k+"Count")
+.innerHTML=bets[k];
 
 }
 
 }
 
-let timer=15;
+/* TIMER */
+
+let time=15;
 
 setInterval(()=>{
 
-timer--;
+time--;
 
 document.getElementById("timer")
-innerHTML=timer;
+innerHTML=time;
 
-if(timer<=0){
+if(time<=0){
 
 spin();
 
-timer=15;
+time=15;
 
 }
 
 },1000);
+
+/* SPIN */
 
 function spin(){
 
@@ -535,28 +588,22 @@ const rotate=
 wheel.style.transform=
 `rotate(${rotate}deg)`;
 
-const ball=
-document.getElementById("ball");
-
-ball.style.transform=
+document.getElementById("ball")
+.style.transform=
 `rotate(${rotate+1400}deg)
-translateY(-30vw)`;
+translateY(-31vw)`;
 
 setTimeout(()=>{
 
-checkWin(result);
-
-addHistory(result);
-
-document.getElementById("timer")
-style.animation=
-"flash .5s infinite";
+finish(result);
 
 },6500);
 
 }
 
-function checkWin(num){
+/* RESULT */
+
+function finish(num){
 
 let win=0;
 
@@ -567,16 +614,16 @@ if(num!==0 &&
 !redNums.includes(num))
 win+=bets.black*2;
 
-if(num%2==0 && num!=0)
+if(num%2===0 && num!==0)
 win+=bets.even*2;
 
-if(num%2==1)
+if(num%2===1)
 win+=bets.odd*2;
 
 if(num>=19)
 win+=bets.high*2;
 
-if(num==0)
+if(num===0)
 win+=bets.zero*14;
 
 balance+=win;
@@ -585,9 +632,13 @@ document.getElementById("result")
 innerHTML=
 win>0
 ?
-"🎉 فوز +$"+win
+"🎉 WIN +$"+win
 :
-"❌ خسارة - الرقم "+num;
+"❌ LOSE "+num;
+
+document.getElementById("result")
+.style.animation=
+"flash .5s infinite";
 
 if(win>0){
 
@@ -595,11 +646,15 @@ navigator.vibrate(300);
 
 }
 
+addHistory(num);
+
 resetBets();
 
 updateUI();
 
 }
+
+/* RESET */
 
 function resetBets(){
 
@@ -619,13 +674,15 @@ el.style.boxShadow="none";
 
 }
 
+/* HISTORY */
+
 function addHistory(num){
 
 const div=document.createElement("div");
 
 div.innerHTML=num;
 
-if(num==0)
+if(num===0)
 div.className="greenHis";
 
 else if(redNums.includes(num))
