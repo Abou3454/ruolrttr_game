@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
 <title>Roulette Casino</title>
 
@@ -17,7 +17,7 @@ font-family:tahoma;
 
 body{
 background:
-radial-gradient(circle,#4d0000,#000);
+radial-gradient(circle,#5a0000,#000);
 overflow:hidden;
 height:100vh;
 color:white;
@@ -29,20 +29,8 @@ height:100vh;
 display:flex;
 flex-direction:column;
 align-items:center;
-padding:8px;
+padding:10px;
 overflow:hidden;
-}
-
-/* TITLE */
-
-.title{
-font-size:14vw;
-font-weight:bold;
-color:white;
-text-shadow:
-0 0 10px red,
-0 0 30px red;
-margin-top:5px;
 }
 
 /* TOP */
@@ -52,16 +40,16 @@ width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:0 10px;
-margin-top:5px;
+margin-bottom:5px;
 }
 
 .balance{
-font-size:8vw;
+font-size:9vw;
 font-weight:bold;
 color:gold;
 text-shadow:
-0 0 10px gold;
+0 0 10px gold,
+0 0 25px orange;
 }
 
 .timer{
@@ -70,28 +58,25 @@ font-weight:bold;
 color:#00ff66;
 text-shadow:
 0 0 10px #00ff66,
-0 0 30px #00ff66;
+0 0 25px #00ff66;
 }
 
 /* HISTORY */
 
 .history{
-width:100%;
 display:flex;
-justify-content:center;
 gap:5px;
-margin-top:5px;
 margin-bottom:5px;
 }
 
 .history div{
-width:28px;
-height:28px;
+width:26px;
+height:26px;
 border-radius:50%;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:14px;
+font-size:13px;
 font-weight:bold;
 }
 
@@ -107,99 +92,65 @@ background:black;
 background:green;
 }
 
-/* WHEEL */
+/* CANVAS */
 
-.wheelWrap{
+.canvasWrap{
 position:relative;
-width:74vw;
-height:74vw;
-max-width:330px;
-max-height:330px;
+width:100%;
+display:flex;
+justify-content:center;
+align-items:center;
 margin-top:5px;
 }
 
+canvas{
+background:transparent;
+}
+
+/* POINTER */
+
 .pointer{
 position:absolute;
-top:-12px;
+top:0;
 left:50%;
 transform:translateX(-50%);
 width:0;
 height:0;
+
 border-left:18px solid transparent;
 border-right:18px solid transparent;
-border-bottom:32px solid yellow;
-z-index:200;
-filter:drop-shadow(0 0 15px yellow);
-}
+border-bottom:35px solid yellow;
 
-.wheel{
-width:100%;
-height:100%;
-border-radius:50%;
-border:8px solid gold;
-overflow:hidden;
-position:relative;
-box-shadow:
-0 0 20px gold,
-0 0 60px orange;
-transition:
-transform 6s cubic-bezier(.17,.67,.19,1);
-background:black;
-}
+z-index:100;
 
-.number{
-position:absolute;
-left:50%;
-top:50%;
-transform-origin:0 0;
-font-size:5vw;
-font-weight:bold;
-color:white;
-text-shadow:
-0 0 5px white;
-}
-
-.ball{
-position:absolute;
-width:18px;
-height:18px;
-border-radius:50%;
-background:white;
-left:50%;
-top:50%;
-margin-left:-9px;
-margin-top:-9px;
-z-index:300;
-
-box-shadow:
-0 0 10px white,
-0 0 20px cyan,
-0 0 40px white;
-
-transition:
-transform 6s cubic-bezier(.17,.67,.19,1);
+filter:
+drop-shadow(0 0 10px yellow);
 }
 
 /* BET AREA */
 
 .betBoard{
 width:100%;
-margin-top:8px;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:8px;
+margin-top:10px;
 }
 
-.betBox{
+.bet{
 height:65px;
-border-radius:14px;
+border-radius:15px;
+
 display:flex;
 justify-content:center;
 align-items:center;
+
 font-size:7vw;
 font-weight:bold;
+
 position:relative;
-border:2px solid rgba(255,255,255,.15);
+
+border:2px solid rgba(255,255,255,.2);
 
 transition:.2s;
 }
@@ -213,22 +164,22 @@ background:#111;
 }
 
 .green{
-background:#00bb44;
+background:#00c83a;
 }
 
 .special{
-background:#7c0f26;
+background:#8a1027;
 }
 
-.betAmount{
+.betValue{
 position:absolute;
 top:4px;
 left:4px;
 background:black;
-color:yellow;
-padding:2px 7px;
+padding:2px 8px;
 border-radius:10px;
 font-size:15px;
+color:yellow;
 }
 
 /* CHIPS */
@@ -240,22 +191,24 @@ margin-top:10px;
 }
 
 .chip{
-width:68px;
-height:68px;
+width:70px;
+height:70px;
 border-radius:50%;
 background:white;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:9vw;
+font-size:8vw;
 font-weight:bold;
 color:black;
+
 border:5px solid #ddd;
 
 transition:.2s;
 }
 
 .activeChip{
+
 border-color:gold;
 
 box-shadow:
@@ -263,46 +216,26 @@ box-shadow:
 0 0 30px gold;
 
 transform:scale(1.1);
+
 }
 
-/* CURRENT BET */
+/* BET */
 
 .currentBet{
-margin-top:10px;
+margin-top:8px;
 font-size:8vw;
-color:white;
-}
-
-/* SPIN */
-
-.spinBtn{
-width:95%;
-height:72px;
-border:none;
-border-radius:20px;
-margin-top:10px;
-
-background:red;
-color:white;
-
-font-size:10vw;
-font-weight:bold;
-
-box-shadow:
-0 0 20px red,
-0 0 50px red;
 }
 
 /* RESULT */
 
 .result{
-margin-top:8px;
+margin-top:6px;
 font-size:8vw;
 font-weight:bold;
 color:yellow;
 text-shadow:
 0 0 10px yellow,
-0 0 25px yellow;
+0 0 30px yellow;
 }
 
 /* FLASH */
@@ -322,10 +255,6 @@ text-shadow:
 
 <div class="container">
 
-<div class="title">
-🎰 روليت
-</div>
-
 <div class="top">
 
 <div class="balance" id="balance">
@@ -340,51 +269,49 @@ $5000
 
 <div class="history" id="history"></div>
 
-<div class="wheelWrap">
+<div class="canvasWrap">
 
 <div class="pointer"></div>
 
-<div class="ball" id="ball"></div>
-
-<div class="wheel" id="wheel"></div>
+<canvas id="roulette" width="320" height="320"></canvas>
 
 </div>
 
 <div class="betBoard">
 
-<div class="betBox black"
+<div class="bet black"
 onclick="placeBet('black',this)">
-<div class="betAmount" id="blackCount">0</div>
+<div class="betValue" id="blackCount">0</div>
 BLACK
 </div>
 
-<div class="betBox red"
+<div class="bet red"
 onclick="placeBet('red',this)">
-<div class="betAmount" id="redCount">0</div>
+<div class="betValue" id="redCount">0</div>
 RED
 </div>
 
-<div class="betBox special"
+<div class="bet special"
 onclick="placeBet('even',this)">
-<div class="betAmount" id="evenCount">0</div>
+<div class="betValue" id="evenCount">0</div>
 EVEN
 </div>
 
-<div class="betBox green"
+<div class="bet green"
 onclick="placeBet('zero',this)">
-<div class="betAmount" id="zeroCount">0</div>
+<div class="betValue" id="zeroCount">0</div>
 0
 </div>
 
-<div class="betBox special"
+<div class="bet special"
 onclick="placeBet('high',this)">
-<div class="betAmount" id="highCount">0</div>
+<div class="betValue" id="highCount">0</div>
 19-36
 </div>
 
-<div class="betBox special"
+<div class="bet special"
 onclick="placeBet('odd',this)">
-<div class="betAmount" id="oddCount">0</div>
+<div class="betValue" id="oddCount">0</div>
 ODD
 </div>
 
@@ -414,25 +341,19 @@ onclick="setChip(10,this)">
 
 </div>
 
-<div class="currentBet"
-id="currentBet">
+<div class="currentBet" id="currentBet">
 الرهان: $0
 </div>
 
-<button class="spinBtn">
-انتظر انتهاء العداد
-</button>
-
-<div class="result"
-id="result"></div>
+<div class="result" id="result"></div>
 
 </div>
 
-<audio id="spinSound"
-src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-wheel-1932.mp3">
-</audio>
-
 <script>
+
+const canvas=document.getElementById("roulette");
+
+const ctx=canvas.getContext("2d");
 
 const numbers=[
 0,32,15,19,4,21,2,25,17,34,
@@ -446,32 +367,111 @@ const redNums=[
 19,21,23,25,27,30,32,34,36
 ];
 
-const wheel=document.getElementById("wheel");
+let angle=0;
 
-numbers.forEach((n,i)=>{
+let spinning=false;
 
-const div=document.createElement("div");
+let ballAngle=0;
 
-div.className="number";
+function drawWheel(){
 
-const deg=i*(360/numbers.length);
+ctx.clearRect(0,0,320,320);
 
-div.style.transform=
-`rotate(${deg}deg)
-translateY(-33vw)
-rotate(90deg)`;
+ctx.save();
 
-div.innerHTML=n;
+ctx.translate(160,160);
 
-wheel.appendChild(div);
+ctx.rotate(angle);
 
-});
+const slice=
+(Math.PI*2)/numbers.length;
+
+for(let i=0;i<numbers.length;i++){
+
+ctx.beginPath();
+
+ctx.moveTo(0,0);
+
+ctx.arc(
+0,
+0,
+145,
+i*slice,
+(i+1)*slice
+);
+
+ctx.fillStyle=
+numbers[i]==0
+?
+"#00cc44"
+:
+redNums.includes(numbers[i])
+?
+"red"
+:
+"black";
+
+ctx.fill();
+
+ctx.strokeStyle="gold";
+
+ctx.lineWidth=2;
+
+ctx.stroke();
+
+ctx.save();
+
+ctx.rotate(i*slice+slice/2);
+
+ctx.translate(115,0);
+
+ctx.rotate(Math.PI/2);
+
+ctx.fillStyle="white";
+
+ctx.font="bold 20px Arial";
+
+ctx.textAlign="center";
+
+ctx.fillText(numbers[i],0,0);
+
+ctx.restore();
+
+}
+
+ctx.restore();
+
+/* BALL */
+
+ctx.save();
+
+ctx.translate(160,160);
+
+ctx.rotate(ballAngle);
+
+ctx.beginPath();
+
+ctx.arc(0,-125,9,0,Math.PI*2);
+
+ctx.fillStyle="white";
+
+ctx.shadowBlur=20;
+
+ctx.shadowColor="cyan";
+
+ctx.fill();
+
+ctx.restore();
+
+}
+
+drawWheel();
 
 /* STATE */
 
 let balance=5000;
 
-let currentChip=10;
+let chip=10;
 
 let bets={
 red:0,
@@ -482,33 +482,27 @@ high:0,
 zero:0
 };
 
-/* CHIP */
-
 function setChip(v,el){
 
-currentChip=v;
+chip=v;
 
 document
 .querySelectorAll(".chip")
-.forEach(c=>{
-
-c.classList.remove("activeChip");
-
-});
+.forEach(c=>c.classList.remove("activeChip"));
 
 el.classList.add("activeChip");
 
 }
 
-/* BET */
-
 function placeBet(type,el){
 
-if(balance<currentChip) return;
+if(spinning)return;
 
-bets[type]+=currentChip;
+if(balance<chip)return;
 
-balance-=currentChip;
+bets[type]+=chip;
+
+balance-=chip;
 
 el.style.boxShadow=
 "0 0 20px gold";
@@ -516,8 +510,6 @@ el.style.boxShadow=
 updateUI();
 
 }
-
-/* UI */
 
 function updateUI(){
 
@@ -546,10 +538,12 @@ let time=15;
 
 setInterval(()=>{
 
+if(spinning)return;
+
 time--;
 
 document.getElementById("timer")
-innerHTML=time;
+.innerHTML=time;
 
 if(time<=0){
 
@@ -565,9 +559,7 @@ time=15;
 
 function spin(){
 
-document
-.getElementById("spinSound")
-.play();
+spinning=true;
 
 const result=
 numbers[
@@ -579,25 +571,41 @@ Math.random()*numbers.length
 const index=
 numbers.indexOf(result);
 
-const deg=
-360/numbers.length;
+const target=
+((Math.PI*2)/numbers.length)
+*index;
 
-const rotate=
-3600-(index*deg);
+let speed=0.35;
 
-wheel.style.transform=
-`rotate(${rotate}deg)`;
+let ballSpeed=-0.45;
 
-document.getElementById("ball")
-.style.transform=
-`rotate(${rotate+1400}deg)
-translateY(-31vw)`;
+const interval=setInterval(()=>{
 
-setTimeout(()=>{
+angle+=speed;
+
+ballAngle+=ballSpeed;
+
+speed*=0.992;
+
+ballSpeed*=0.991;
+
+drawWheel();
+
+if(speed<0.003){
+
+clearInterval(interval);
+
+ballAngle=target;
+
+drawWheel();
 
 finish(result);
 
-},6500);
+spinning=false;
+
+}
+
+},16);
 
 }
 
@@ -629,7 +637,7 @@ win+=bets.zero*14;
 balance+=win;
 
 document.getElementById("result")
-innerHTML=
+.innerHTML=
 win>0
 ?
 "🎉 WIN +$"+win
@@ -639,12 +647,6 @@ win>0
 document.getElementById("result")
 .style.animation=
 "flash .5s infinite";
-
-if(win>0){
-
-navigator.vibrate(300);
-
-}
 
 addHistory(num);
 
@@ -665,7 +667,7 @@ bets[k]=0;
 }
 
 document
-.querySelectorAll(".betBox")
+.querySelectorAll(".bet")
 .forEach(el=>{
 
 el.style.boxShadow="none";
@@ -691,16 +693,14 @@ div.className="redHis";
 else
 div.className="blackHis";
 
-const history=
+const his=
 document.getElementById("history");
 
-history.prepend(div);
+his.prepend(div);
 
-if(history.children.length>8){
+if(his.children.length>8){
 
-history.removeChild(
-history.lastChild
-);
+his.removeChild(his.lastChild);
 
 }
 
