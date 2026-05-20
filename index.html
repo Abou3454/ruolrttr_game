@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lucky Wheel</title>
+<title>Lucky Wheel Pro</title>
 
 <style>
 
@@ -16,7 +16,7 @@ font-family:Tahoma;
 }
 
 body{
-background:#120028;
+background:#14002c;
 overflow:hidden;
 height:100vh;
 display:flex;
@@ -25,28 +25,29 @@ align-items:center;
 color:white;
 }
 
-.bg{
+body::before{
+content:"";
 position:fixed;
 width:100%;
 height:100%;
 background:
-radial-gradient(circle at center,#29105f,#090015);
+radial-gradient(circle,#37006d,#120022);
 z-index:-2;
 }
 
 .container{
 width:100%;
-max-width:420px;
+max-width:430px;
 text-align:center;
 padding-top:10px;
 }
 
-.title{
-font-size:35px;
+.balance{
+font-size:42px;
 font-weight:bold;
 color:gold;
-margin-bottom:10px;
 text-shadow:0 0 20px gold;
+margin-bottom:10px;
 }
 
 .wheel-box{
@@ -58,16 +59,16 @@ margin:auto;
 
 .pointer{
 position:absolute;
-top:-8px;
+top:-10px;
 left:50%;
 transform:translateX(-50%);
 width:0;
 height:0;
-border-left:22px solid transparent;
-border-right:22px solid transparent;
-border-top:50px solid gold;
-z-index:10;
-filter:drop-shadow(0 0 10px yellow);
+border-left:25px solid transparent;
+border-right:25px solid transparent;
+border-top:55px solid gold;
+z-index:100;
+filter:drop-shadow(0 0 12px yellow);
 }
 
 #wheel{
@@ -76,17 +77,17 @@ height:100%;
 border-radius:50%;
 border:12px solid gold;
 background:#111;
-transition:transform 5s cubic-bezier(.17,.67,.12,.99);
+transition:transform 6s cubic-bezier(.17,.67,.12,.99);
 box-shadow:
 0 0 40px gold,
-0 0 100px rgba(255,215,0,.5);
+0 0 100px rgba(255,215,0,.6);
 }
 
 .center{
 position:absolute;
-width:90px;
-height:90px;
-background:radial-gradient(circle,#ff0000,#660000);
+width:100px;
+height:100px;
+background:radial-gradient(circle,#ff0000,#5f0000);
 border:8px solid gold;
 border-radius:50%;
 top:50%;
@@ -95,109 +96,176 @@ transform:translate(-50%,-50%);
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:40px;
+font-size:45px;
 font-weight:bold;
-box-shadow:0 0 30px gold;
+box-shadow:0 0 25px gold;
 }
 
 .history{
-margin-top:20px;
 display:flex;
 justify-content:center;
 gap:10px;
+margin-top:20px;
 }
 
-.item{
-width:80px;
-height:90px;
-background:linear-gradient(#6f008d,#350046);
-border:3px solid gold;
-border-radius:15px;
+.history div{
+width:45px;
+height:45px;
+background:#70008f;
+border:2px solid gold;
+border-radius:10px;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
-box-shadow:0 0 15px rgba(255,215,0,.5);
+font-size:25px;
+box-shadow:0 0 10px rgba(255,215,0,.4);
 }
 
-.item span{
-font-size:40px;
-}
-
-.item b{
-margin-top:5px;
-font-size:30px;
-color:gold;
-}
-
-.bet-area{
-margin-top:25px;
+.bets{
+margin-top:18px;
 display:flex;
 justify-content:center;
 gap:15px;
 }
 
 .bet{
-width:100px;
-height:100px;
-border-radius:20px;
-border:3px solid gold;
-background:linear-gradient(#8b008b,#45004f);
+width:105px;
+height:115px;
+background:linear-gradient(#a000c8,#5f006f);
+border:4px solid gold;
+border-radius:18px;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-font-size:35px;
-font-weight:bold;
-box-shadow:0 0 20px rgba(255,215,0,.4);
+box-shadow:0 0 18px rgba(255,215,0,.5);
+transition:.2s;
+}
+
+.bet.active{
+transform:scale(1.08);
+box-shadow:0 0 30px gold;
+}
+
+.bet span{
+font-size:50px;
+}
+
+.bet b{
+font-size:40px;
+color:gold;
 }
 
 .bet p{
-font-size:18px;
+font-size:24px;
 margin-top:5px;
-color:#fff;
 }
 
 .chips{
-margin-top:25px;
 display:flex;
 justify-content:center;
 gap:15px;
+margin-top:25px;
 }
 
 .chip{
-width:70px;
-height:70px;
+width:72px;
+height:72px;
 border-radius:50%;
 background:white;
-border:6px solid #ccc;
+border:7px solid #ddd;
 display:flex;
 justify-content:center;
 align-items:center;
 font-weight:bold;
-font-size:22px;
+font-size:24px;
 color:black;
 box-shadow:0 0 15px white;
+transition:.2s;
 }
 
-button{
+.chip.active{
+transform:scale(1.15);
+box-shadow:0 0 25px gold;
+border-color:gold;
+}
+
+.spin-btn{
 margin-top:25px;
-width:220px;
-height:60px;
+width:240px;
+height:65px;
 border:none;
 border-radius:18px;
-background:linear-gradient(#555,#222);
+background:linear-gradient(#666,#222);
 color:white;
-font-size:28px;
+font-size:32px;
 font-weight:bold;
 box-shadow:0 0 20px rgba(255,255,255,.5);
 }
 
-.result{
-margin-top:15px;
-font-size:30px;
+.result-popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.75);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.popup{
+width:320px;
+background:linear-gradient(#c00000,#500000);
+border:5px solid gold;
+border-radius:20px;
+padding:25px;
+box-shadow:0 0 35px gold;
+animation:pop .4s;
+}
+
+@keyframes pop{
+from{
+transform:scale(.5);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.popup h1{
+font-size:42px;
 color:gold;
-text-shadow:0 0 15px gold;
+margin-bottom:15px;
+}
+
+.popup .emoji{
+font-size:90px;
+margin:20px 0;
+}
+
+.popup button{
+margin-top:15px;
+width:180px;
+height:55px;
+border:none;
+border-radius:15px;
+background:gold;
+font-size:28px;
+font-weight:bold;
+}
+
+.timer{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:55px;
+font-weight:bold;
+color:white;
+text-shadow:0 0 15px white;
+z-index:200;
 }
 
 </style>
@@ -205,11 +273,9 @@ text-shadow:0 0 15px gold;
 
 <body>
 
-<div class="bg"></div>
-
 <div class="container">
 
-<div class="title">LUCKY WHEEL</div>
+<div class="balance" id="balance">$5000</div>
 
 <div class="wheel-box">
 
@@ -217,46 +283,65 @@ text-shadow:0 0 15px gold;
 
 <canvas id="wheel" width="340" height="340"></canvas>
 
-<div class="center" id="timer">5</div>
+<div class="center"></div>
+
+<div class="timer" id="timer">5</div>
 
 </div>
 
-<div class="history">
-<div class="item"><span>🍉</span><b>x2</b></div>
-<div class="item"><span>7️⃣</span><b>x8</b></div>
-<div class="item"><span>🍎</span><b>x2</b></div>
+<div class="history" id="history">
+<div>🍉</div>
+<div>🍎</div>
+<div>7️⃣</div>
 </div>
 
-<div class="bet-area">
+<div class="bets">
 
-<div class="bet">
-🍉
-<p>x2</p>
+<div class="bet" onclick="selectBet('🍉',this)">
+<span>🍉</span>
+<b>x2</b>
+<p id="bet1">0</p>
 </div>
 
-<div class="bet">
-7️⃣
-<p>x8</p>
+<div class="bet" onclick="selectBet('7️⃣',this)">
+<span>7️⃣</span>
+<b>x8</b>
+<p id="bet2">0</p>
 </div>
 
-<div class="bet">
-🍎
-<p>x2</p>
+<div class="bet" onclick="selectBet('🍎',this)">
+<span>🍎</span>
+<b>x2</b>
+<p id="bet3">0</p>
 </div>
 
 </div>
 
 <div class="chips">
 
-<div class="chip">100</div>
-<div class="chip">1K</div>
-<div class="chip">10K</div>
+<div class="chip active" onclick="selectChip(100,this)">100</div>
+<div class="chip" onclick="selectChip(1000,this)">1K</div>
+<div class="chip" onclick="selectChip(10000,this)">10K</div>
 
 </div>
 
-<button onclick="spin()">SPIN</button>
+<button class="spin-btn" onclick="spin()">SPIN</button>
 
-<div class="result" id="result">جاهز للدوران</div>
+</div>
+
+<div class="result-popup" id="popup">
+
+<div class="popup">
+
+<h1>حظ سعيد!</h1>
+
+<div class="emoji" id="popupEmoji">🍉</div>
+
+<h2 id="popupText">ربحت</h2>
+
+<button onclick="closePopup()">إغلاق</button>
+
+</div>
 
 </div>
 
@@ -274,7 +359,7 @@ const colors=[
 "#0080ff",
 "#0066cc",
 "#0080ff",
-"#ff00aa",
+"#ff00cc",
 "#0066cc",
 "#0080ff",
 "#0066cc",
@@ -315,7 +400,7 @@ ctx.rotate(i*arc+arc/2);
 
 ctx.textAlign="center";
 
-ctx.font="40px Arial";
+ctx.font="45px Arial";
 
 ctx.fillText(sections[i],110,15);
 
@@ -327,9 +412,46 @@ ctx.restore();
 
 drawWheel();
 
+let selectedChip=100;
+let selectedBet=null;
+let balance=5000;
 let deg=0;
 
+function selectChip(value,el){
+
+selectedChip=value;
+
+document.querySelectorAll(".chip")
+.forEach(c=>c.classList.remove("active"));
+
+el.classList.add("active");
+
+}
+
+function selectBet(type,el){
+
+if(balance<selectedChip) return;
+
+selectedBet=type;
+
+balance-=selectedChip;
+
+document.getElementById("balance")
+.innerHTML="$"+balance;
+
+document.querySelectorAll(".bet")
+.forEach(b=>b.classList.remove("active"));
+
+el.classList.add("active");
+
+}
+
 function spin(){
+
+if(!selectedBet){
+alert("اختر رهان");
+return;
+}
 
 const wheel=document.getElementById("wheel");
 
@@ -339,9 +461,9 @@ deg+=3600+random;
 
 wheel.style.transform=`rotate(${deg}deg)`;
 
-const timer=document.getElementById("timer");
-
 let count=5;
+
+const timer=document.getElementById("timer");
 
 timer.innerHTML=count;
 
@@ -365,12 +487,55 @@ finish();
 
 function finish(){
 
-const result=sections[
-Math.floor(Math.random()*sections.length)
-];
+const result=
+sections[Math.floor(Math.random()*sections.length)];
 
-document.getElementById("result").innerHTML=
-"النتيجة : "+result;
+document.getElementById("popupEmoji")
+.innerHTML=result;
+
+let text="خسرت";
+
+if(result===selectedBet){
+
+if(result==="7️⃣"){
+
+balance+=selectedChip*8;
+
+}else{
+
+balance+=selectedChip*2;
+
+}
+
+text="ربحت 🎉";
+
+}
+
+document.getElementById("balance")
+.innerHTML="$"+balance;
+
+document.getElementById("popupText")
+.innerHTML=text;
+
+document.getElementById("popup")
+.style.display="flex";
+
+const history=document.getElementById("history");
+
+history.innerHTML=
+`<div>${result}</div>`+history.innerHTML;
+
+selectedBet=null;
+
+document.querySelectorAll(".bet")
+.forEach(b=>b.classList.remove("active"));
+
+}
+
+function closePopup(){
+
+document.getElementById("popup")
+.style.display="none";
 
 }
 
