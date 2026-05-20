@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كازينو روليت</title>
+<title>Roulette Casino</title>
 
 <style>
 
 body{
 margin:0;
-background:#050505;
+background:#0b0b0b;
 font-family:tahoma;
 color:white;
 text-align:center;
@@ -19,21 +19,20 @@ overflow-x:hidden;
 h1{
 margin-top:20px;
 font-size:42px;
-color:white;
 text-shadow:0 0 20px red;
 }
 
 .balance{
 font-size:30px;
-margin:15px;
 color:gold;
+margin:15px;
 }
 
-.wheel-container{
+#wheel-container{
 position:relative;
-margin:auto;
 width:320px;
 height:320px;
+margin:auto;
 }
 
 #wheel{
@@ -41,7 +40,6 @@ width:320px;
 height:320px;
 border-radius:50%;
 border:10px solid gold;
-transition:transform 5s cubic-bezier(.17,.67,.2,1);
 background:
 conic-gradient(
 red 0deg 20deg,
@@ -63,14 +61,17 @@ black 300deg 320deg,
 red 320deg 340deg,
 black 340deg 360deg
 );
+
 box-shadow:
-0 0 20px gold,
-0 0 60px orange;
+0 0 30px gold,
+0 0 80px orange;
+
+transition:transform 5s cubic-bezier(.17,.67,.2,1);
 }
 
 .pointer{
 position:absolute;
-top:-20px;
+top:-18px;
 left:50%;
 transform:translateX(-50%);
 width:0;
@@ -78,71 +79,86 @@ height:0;
 border-left:18px solid transparent;
 border-right:18px solid transparent;
 border-bottom:35px solid yellow;
+z-index:10;
 }
 
-.controls{
-margin-top:25px;
+.bet-buttons{
+margin-top:20px;
 }
 
-input{
-padding:12px;
+.bet-buttons button{
+padding:12px 25px;
+margin:8px;
 font-size:22px;
 border:none;
-border-radius:10px;
-margin:10px;
-width:120px;
-text-align:center;
+border-radius:50px;
+cursor:pointer;
+font-weight:bold;
 }
 
-button{
-padding:15px 45px;
+.redBtn{
+background:#ff4d6d;
+color:white;
+}
+
+.blackBtn{
+background:#444;
+color:white;
+}
+
+.greenBtn{
+background:#00d000;
+color:white;
+}
+
+.range-buttons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+width:90%;
+margin:25px auto;
+}
+
+.range-buttons button{
+padding:20px;
 font-size:28px;
-background:red;
+background:#1e90ff;
 color:white;
 border:none;
-border-radius:15px;
+border-radius:12px;
 cursor:pointer;
-box-shadow:0 0 20px red;
+font-weight:bold;
 }
 
-button:hover{
-transform:scale(1.05);
+.money-buttons{
+margin-top:20px;
+}
+
+.money-buttons button{
+width:70px;
+height:70px;
+border-radius:50%;
+border:none;
+font-size:24px;
+margin:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.selectedMoney{
+outline:5px solid gold;
+}
+
+.currentBet{
+font-size:30px;
+margin-top:10px;
 }
 
 .result{
 margin-top:25px;
-font-size:36px;
+font-size:40px;
 color:yellow;
 text-shadow:0 0 20px yellow;
-}
-
-.numbers{
-display:grid;
-grid-template-columns:repeat(6,1fr);
-gap:8px;
-max-width:420px;
-margin:30px auto;
-padding:10px;
-}
-
-.num{
-padding:12px;
-border-radius:8px;
-font-weight:bold;
-font-size:20px;
-}
-
-.red{
-background:red;
-}
-
-.black{
-background:black;
-border:1px solid #555;
-}
-
-.selected{
-outline:4px solid gold;
 }
 
 </style>
@@ -153,10 +169,10 @@ outline:4px solid gold;
 <h1>🎰 كازينو الروليت</h1>
 
 <div class="balance">
-الرصيد: $<span id="balance">1000</span>
+الرصيد: $<span id="balance">5000</span>
 </div>
 
-<div class="wheel-container">
+<div id="wheel-container">
 
 <div class="pointer"></div>
 
@@ -164,119 +180,242 @@ outline:4px solid gold;
 
 </div>
 
-<div class="controls">
+<div class="money-buttons">
 
-<input type="number" id="betAmount" placeholder="مبلغ الرهان">
+<button onclick="setBet(10)">10</button>
 
-<input type="number" id="betNumber" placeholder="الرقم">
+<button onclick="setBet(50)">50</button>
 
-<br><br>
+<button onclick="setBet(100)">100</button>
 
-<button onclick="spin()">ابدأ الرهان</button>
+<button onclick="setBet(1000)">1K</button>
+
+</div>
+
+<div class="currentBet">
+الرهان الحالي:
+<span id="currentBet">10</span>
+$
+</div>
+
+<div class="bet-buttons">
+
+<button class="redBtn" onclick="play('red')">
+🔴 RED x2
+</button>
+
+<button class="blackBtn" onclick="play('black')">
+⚫ BLACK x2
+</button>
+
+<button class="greenBtn" onclick="play('green')">
+🟢 GREEN x14
+</button>
+
+</div>
+
+<div class="range-buttons">
+
+<button onclick="playRange(1,12)">
+1 - 12
+</button>
+
+<button onclick="playRange(13,24)">
+13 - 24
+</button>
+
+<button onclick="playRange(25,36)">
+25 - 36
+</button>
+
+<button onclick="playEvenOdd('even')">
+EVEN
+</button>
+
+<button onclick="playEvenOdd('odd')">
+ODD
+</button>
 
 </div>
 
 <div class="result" id="result"></div>
-
-<div class="numbers" id="numbers"></div>
 
 <script>
 
 const wheel=document.getElementById("wheel");
 const result=document.getElementById("result");
 const balanceEl=document.getElementById("balance");
-const numbersDiv=document.getElementById("numbers");
+const currentBetEl=document.getElementById("currentBet");
 
-let balance=1000;
+let balance=5000;
+let currentBet=10;
 
-const rouletteNumbers=[
-0,32,15,19,4,21,2,25,17,
-34,6,27,13,36,11,30,8,23,
-10,5,24,16,33,1,20,14,31,
-9,22,18,29,7,28,12,35,3,26
-];
+function setBet(amount){
 
-rouletteNumbers.forEach((n,i)=>{
+currentBet=amount;
 
-const div=document.createElement("div");
-
-div.className="num "+(i%2==0?"red":"black");
-
-div.innerHTML=n;
-
-numbersDiv.appendChild(div);
-
-});
-
-function spin(){
-
-const bet=
-parseInt(document.getElementById("betAmount").value);
-
-const chosen=
-parseInt(document.getElementById("betNumber").value);
-
-if(isNaN(bet)||bet<=0){
-
-alert("ضع مبلغ صحيح");
-
-return;
+currentBetEl.innerHTML=currentBet;
 
 }
 
-if(bet>balance){
+function spinWheel(){
 
-alert("رصيدك غير كافي");
+return new Promise(resolve=>{
 
-return;
+const number=
+Math.floor(Math.random()*37);
 
-}
-
-if(isNaN(chosen)||chosen<0||chosen>36){
-
-alert("اختر رقم من 0 الى 36");
-
-return;
-
-}
-
-balance-=bet;
-
-balanceEl.innerHTML=balance;
-
-const randomIndex=
-Math.floor(Math.random()*rouletteNumbers.length);
-
-const winning=
-rouletteNumbers[randomIndex];
-
-const deg=
-3600+(randomIndex*9.73);
+const degree=
+3600+(number*9.73);
 
 wheel.style.transform=
-`rotate(-${deg}deg)`;
+`rotate(-${degree}deg)`;
 
 setTimeout(()=>{
 
-if(chosen===winning){
+resolve(number);
 
-const win=bet*35;
+},5000);
 
-balance+=win;
+});
+
+}
+
+async function play(color){
+
+if(balance<currentBet){
+
+alert("الرصيد غير كافي");
+
+return;
+
+}
+
+balance-=currentBet;
+
+updateBalance();
+
+const number=await spinWheel();
+
+let win=false;
+
+if(color==="green" && number===0){
+
+balance+=currentBet*14;
+
+win=true;
+
+}
+
+else if(color==="red" && number!==0 && number%2===0){
+
+balance+=currentBet*2;
+
+win=true;
+
+}
+
+else if(color==="black" && number%2!==0){
+
+balance+=currentBet*2;
+
+win=true;
+
+}
+
+showResult(win,number);
+
+}
+
+async function playRange(min,max){
+
+if(balance<currentBet){
+
+alert("الرصيد غير كافي");
+
+return;
+
+}
+
+balance-=currentBet;
+
+updateBalance();
+
+const number=await spinWheel();
+
+let win=false;
+
+if(number>=min && number<=max){
+
+balance+=currentBet*3;
+
+win=true;
+
+}
+
+showResult(win,number);
+
+}
+
+async function playEvenOdd(type){
+
+if(balance<currentBet){
+
+alert("الرصيد غير كافي");
+
+return;
+
+}
+
+balance-=currentBet;
+
+updateBalance();
+
+const number=await spinWheel();
+
+let win=false;
+
+if(type==="even" && number!==0 && number%2===0){
+
+balance+=currentBet*2;
+
+win=true;
+
+}
+
+if(type==="odd" && number%2!==0){
+
+balance+=currentBet*2;
+
+win=true;
+
+}
+
+showResult(win,number);
+
+}
+
+function updateBalance(){
+
+balanceEl.innerHTML=balance;
+
+}
+
+function showResult(win,number){
+
+if(win){
 
 result.innerHTML=
-"🎉 ربحت $" + win + " الرقم " + winning;
+"🎉 WIN +" + currentBet;
 
 }else{
 
 result.innerHTML=
-"❌ خسرت - الرقم " + winning;
+"❌ خسرت - الرقم " + number;
 
 }
 
-balanceEl.innerHTML=balance;
-
-},5000);
+updateBalance();
 
 }
 
