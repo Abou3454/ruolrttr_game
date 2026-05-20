@@ -30,12 +30,14 @@ flex-direction:column;
 align-items:center;
 }
 
+/* TOP */
+
 .top{
 width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:5px;
+margin-bottom:8px;
 }
 
 #balance{
@@ -46,11 +48,13 @@ text-shadow:0 0 20px gold;
 }
 
 #timer{
-font-size:70px;
+font-size:72px;
 font-weight:bold;
 color:#00ff55;
 text-shadow:0 0 25px #00ff55;
 }
+
+/* HISTORY */
 
 .history{
 display:flex;
@@ -73,32 +77,41 @@ font-size:15px;
 .black{background:black;}
 .green{background:green;}
 
+/* WHEEL */
+
 .wheelWrap{
 position:relative;
-width:310px;
-height:310px;
+width:320px;
+height:320px;
+display:flex;
+justify-content:center;
+align-items:center;
+margin-top:10px;
 }
 
 .pointer{
 position:absolute;
-top:-10px;
+top:-8px;
 left:50%;
 transform:translateX(-50%);
 width:0;
 height:0;
-border-left:22px solid transparent;
-border-right:22px solid transparent;
-border-bottom:50px solid yellow;
-z-index:50;
-filter:drop-shadow(0 0 15px yellow);
+border-left:24px solid transparent;
+border-right:24px solid transparent;
+border-bottom:55px solid yellow;
+z-index:100;
+filter:drop-shadow(0 0 20px yellow);
 }
 
 #wheel{
-width:100%;
-height:100%;
+width:320px;
+height:320px;
 border-radius:50%;
 border:10px solid gold;
-box-shadow:0 0 35px gold;
+box-shadow:
+0 0 20px gold,
+0 0 40px orange,
+0 0 60px gold;
 transition:transform 5s cubic-bezier(.17,.67,.2,1);
 position:relative;
 overflow:hidden;
@@ -144,39 +157,51 @@ black 349.2deg 360deg
 );
 }
 
+/* NUMBERS */
+
 .number{
 position:absolute;
 left:50%;
 top:50%;
-transform-origin:0 -130px;
-font-size:15px;
+transform-origin:0 -145px;
+font-size:18px;
 font-weight:bold;
 color:white;
+text-shadow:
+0 0 6px black,
+0 0 12px black;
 }
+
+/* BALL */
 
 .ball{
 position:absolute;
-width:18px;
-height:18px;
+width:22px;
+height:22px;
 background:white;
 border-radius:50%;
 top:50%;
 left:50%;
-margin-left:-9px;
-margin-top:-145px;
-box-shadow:0 0 20px white;
-z-index:20;
+margin-left:-11px;
+margin-top:-150px;
+box-shadow:
+0 0 10px white,
+0 0 25px white,
+0 0 40px white;
+z-index:30;
 animation:ballSpin 1s linear infinite;
 }
 
 @keyframes ballSpin{
 0%{
-transform:rotate(0deg) translateY(-145px);
+transform:rotate(0deg) translateY(-150px);
 }
 100%{
-transform:rotate(360deg) translateY(-145px);
+transform:rotate(360deg) translateY(-150px);
 }
 }
+
+/* BETS */
 
 .bets{
 width:100%;
@@ -220,6 +245,8 @@ color:yellow;
 .greenbox{background:#00cc44;}
 .darkbox{background:#8b1030;}
 
+/* CHIPS */
+
 .chips{
 display:flex;
 justify-content:center;
@@ -245,6 +272,8 @@ border:5px solid #ddd;
 border:5px solid gold;
 box-shadow:0 0 25px gold;
 }
+
+/* INFO */
 
 #currentBet{
 margin-top:12px;
@@ -336,11 +365,8 @@ ODD
 <script>
 
 let balance=5000;
-
 let selectedChip=50;
-
 let timer=10;
-
 let spinning=false;
 
 let bets={
@@ -363,6 +389,8 @@ const redNums=[
 21,23,25,27,30,32,34,36
 ];
 
+/* CREATE NUMBERS */
+
 function createNumbers(){
 
 const wheel=document.getElementById("wheel");
@@ -376,7 +404,7 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-130px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-145px) rotate(90deg)";
 
 wheel.appendChild(div);
 
@@ -386,11 +414,13 @@ wheel.appendChild(div);
 
 createNumbers();
 
+/* BALANCE */
+
 function updateBalance(){
-
 document.getElementById("balance").innerHTML="$"+balance;
-
 }
+
+/* CHIPS */
 
 function selectChip(value,el){
 
@@ -404,36 +434,32 @@ el.classList.add("active");
 
 }
 
+/* TOTAL BET */
+
 function totalBet(){
-
 return Object.values(bets).reduce((a,b)=>a+b,0);
-
 }
+
+/* PLACE BET */
 
 function placeBet(type,el){
 
 if(spinning)return;
-
 if(timer<=0)return;
 
 if(balance < selectedChip)return;
 
-/* خصم الرصيد */
 balance -= selectedChip;
 
 updateBalance();
 
-/* إضافة الرهان */
-bets[type] += selectedChip;
+bets[type]+=selectedChip;
 
-/* تحديث الخانة */
-document.getElementById(type+"Amount").innerHTML = bets[type];
+document.getElementById(type+"Amount").innerHTML=bets[type];
 
-/* تحديث إجمالي الرهان */
-document.getElementById("currentBet").innerHTML =
-"الرهان: $" + totalBet();
+document.getElementById("currentBet").innerHTML=
+"الرهان: $"+totalBet();
 
-/* تأثير */
 el.classList.add("active");
 
 setTimeout(()=>{
@@ -441,6 +467,8 @@ el.classList.remove("active");
 },300);
 
 }
+
+/* START ROUND */
 
 function startRound(){
 
@@ -466,6 +494,8 @@ finishRound(result);
 },5000);
 
 }
+
+/* FINISH ROUND */
 
 function finishRound(number){
 
@@ -531,6 +561,8 @@ spinning=false;
 timer=10;
 
 }
+
+/* TIMER */
 
 setInterval(()=>{
 
