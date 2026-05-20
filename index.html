@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لعبة الروليت</title>
+
+<title>Lucky Wheel Pro</title>
 
 <style>
 
@@ -11,45 +12,63 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial;
+font-family:Tahoma;
 }
 
 body{
-background:radial-gradient(#3d0057,#000);
-min-height:100vh;
+background:#14002c;
+overflow:hidden;
+height:100vh;
 display:flex;
-flex-direction:column;
+justify-content:center;
 align-items:center;
-overflow-x:hidden;
 color:white;
 }
 
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle,#37006d,#120022);
+z-index:-2;
+}
+
+.container{
+width:100%;
+max-width:430px;
+text-align:center;
+padding-top:10px;
+}
+
 .balance{
-font-size:70px;
+font-size:42px;
 font-weight:bold;
 color:gold;
-margin-top:20px;
-text-shadow:0 0 25px gold;
+text-shadow:0 0 20px gold;
+margin-bottom:10px;
+}
+
+.wheel-box{
+position:relative;
+width:340px;
+height:340px;
+margin:auto;
 }
 
 .pointer{
+position:absolute;
+top:-10px;
+left:50%;
+transform:translateX(-50%);
 width:0;
 height:0;
-border-left:28px solid transparent;
-border-right:28px solid transparent;
-border-top:70px solid yellow;
-margin-top:-5px;
-z-index:10;
-filter:drop-shadow(0 0 15px yellow);
-}
-
-.wheel-container{
-position:relative;
-width:85vw;
-height:85vw;
-max-width:380px;
-max-height:380px;
-margin-top:-10px;
+border-left:25px solid transparent;
+border-right:25px solid transparent;
+border-top:55px solid gold;
+z-index:100;
+filter:drop-shadow(0 0 12px yellow);
 }
 
 #wheel{
@@ -57,127 +76,243 @@ width:100%;
 height:100%;
 border-radius:50%;
 border:12px solid gold;
-position:relative;
-overflow:hidden;
-background:#2d8cf0;
+background:#111;
+transition:transform 6s cubic-bezier(.17,.67,.12,.99);
 box-shadow:
 0 0 40px gold,
-0 0 80px #ff00ff;
-transition:transform 5s cubic-bezier(.17,.67,.25,1);
+0 0 100px rgba(255,215,0,.6);
 }
 
-.sector{
+.center{
 position:absolute;
-width:50%;
-height:50%;
-left:50%;
+width:100px;
+height:100px;
+background:radial-gradient(circle,#ff0000,#5f0000);
+border:8px solid gold;
+border-radius:50%;
 top:50%;
-transform-origin:0% 0%;
-clip-path:polygon(0 0,100% 0,0 100%);
+left:50%;
+transform:translate(-50%,-50%);
 display:flex;
 justify-content:center;
 align-items:center;
-overflow:hidden;
-border:2px solid #ffd700;
+font-size:45px;
+font-weight:bold;
+box-shadow:0 0 25px gold;
 }
 
-.sector span{
-position:absolute;
+.history{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-top:20px;
+}
+
+.history div{
+width:45px;
+height:45px;
+background:#70008f;
+border:2px solid gold;
+border-radius:10px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:25px;
+box-shadow:0 0 10px rgba(255,215,0,.4);
+}
+
+.bets{
+margin-top:18px;
+display:flex;
+justify-content:center;
+gap:15px;
+}
+
+.bet{
+width:105px;
+height:115px;
+background:linear-gradient(#a000c8,#5f006f);
+border:4px solid gold;
+border-radius:18px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+box-shadow:0 0 18px rgba(255,215,0,.5);
+transition:.2s;
+}
+
+.bet.active{
+transform:scale(1.08);
+box-shadow:0 0 30px gold;
+}
+
+.bet span{
+font-size:50px;
+}
+
+.bet b{
+font-size:40px;
+color:gold;
+}
+
+.bet p{
+font-size:24px;
+margin-top:5px;
+}
+
+.chips{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-top:25px;
+}
+
+.chip{
+width:72px;
+height:72px;
+border-radius:50%;
+background:white;
+border:7px solid #ddd;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+font-size:24px;
+color:black;
+box-shadow:0 0 15px white;
+transition:.2s;
+}
+
+.chip.active{
+transform:scale(1.15);
+box-shadow:0 0 25px gold;
+border-color:gold;
+}
+
+.spin-btn{
+margin-top:25px;
+width:240px;
+height:65px;
+border:none;
+border-radius:18px;
+background:linear-gradient(#666,#222);
+color:white;
+font-size:32px;
+font-weight:bold;
+box-shadow:0 0 20px rgba(255,255,255,.5);
+}
+
+.result-popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.75);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.popup{
+width:320px;
+background:linear-gradient(#c00000,#500000);
+border:5px solid gold;
+border-radius:20px;
+padding:25px;
+box-shadow:0 0 35px gold;
+animation:pop .4s;
+}
+
+@keyframes pop{
+from{
+transform:scale(.5);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.popup h1{
 font-size:42px;
-transform:skewY(45deg) rotate(22deg);
-text-shadow:0 0 10px rgba(255,255,255,0.8);
+color:gold;
+margin-bottom:15px;
 }
 
-.s1{
-background:linear-gradient(135deg,#ff00c8,#ff4de1);
-transform:rotate(0deg) skewY(-45deg);
+.popup .emoji{
+font-size:90px;
+margin:20px 0;
 }
 
-.s1 span{
+.popup button{
+margin-top:15px;
+width:180px;
+height:55px;
+border:none;
+border-radius:15px;
+background:gold;
+font-size:28px;
+font-weight:bold;
+}
+
+.timer{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 font-size:55px;
-filter:drop-shadow(0 0 12px gold);
+font-weight:bold;
+color:white;
+text-shadow:0 0 15px white;
+z-index:200;
 }
 
-.s2{
-background:#1f8fff;
-transform:rotate(45deg) skewY(-45deg);
-}
-
-.s3{
-background:#1f8fff;
-transform:rotate(90deg) skewY(-45deg);
-}
-
-.s4{
-background:#1f8fff;
-transform:rotate(135deg) skewY(-45deg);
-}
-
-.s5{
-background:#1f8fff;
-transform:rotate(180deg) skewY(-45deg);
-}
-
-.s6{
-background:#1f8fff;
-transform:rotate(225deg) skewY(-45deg);
-}
-
-.s7{
-background:#1f8fff;
-transform:rotate(270deg) skewY(-45deg);
-}
-
-.s8{
-background:#1f8fff;
-transform:rotate(315deg) skewY(-45deg);
-}
 </style>
 </head>
 
 <body>
 
+<div class="container">
+
 <div class="balance" id="balance">$5000</div>
+
+<div class="wheel-box">
 
 <div class="pointer"></div>
 
-<div class="wheel-container">
+<canvas id="wheel" width="340" height="340"></canvas>
 
-<div id="wheel">
+<div class="center"></div>
 
-<div class="sector s1"><span>7️⃣</span></div>
-<div class="sector s2"><span>🍉</span></div>
-<div class="sector s3"><span>🍎</span></div>
-<div class="sector s4"><span>🍉</span></div>
-<div class="sector s5"><span>🍎</span></div>
-<div class="sector s6"><span>🍉</span></div>
-<div class="sector s7"><span>🍎</span></div>
-<div class="sector s8"><span>🍉</span></div>
+<div class="timer" id="timer">5</div>
 
 </div>
 
-<div class="center" id="timer">5</div>
-
+<div class="history" id="history">
+<div>🍉</div>
+<div>🍎</div>
+<div>7️⃣</div>
 </div>
 
-<div class="bet-area">
+<div class="bets">
 
-<div class="card" onclick="bet('melon')">
-<div class="emoji">🍉</div>
-<div class="x">x2</div>
-<div class="bet" id="melonBet">0</div>
+<div class="bet" onclick="selectBet('🍉',this)">
+<span>🍉</span>
+<b>x2</b>
+<p id="bet1">0</p>
 </div>
 
-<div class="card" onclick="bet('seven')">
-<div class="emoji">7️⃣</div>
-<div class="x">x8</div>
-<div class="bet" id="sevenBet">0</div>
+<div class="bet" onclick="selectBet('7️⃣',this)">
+<span>7️⃣</span>
+<b>x8</b>
+<p id="bet2">0</p>
 </div>
 
-<div class="card" onclick="bet('apple')">
-<div class="emoji">🍎</div>
-<div class="x">x2</div>
-<div class="bet" id="appleBet">0</div>
+<div class="bet" onclick="selectBet('🍎',this)">
+<span>🍎</span>
+<b>x2</b>
+<p id="bet3">0</p>
 </div>
 
 </div>
@@ -190,120 +325,217 @@ transform:rotate(315deg) skewY(-45deg);
 
 </div>
 
-<div class="result" id="result">النتيجة : ؟</div>
+<button class="spin-btn" onclick="spin()">SPIN</button>
+
+</div>
+
+<div class="result-popup" id="popup">
+
+<div class="popup">
+
+<h1>حظ سعيد!</h1>
+
+<div class="emoji" id="popupEmoji">🍉</div>
+
+<h2 id="popupText">ربحت</h2>
+
+<button onclick="closePopup()">إغلاق</button>
+
+</div>
+
+</div>
 
 <script>
 
-let balance = 5000;
-let selectedChip = 100;
+const canvas=document.getElementById("wheel");
+const ctx=canvas.getContext("2d");
 
-let bets = {
-melon:0,
-apple:0,
-seven:0
-};
+const sections=[
+"🍉","🍎","🍉","7️⃣",
+"🍎","🍉","🍎","🍉"
+];
+
+const colors=[
+"#0080ff",
+"#0066cc",
+"#0080ff",
+"#ff00cc",
+"#0066cc",
+"#0080ff",
+"#0066cc",
+"#0080ff"
+];
+
+const arc=Math.PI*2/sections.length;
+
+function drawWheel(){
+
+for(let i=0;i<sections.length;i++){
+
+ctx.beginPath();
+
+ctx.fillStyle=colors[i];
+
+ctx.moveTo(170,170);
+
+ctx.arc(
+170,
+170,
+160,
+i*arc,
+(i+1)*arc
+);
+
+ctx.fill();
+
+ctx.lineWidth=4;
+ctx.strokeStyle="gold";
+ctx.stroke();
+
+ctx.save();
+
+ctx.translate(170,170);
+
+ctx.rotate(i*arc+arc/2);
+
+ctx.textAlign="center";
+
+ctx.font="45px Arial";
+
+ctx.fillText(sections[i],110,15);
+
+ctx.restore();
+
+}
+
+}
+
+drawWheel();
+
+let selectedChip=100;
+let selectedBet=null;
+let balance=5000;
+let deg=0;
 
 function selectChip(value,el){
 
 selectedChip=value;
 
-document.querySelectorAll('.chip').forEach(c=>{
-c.classList.remove('active');
-});
+document.querySelectorAll(".chip")
+.forEach(c=>c.classList.remove("active"));
 
-el.classList.add('active');
-
-}
-
-function bet(type){
-
-if(balance < selectedChip) return;
-
-balance -= selectedChip;
-
-bets[type] += selectedChip;
-
-document.getElementById("balance").innerText="$"+balance;
-
-document.getElementById(type+"Bet").innerText=bets[type];
+el.classList.add("active");
 
 }
 
-let timer = 5;
+function selectBet(type,el){
 
-setInterval(()=>{
+if(balance<selectedChip) return;
 
-timer--;
+selectedBet=type;
 
-document.getElementById("timer").innerText=timer;
+balance-=selectedChip;
 
-if(timer<=0){
+document.getElementById("balance")
+.innerHTML="$"+balance;
 
-spinWheel();
+document.querySelectorAll(".bet")
+.forEach(b=>b.classList.remove("active"));
 
-timer=5;
+el.classList.add("active");
+
+}
+
+function spin(){
+
+if(!selectedBet){
+alert("اختر رهان");
+return;
+}
+
+const wheel=document.getElementById("wheel");
+
+const random=Math.floor(Math.random()*360);
+
+deg+=3600+random;
+
+wheel.style.transform=`rotate(${deg}deg)`;
+
+let count=5;
+
+const timer=document.getElementById("timer");
+
+timer.innerHTML=count;
+
+const t=setInterval(()=>{
+
+count--;
+
+timer.innerHTML=count;
+
+if(count<=0){
+
+clearInterval(t);
+
+finish();
 
 }
 
 },1000);
 
-function spinWheel(){
-
-let wheel = document.getElementById("wheel");
-
-let random = Math.floor(Math.random()*360)+1440;
-
-wheel.style.transform="rotate("+random+"deg)";
-
-let final = random % 360;
-
-let result="apple";
-
-if(final>=0 && final<90){
-result="melon";
-}
-else if(final>=90 && final<180){
-result="apple";
-}
-else if(final>=180 && final<270){
-result="seven";
-}
-else{
-result="apple";
 }
 
-setTimeout(()=>{
+function finish(){
 
-let win=0;
+const result=
+sections[Math.floor(Math.random()*sections.length)];
 
-if(result=="melon"){
-win=bets.melon*2;
-document.getElementById("result").innerText="النتيجة : 🍉";
+document.getElementById("popupEmoji")
+.innerHTML=result;
+
+let text="خسرت";
+
+if(result===selectedBet){
+
+if(result==="7️⃣"){
+
+balance+=selectedChip*8;
+
+}else{
+
+balance+=selectedChip*2;
+
 }
 
-if(result=="apple"){
-win=bets.apple*2;
-document.getElementById("result").innerText="النتيجة : 🍎";
+text="ربحت 🎉";
+
 }
 
-if(result=="seven"){
-win=bets.seven*8;
-document.getElementById("result").innerText="النتيجة : 7️⃣";
+document.getElementById("balance")
+.innerHTML="$"+balance;
+
+document.getElementById("popupText")
+.innerHTML=text;
+
+document.getElementById("popup")
+.style.display="flex";
+
+const history=document.getElementById("history");
+
+history.innerHTML=
+`<div>${result}</div>`+history.innerHTML;
+
+selectedBet=null;
+
+document.querySelectorAll(".bet")
+.forEach(b=>b.classList.remove("active"));
+
 }
 
-balance += win;
+function closePopup(){
 
-document.getElementById("balance").innerText="$"+balance;
-
-bets.melon=0;
-bets.apple=0;
-bets.seven=0;
-
-document.getElementById("melonBet").innerText="0";
-document.getElementById("appleBet").innerText="0";
-document.getElementById("sevenBet").innerText="0";
-
-},5200);
+document.getElementById("popup")
+.style.display="none";
 
 }
 
