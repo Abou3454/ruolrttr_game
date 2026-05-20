@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Pro</title>
+
+<title>Lucky Wheel</title>
 
 <style>
 
@@ -11,314 +12,190 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:tahoma;
+font-family:Tahoma;
 }
 
 body{
-background:
-radial-gradient(circle at center,#006400 0%,#001100 80%);
+background:#120028;
 overflow:hidden;
 height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 color:white;
 }
 
-.game{
+.bg{
+position:fixed;
 width:100%;
-height:100vh;
-padding:10px;
-display:flex;
-flex-direction:column;
-align-items:center;
+height:100%;
+background:
+radial-gradient(circle at center,#29105f,#090015);
+z-index:-2;
 }
 
-/* TOP */
-
-.top{
+.container{
 width:100%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:10px;
+max-width:420px;
+text-align:center;
+padding-top:10px;
 }
 
-#balance{
-font-size:40px;
+.title{
+font-size:35px;
 font-weight:bold;
 color:gold;
+margin-bottom:10px;
 text-shadow:0 0 20px gold;
 }
 
-#timer{
-font-size:70px;
-font-weight:bold;
-color:#00ff55;
-text-shadow:0 0 25px #00ff55;
-}
-
-/* WHEEL */
-
-.wheelWrap{
+.wheel-box{
 position:relative;
 width:340px;
 height:340px;
-margin-top:5px;
+margin:auto;
+}
+
+.pointer{
+position:absolute;
+top:-8px;
+left:50%;
+transform:translateX(-50%);
+width:0;
+height:0;
+border-left:22px solid transparent;
+border-right:22px solid transparent;
+border-top:50px solid gold;
+z-index:10;
+filter:drop-shadow(0 0 10px yellow);
 }
 
 #wheel{
 width:100%;
 height:100%;
 border-radius:50%;
-position:absolute;
-overflow:hidden;
-
 border:12px solid gold;
-
+background:#111;
+transition:transform 5s cubic-bezier(.17,.67,.12,.99);
 box-shadow:
-0 0 20px gold,
-0 0 60px rgba(255,255,0,.5);
-
-transition:transform 5s cubic-bezier(.17,.67,.2,1);
-
-background:
-conic-gradient(
-#00aa00 0deg 9.73deg,
-red 9.73deg 19.46deg,
-black 19.46deg 29.19deg,
-red 29.19deg 38.92deg,
-black 38.92deg 48.65deg,
-red 48.65deg 58.38deg,
-black 58.38deg 68.11deg,
-red 68.11deg 77.84deg,
-black 77.84deg 87.57deg,
-red 87.57deg 97.3deg,
-black 97.3deg 107.03deg,
-red 107.03deg 116.76deg,
-black 116.76deg 126.49deg,
-red 126.49deg 136.22deg,
-black 136.22deg 145.95deg,
-red 145.95deg 155.68deg,
-black 155.68deg 165.41deg,
-red 165.41deg 175.14deg,
-black 175.14deg 184.87deg,
-red 184.87deg 194.6deg,
-black 194.6deg 204.33deg,
-red 204.33deg 214.06deg,
-black 214.06deg 223.79deg,
-red 223.79deg 233.52deg,
-black 233.52deg 243.25deg,
-red 243.25deg 252.98deg,
-black 252.98deg 262.71deg,
-red 262.71deg 272.44deg,
-black 272.44deg 282.17deg,
-red 282.17deg 291.9deg,
-black 291.9deg 301.63deg,
-red 301.63deg 311.36deg,
-black 311.36deg 321.09deg,
-red 321.09deg 330.82deg,
-black 330.82deg 340.55deg,
-red 340.55deg 350.28deg,
-black 350.28deg 360deg
-);
-
+0 0 40px gold,
+0 0 100px rgba(255,215,0,.5);
 }
-
-/* CENTER */
 
 .center{
 position:absolute;
-width:100px;
-height:100px;
-border-radius:50%;
-background:
-radial-gradient(circle,#aa0000 0%,#550000 80%);
+width:90px;
+height:90px;
+background:radial-gradient(circle,#ff0000,#660000);
 border:8px solid gold;
-
-top:50%;
-left:50%;
-
-transform:translate(-50%,-50%);
-
-z-index:10;
-
-box-shadow:
-0 0 20px gold;
-}
-
-/* POINTER */
-
-.pointer{
-position:absolute;
-top:-5px;
-left:50%;
-transform:translateX(-50%);
-
-width:0;
-height:0;
-
-border-left:30px solid transparent;
-border-right:30px solid transparent;
-border-bottom:55px solid yellow;
-
-z-index:20;
-
-filter:drop-shadow(0 0 10px yellow);
-}
-
-/* BALL */
-
-.ball{
-position:absolute;
-width:20px;
-height:20px;
 border-radius:50%;
-background:white;
-
 top:50%;
 left:50%;
-
-margin-left:-10px;
-margin-top:-145px;
-
-box-shadow:
-0 0 15px white,
-0 0 30px white;
-
-z-index:30;
-
-animation:spinBall 1s linear infinite;
-}
-
-@keyframes spinBall{
-
-0%{
-transform:rotate(0deg) translateY(-145px);
-}
-
-100%{
-transform:rotate(360deg) translateY(-145px);
-}
-
-}
-
-/* NUMBERS */
-
-.number{
-position:absolute;
-left:50%;
-top:50%;
-transform-origin:0 -145px;
-
-font-size:16px;
+transform:translate(-50%,-50%);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:40px;
 font-weight:bold;
-color:white;
-text-shadow:0 0 6px black;
+box-shadow:0 0 30px gold;
 }
 
-/* BETS */
-
-.bets{
-width:100%;
-display:grid;
-grid-template-columns:1fr 1fr;
+.history{
+margin-top:20px;
+display:flex;
+justify-content:center;
 gap:10px;
-margin-top:18px;
+}
+
+.item{
+width:80px;
+height:90px;
+background:linear-gradient(#6f008d,#350046);
+border:3px solid gold;
+border-radius:15px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+box-shadow:0 0 15px rgba(255,215,0,.5);
+}
+
+.item span{
+font-size:40px;
+}
+
+.item b{
+margin-top:5px;
+font-size:30px;
+color:gold;
+}
+
+.bet-area{
+margin-top:25px;
+display:flex;
+justify-content:center;
+gap:15px;
 }
 
 .bet{
-height:90px;
-border-radius:22px;
-
+width:100px;
+height:100px;
+border-radius:20px;
+border:3px solid gold;
+background:linear-gradient(#8b008b,#45004f);
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-
-font-size:24px;
+font-size:35px;
 font-weight:bold;
-
-position:relative;
-
-border:3px solid rgba(255,255,255,.15);
-
-box-shadow:
-0 0 15px rgba(255,255,255,.15);
+box-shadow:0 0 20px rgba(255,215,0,.4);
 }
 
-.bet span{
-position:absolute;
-top:6px;
-left:6px;
-
-background:black;
-padding:4px 12px;
-
-border-radius:14px;
-
+.bet p{
 font-size:18px;
-color:yellow;
+margin-top:5px;
+color:#fff;
 }
-
-.blackbox{
-background:#000;
-}
-
-.redbox{
-background:#ff0055;
-}
-
-.greenbox{
-background:#00dd44;
-}
-
-.darkbox{
-background:#a00040;
-}
-
-/* CHIPS */
 
 .chips{
+margin-top:25px;
 display:flex;
 justify-content:center;
-gap:12px;
-margin-top:15px;
+gap:15px;
 }
 
 .chip{
-width:82px;
-height:82px;
+width:70px;
+height:70px;
 border-radius:50%;
 background:white;
-
+border:6px solid #ccc;
 display:flex;
 justify-content:center;
 align-items:center;
-
-font-size:24px;
 font-weight:bold;
+font-size:22px;
 color:black;
-
-border:5px solid #ddd;
+box-shadow:0 0 15px white;
 }
 
-.chip.active{
-border:5px solid gold;
-
-box-shadow:
-0 0 20px gold,
-0 0 40px rgba(255,255,0,.6);
-}
-
-/* TEXT */
-
-#currentBet{
-margin-top:15px;
-font-size:36px;
-text-shadow:0 0 10px white;
-}
-
-#result{
-margin-top:8px;
-font-size:32px;
+button{
+margin-top:25px;
+width:220px;
+height:60px;
+border:none;
+border-radius:18px;
+background:linear-gradient(#555,#222);
+color:white;
+font-size:28px;
 font-weight:bold;
+box-shadow:0 0 20px rgba(255,255,255,.5);
+}
+
+.result{
+margin-top:15px;
+font-size:30px;
 color:gold;
 text-shadow:0 0 15px gold;
 }
@@ -328,278 +205,174 @@ text-shadow:0 0 15px gold;
 
 <body>
 
-<div class="game">
+<div class="bg"></div>
 
-<div class="top">
+<div class="container">
 
-<div id="balance">$5000</div>
+<div class="title">LUCKY WHEEL</div>
 
-<div id="timer">10</div>
-
-</div>
-
-<div class="wheelWrap">
+<div class="wheel-box">
 
 <div class="pointer"></div>
 
-<div class="ball"></div>
+<canvas id="wheel" width="340" height="340"></canvas>
 
-<div id="wheel"></div>
-
-<div class="center"></div>
+<div class="center" id="timer">5</div>
 
 </div>
 
-<div class="bets">
-
-<div class="bet blackbox" onclick="placeBet('black')">
-<span id="blackAmount">0</span>
-BLACK
+<div class="history">
+<div class="item"><span>🍉</span><b>x2</b></div>
+<div class="item"><span>7️⃣</span><b>x8</b></div>
+<div class="item"><span>🍎</span><b>x2</b></div>
 </div>
 
-<div class="bet redbox" onclick="placeBet('red')">
-<span id="redAmount">0</span>
-RED
+<div class="bet-area">
+
+<div class="bet">
+🍉
+<p>x2</p>
 </div>
 
-<div class="bet darkbox" onclick="placeBet('even')">
-<span id="evenAmount">0</span>
-EVEN
+<div class="bet">
+7️⃣
+<p>x8</p>
 </div>
 
-<div class="bet greenbox" onclick="placeBet('zero')">
-<span id="zeroAmount">0</span>
-0
-</div>
-
-<div class="bet darkbox" onclick="placeBet('high')">
-<span id="highAmount">0</span>
-19-36
-</div>
-
-<div class="bet darkbox" onclick="placeBet('odd')">
-<span id="oddAmount">0</span>
-ODD
+<div class="bet">
+🍎
+<p>x2</p>
 </div>
 
 </div>
 
 <div class="chips">
 
-<div class="chip" onclick="selectChip(1000,this)">1K</div>
-
-<div class="chip" onclick="selectChip(100,this)">100</div>
-
-<div class="chip active" onclick="selectChip(50,this)">50</div>
-
-<div class="chip" onclick="selectChip(10,this)">10</div>
+<div class="chip">100</div>
+<div class="chip">1K</div>
+<div class="chip">10K</div>
 
 </div>
 
-<div id="currentBet">الرهان: $0</div>
+<button onclick="spin()">SPIN</button>
 
-<div id="result"></div>
+<div class="result" id="result">جاهز للدوران</div>
 
 </div>
 
 <script>
 
-let balance=5000;
+const canvas=document.getElementById("wheel");
+const ctx=canvas.getContext("2d");
 
-let selectedChip=50;
-
-let timer=10;
-
-let spinning=false;
-
-let bets={
-red:0,
-black:0,
-even:0,
-odd:0,
-high:0,
-zero:0
-};
-
-const numbers=[
-0,32,15,19,4,21,2,25,17,34,
-6,27,13,36,11,30,8,23,10,
-5,24,16,33,1,20,14,31,9,
-22,18,29,7,28,12,35,3,26
+const sections=[
+"🍉","🍎","🍉","7️⃣",
+"🍎","🍉","🍎","🍉"
 ];
 
-const redNums=[
-1,3,5,7,9,12,14,16,18,
-19,21,23,25,27,30,32,34,36
+const colors=[
+"#0080ff",
+"#0066cc",
+"#0080ff",
+"#ff00aa",
+"#0066cc",
+"#0080ff",
+"#0066cc",
+"#0080ff"
 ];
+
+const arc=Math.PI*2/sections.length;
+
+function drawWheel(){
+
+for(let i=0;i<sections.length;i++){
+
+ctx.beginPath();
+
+ctx.fillStyle=colors[i];
+
+ctx.moveTo(170,170);
+
+ctx.arc(
+170,
+170,
+160,
+i*arc,
+(i+1)*arc
+);
+
+ctx.fill();
+
+ctx.lineWidth=4;
+ctx.strokeStyle="gold";
+ctx.stroke();
+
+ctx.save();
+
+ctx.translate(170,170);
+
+ctx.rotate(i*arc+arc/2);
+
+ctx.textAlign="center";
+
+ctx.font="40px Arial";
+
+ctx.fillText(sections[i],110,15);
+
+ctx.restore();
+
+}
+
+}
+
+drawWheel();
+
+let deg=0;
+
+function spin(){
 
 const wheel=document.getElementById("wheel");
 
-/* CREATE NUMBERS */
+const random=Math.floor(Math.random()*360);
 
-for(let i=0;i<numbers.length;i++){
+deg+=3600+random;
 
-let div=document.createElement("div");
+wheel.style.transform=`rotate(${deg}deg)`;
 
-div.className="number";
+const timer=document.getElementById("timer");
 
-div.innerHTML=numbers[i];
+let count=5;
 
-div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-145px) rotate(90deg)";
+timer.innerHTML=count;
 
-wheel.appendChild(div);
+const t=setInterval(()=>{
 
-}
+count--;
 
-/* BALANCE */
+timer.innerHTML=count;
 
-function updateBalance(){
+if(count<=0){
 
-document.getElementById("balance").innerHTML="$"+balance;
+clearInterval(t);
 
-}
-
-/* CHIP */
-
-function selectChip(value,el){
-
-selectedChip=value;
-
-document.querySelectorAll(".chip").forEach(c=>{
-c.classList.remove("active");
-});
-
-el.classList.add("active");
-
-}
-
-/* TOTAL */
-
-function totalBet(){
-
-return Object.values(bets).reduce((a,b)=>a+b,0);
-
-}
-
-/* PLACE BET */
-
-function placeBet(type){
-
-if(spinning)return;
-
-if(balance<selectedChip)return;
-
-balance-=selectedChip;
-
-updateBalance();
-
-bets[type]+=selectedChip;
-
-document.getElementById(type+"Amount").innerHTML=bets[type];
-
-document.getElementById("currentBet").innerHTML=
-"الرهان: $"+totalBet();
-
-}
-
-/* START ROUND */
-
-function startRound(){
-
-if(spinning)return;
-
-spinning=true;
-
-let result=
-numbers[Math.floor(Math.random()*numbers.length)];
-
-let index=numbers.indexOf(result);
-
-let degree=(360/numbers.length)*index;
-
-let finalRotate=3600-degree;
-
-wheel.style.transform=
-"rotate("+finalRotate+"deg)";
-
-setTimeout(()=>{
-
-finishRound(result);
-
-},5000);
-
-}
-
-/* FINISH */
-
-function finishRound(number){
-
-let win=0;
-
-if(redNums.includes(number))
-win+=bets.red*2;
-
-if(number!==0 && !redNums.includes(number))
-win+=bets.black*2;
-
-if(number%2===0 && number!==0)
-win+=bets.even*2;
-
-if(number%2===1)
-win+=bets.odd*2;
-
-if(number>=19)
-win+=bets.high*2;
-
-if(number===0)
-win+=bets.zero*14;
-
-balance+=win;
-
-updateBalance();
-
-document.getElementById("result").innerHTML=
-(win>0 ? "WIN +$"+win : "LOSE")+" | "+number;
-
-for(let key in bets){
-
-bets[key]=0;
-
-document.getElementById(key+"Amount").innerHTML="0";
-
-}
-
-document.getElementById("currentBet").innerHTML=
-"الرهان: $0";
-
-spinning=false;
-
-timer=10;
-
-}
-
-/* TIMER */
-
-setInterval(()=>{
-
-if(spinning)return;
-
-timer--;
-
-document.getElementById("timer").innerHTML=timer;
-
-if(timer<=0){
-
-document.getElementById("timer").innerHTML="SPIN";
-
-startRound();
+finish();
 
 }
 
 },1000);
 
-updateBalance();
+}
+
+function finish(){
+
+const result=sections[
+Math.floor(Math.random()*sections.length)
+];
+
+document.getElementById("result").innerHTML=
+"النتيجة : "+result;
+
+}
 
 </script>
 
