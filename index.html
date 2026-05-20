@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,12 @@ font-family:Tahoma;
 }
 
 body{
-background:radial-gradient(circle,#2b0040,#090010);
+background:radial-gradient(circle,#2d004d,#090010);
 min-height:100vh;
-overflow-x:hidden;
 display:flex;
 justify-content:center;
-align-items:flex-start;
-padding:10px;
+align-items:center;
+overflow:hidden;
 color:white;
 }
 
@@ -29,23 +29,23 @@ color:white;
 width:100%;
 max-width:430px;
 text-align:center;
+padding:10px;
 }
 
 .balance{
 font-size:70px;
 font-weight:bold;
 color:gold;
-text-shadow:0 0 20px gold;
-margin-top:10px;
-margin-bottom:10px;
+text-shadow:0 0 25px gold;
+margin-bottom:15px;
 }
 
-.wheel-wrapper{
+.wheel-box{
 position:relative;
-width:95vw;
-max-width:380px;
-height:95vw;
-max-height:380px;
+width:90vw;
+height:90vw;
+max-width:360px;
+max-height:360px;
 margin:auto;
 }
 
@@ -60,7 +60,7 @@ border-left:25px solid transparent;
 border-right:25px solid transparent;
 border-top:55px solid yellow;
 z-index:20;
-filter:drop-shadow(0 0 10px yellow);
+filter:drop-shadow(0 0 15px yellow);
 }
 
 #wheel{
@@ -69,7 +69,7 @@ height:100%;
 border-radius:50%;
 border:12px solid gold;
 box-shadow:
-0 0 25px gold,
+0 0 30px gold,
 0 0 60px yellow;
 background:
 conic-gradient(
@@ -82,29 +82,10 @@ conic-gradient(
 #1e90ff 270deg 315deg,
 #ff00aa 315deg 360deg
 );
+
+transition:transform 5s cubic-bezier(.17,.67,.12,.99);
 position:relative;
 overflow:hidden;
-transition:transform 5s cubic-bezier(.17,.67,.12,.99);
-}
-
-.center{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-width:120px;
-height:120px;
-border-radius:50%;
-background:radial-gradient(circle,red,darkred);
-border:8px solid gold;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:70px;
-font-weight:bold;
-color:white;
-box-shadow:0 0 30px yellow;
-z-index:10;
 }
 
 .slice{
@@ -112,7 +93,7 @@ position:absolute;
 left:50%;
 top:50%;
 transform-origin:0 0;
-font-size:40px;
+font-size:38px;
 }
 
 .slice:nth-child(1){transform:rotate(0deg) translate(120px);}
@@ -124,28 +105,30 @@ font-size:40px;
 .slice:nth-child(7){transform:rotate(270deg) translate(120px);}
 .slice:nth-child(8){transform:rotate(315deg) translate(120px);}
 
-.bet-icons{
+.center{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:110px;
+height:110px;
+border-radius:50%;
+background:radial-gradient(circle,red,darkred);
+border:8px solid gold;
 display:flex;
 justify-content:center;
-gap:10px;
-margin-top:20px;
-margin-bottom:10px;
-}
-
-.bet-icons div{
-font-size:40px;
-background:#700090;
-padding:10px;
-border-radius:15px;
-border:3px solid gold;
-box-shadow:0 0 15px magenta;
+align-items:center;
+font-size:60px;
+font-weight:bold;
+color:white;
+box-shadow:0 0 25px yellow;
 }
 
 .cards{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:15px;
-margin-top:10px;
+margin-top:25px;
 }
 
 .card{
@@ -154,22 +137,28 @@ border:4px solid gold;
 border-radius:25px;
 padding:20px 10px;
 box-shadow:0 0 25px magenta;
+cursor:pointer;
 }
 
 .card .icon{
-font-size:60px;
+font-size:55px;
 }
 
-.card .multi{
-font-size:55px;
+.multi{
+font-size:50px;
 font-weight:bold;
 color:gold;
-margin-top:10px;
 }
 
 .bet{
-font-size:50px;
+font-size:40px;
 margin-top:5px;
+}
+
+.apple{
+grid-column:1/3;
+width:50%;
+margin:auto;
 }
 
 .chips{
@@ -177,92 +166,86 @@ display:flex;
 justify-content:center;
 gap:15px;
 margin-top:25px;
-flex-wrap:wrap;
 }
 
 .chip{
-width:90px;
-height:90px;
+width:80px;
+height:80px;
 border-radius:50%;
 background:white;
-color:black;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:35px;
+font-size:30px;
 font-weight:bold;
+color:black;
 box-shadow:0 0 20px white;
 cursor:pointer;
-transition:.2s;
 }
 
-.chip.active{
-border:6px solid gold;
-box-shadow:0 0 30px yellow;
+.active{
+border:5px solid gold;
+box-shadow:0 0 25px yellow;
 }
 
-.spin-btn{
+button{
 margin-top:25px;
 width:100%;
-height:85px;
+height:80px;
 border:none;
 border-radius:25px;
-font-size:50px;
+font-size:45px;
 font-weight:bold;
 background:linear-gradient(#666,#222);
 color:white;
-box-shadow:0 0 20px #000;
 cursor:pointer;
+box-shadow:0 0 20px black;
 }
 
 .result{
 margin-top:20px;
-font-size:45px;
+font-size:40px;
 color:gold;
-text-shadow:0 0 10px gold;
+text-shadow:0 0 15px gold;
 }
 
 @media(max-width:480px){
 
 .balance{
-font-size:50px;
+font-size:55px;
 }
 
 .center{
 width:90px;
 height:90px;
-font-size:50px;
-}
-
-.slice{
-font-size:30px;
+font-size:45px;
 }
 
 .card .icon{
 font-size:45px;
 }
 
-.card .multi{
+.multi{
 font-size:40px;
 }
 
 .bet{
-font-size:40px;
-}
-
-.spin-btn{
-font-size:40px;
-height:75px;
-}
-
-.result{
 font-size:35px;
 }
 
 .chip{
-width:75px;
-height:75px;
-font-size:28px;
+width:65px;
+height:65px;
+font-size:25px;
+}
+
+button{
+font-size:35px;
+height:70px;
+}
+
+.result{
+font-size:30px;
 }
 
 }
@@ -276,7 +259,7 @@ font-size:28px;
 
 <div class="balance" id="balance">$5000</div>
 
-<div class="wheel-wrapper">
+<div class="wheel-box">
 
 <div class="pointer"></div>
 
@@ -297,27 +280,21 @@ font-size:28px;
 
 </div>
 
-<div class="bet-icons">
-<div>🍉</div>
-<div>🍎</div>
-<div>7️⃣</div>
-</div>
-
 <div class="cards">
 
-<div class="card" onclick="setBet('watermelon')">
+<div class="card" onclick="bet('watermelon')">
 <div class="icon">🍉</div>
 <div class="multi">x2</div>
 <div class="bet" id="watermelonBet">0</div>
 </div>
 
-<div class="card" onclick="setBet('seven')">
+<div class="card" onclick="bet('seven')">
 <div class="icon">7️⃣</div>
 <div class="multi">x8</div>
 <div class="bet" id="sevenBet">0</div>
 </div>
 
-<div class="card" style="grid-column:1/3;width:50%;margin:auto;" onclick="setBet('apple')">
+<div class="card apple" onclick="bet('apple')">
 <div class="icon">🍎</div>
 <div class="multi">x2</div>
 <div class="bet" id="appleBet">0</div>
@@ -327,35 +304,37 @@ font-size:28px;
 
 <div class="chips">
 
-<div class="chip" onclick="selectChip(100)">100</div>
-<div class="chip" onclick="selectChip(1000)">1K</div>
-<div class="chip active" onclick="selectChip(10000)">10K</div>
+<div class="chip" onclick="selectChip(100,this)">100</div>
+<div class="chip" onclick="selectChip(1000,this)">1K</div>
+<div class="chip active" onclick="selectChip(10000,this)">10K</div>
 
 </div>
 
-<button class="spin-btn" onclick="spin()">SPIN</button>
+<button onclick="spin()">SPIN</button>
 
-<div class="result" id="result">النتيجة :</div>
+<div class="result" id="result">
+النتيجة :
+</div>
 
 </div>
 
 <script>
 
-let selectedChip = 10000;
+let selectedChip=10000;
 
-let bets = {
+let balance=5000;
+
+let bets={
 watermelon:0,
 apple:0,
 seven:0
 };
 
-let balance = 5000;
-
 function updateBalance(){
 document.getElementById("balance").innerHTML="$"+balance;
 }
 
-function selectChip(amount){
+function selectChip(amount,el){
 
 selectedChip=amount;
 
@@ -363,21 +342,21 @@ document.querySelectorAll(".chip").forEach(c=>{
 c.classList.remove("active");
 });
 
-event.target.classList.add("active");
+el.classList.add("active");
 
 }
 
-function setBet(type){
+function bet(type){
 
-if(balance < selectedChip) return;
+if(balance<selectedChip)return;
 
-balance -= selectedChip;
+balance-=selectedChip;
 
 bets[type]+=selectedChip;
 
-updateBalance();
-
 document.getElementById(type+"Bet").innerHTML=bets[type];
+
+updateBalance();
 
 }
 
@@ -391,6 +370,10 @@ let count=5;
 
 timer.innerHTML=count;
 
+let deg=3600+Math.floor(Math.random()*360);
+
+wheel.style.transform="rotate("+deg+"deg)";
+
 let interval=setInterval(()=>{
 
 count--;
@@ -401,44 +384,40 @@ if(count<=0){
 
 clearInterval(interval);
 
-finishSpin();
+finish();
 
 }
 
 },1000);
 
-let randomDeg=3600+Math.floor(Math.random()*360);
-
-wheel.style.transform="rotate("+randomDeg+"deg)";
-
 }
 
-function finishSpin(){
+function finish(){
 
-const results=["🍉","🍎","7️⃣"];
+const results=["🍎","🍉","7️⃣"];
 
 const result=results[Math.floor(Math.random()*results.length)];
 
 document.getElementById("result").innerHTML="النتيجة : "+result;
 
-if(result=="🍉"){
-balance += bets.watermelon * 2;
+if(result=="🍎"){
+balance+=bets.apple*2;
 }
 
-if(result=="🍎"){
-balance += bets.apple * 2;
+if(result=="🍉"){
+balance+=bets.watermelon*2;
 }
 
 if(result=="7️⃣"){
-balance += bets.seven * 8;
+balance+=bets.seven*8;
 }
 
-bets.watermelon=0;
 bets.apple=0;
+bets.watermelon=0;
 bets.seven=0;
 
-document.getElementById("watermelonBet").innerHTML=0;
 document.getElementById("appleBet").innerHTML=0;
+document.getElementById("watermelonBet").innerHTML=0;
 document.getElementById("sevenBet").innerHTML=0;
 
 updateBalance();
