@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette</title>
+<title>Roulette Ultra Pro</title>
 
 <style>
 
@@ -15,52 +15,77 @@ font-family:tahoma;
 }
 
 body{
+
 background:
-radial-gradient(circle,#006400 0%,#002200 50%,#000 100%);
+radial-gradient(circle,#006400 0%,#002200 45%,#000 100%);
+
 overflow:hidden;
 height:100vh;
 color:white;
+
 }
 
 .game{
+
 width:100%;
 height:100vh;
+
 display:flex;
 flex-direction:column;
 align-items:center;
+
 padding:10px;
+
 }
 
 .top{
+
 width:100%;
+
 display:flex;
 justify-content:space-between;
 align-items:center;
+
 margin-bottom:10px;
+
 }
 
 #balance{
-font-size:32px;
+
+font-size:34px;
 font-weight:bold;
+
 color:gold;
-text-shadow:0 0 25px gold;
+
+text-shadow:
+0 0 10px gold,
+0 0 25px gold,
+0 0 50px gold;
+
 }
 
 #timer{
-font-size:80px;
+
+font-size:90px;
 font-weight:bold;
+
 color:#00ff55;
-text-shadow:0 0 25px #00ff55;
+
+text-shadow:
+0 0 10px #00ff55,
+0 0 25px #00ff55,
+0 0 50px #00ff55;
+
 }
 
 .wheelWrap{
 
 position:relative;
 
-width:320px;
-height:320px;
+width:330px;
+height:330px;
 
-margin-top:20px;
+margin-top:10px;
 
 display:flex;
 justify-content:center;
@@ -70,22 +95,24 @@ align-items:center;
 
 #wheel{
 
-width:320px;
-height:320px;
+width:100%;
+height:100%;
 
 border-radius:50%;
 
-border:12px solid gold;
-
-box-shadow:
-0 0 30px gold,
-0 0 80px gold;
-
-position:relative;
+border:14px solid gold;
 
 overflow:hidden;
 
-transition:transform 6s cubic-bezier(.17,.67,.2,1);
+position:relative;
+
+transition:
+transform 7s cubic-bezier(.15,.8,.2,1);
+
+box-shadow:
+0 0 20px gold,
+0 0 50px gold,
+0 0 100px gold;
 
 background:
 conic-gradient(
@@ -134,8 +161,8 @@ black 349.2deg 360deg
 
 position:absolute;
 
-width:90px;
-height:90px;
+width:95px;
+height:95px;
 
 border-radius:50%;
 
@@ -144,10 +171,11 @@ radial-gradient(circle,#aa0000,#550000);
 
 border:8px solid gold;
 
-z-index:10;
+z-index:20;
 
 box-shadow:
-0 0 25px gold;
+0 0 20px gold,
+0 0 50px gold;
 
 }
 
@@ -165,11 +193,12 @@ height:0;
 
 border-left:28px solid transparent;
 border-right:28px solid transparent;
-border-bottom:55px solid yellow;
+border-bottom:60px solid yellow;
 
-z-index:20;
+z-index:100;
 
-filter:drop-shadow(0 0 15px yellow);
+filter:
+drop-shadow(0 0 15px yellow);
 
 }
 
@@ -180,15 +209,16 @@ position:absolute;
 left:50%;
 top:50%;
 
-font-size:15px;
+font-size:16px;
 font-weight:bold;
 
 color:white;
 
-transform-origin:0 -130px;
+transform-origin:0 -135px;
 
 text-shadow:
-0 0 5px black;
+0 0 5px black,
+0 0 10px black;
 
 }
 
@@ -213,21 +243,43 @@ z-index:50;
 
 box-shadow:
 0 0 20px white,
-0 0 40px white;
+0 0 40px white,
+0 0 80px white;
 
-animation:ballMove 2s linear infinite;
+animation:ballSpin 1.2s linear infinite;
 
 }
 
-@keyframes ballMove{
+@keyframes ballSpin{
 
 0%{
-transform:rotate(0deg) translateY(-150px);
+transform:
+rotate(0deg)
+translateY(-150px);
 }
 
 100%{
-transform:rotate(360deg) translateY(-150px);
+transform:
+rotate(360deg)
+translateY(-150px);
 }
+
+}
+
+.resultBox{
+
+margin-top:15px;
+
+font-size:42px;
+font-weight:bold;
+
+color:gold;
+
+text-shadow:
+0 0 10px gold,
+0 0 30px gold;
+
+height:50px;
 
 }
 
@@ -240,7 +292,7 @@ grid-template-columns:1fr 1fr;
 
 gap:10px;
 
-margin-top:20px;
+margin-top:15px;
 
 }
 
@@ -262,7 +314,8 @@ position:relative;
 border:3px solid rgba(255,255,255,.2);
 
 box-shadow:
-0 0 15px rgba(255,255,255,.3);
+0 0 15px rgba(255,255,255,.3),
+inset 0 0 15px rgba(255,255,255,.2);
 
 }
 
@@ -279,9 +332,9 @@ padding:4px 12px;
 
 border-radius:12px;
 
-color:yellow;
-
 font-size:18px;
+
+color:yellow;
 
 }
 
@@ -323,7 +376,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 
-font-size:22px;
+font-size:24px;
 font-weight:bold;
 
 color:black;
@@ -337,7 +390,8 @@ border:6px solid #ddd;
 border:6px solid gold;
 
 box-shadow:
-0 0 20px gold;
+0 0 20px gold,
+0 0 50px gold;
 
 }
 
@@ -345,9 +399,12 @@ box-shadow:
 
 margin-top:15px;
 
-font-size:32px;
+font-size:36px;
 
 color:white;
+
+text-shadow:
+0 0 10px white;
 
 }
 
@@ -370,13 +427,15 @@ color:white;
 
 <div class="pointer"></div>
 
-<div class="ball"></div>
+<div class="ball" id="ball"></div>
 
 <div id="wheel"></div>
 
 <div class="center"></div>
 
 </div>
+
+<div class="resultBox" id="result"></div>
 
 <div class="bets">
 
@@ -449,7 +508,7 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-130px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-135px) rotate(90deg)";
 
 wheel.appendChild(div);
 
@@ -481,9 +540,35 @@ spinning=true;
 
 document.getElementById("timer").innerHTML="SPIN";
 
-let rotate=7200+Math.random()*360;
+const randomIndex=
+Math.floor(Math.random()*numbers.length);
 
-wheel.style.transform="rotate("+rotate+"deg)";
+const result=
+numbers[randomIndex];
+
+const degree=
+(randomIndex*9.73);
+
+const finalRotate=
+7200-degree;
+
+wheel.style.transform=
+"rotate("+finalRotate+"deg)";
+
+const ball=
+document.getElementById("ball");
+
+ball.style.animation=
+"ballSpin .4s linear infinite";
+
+setTimeout(()=>{
+
+ball.style.animation="none";
+
+document.getElementById("result").innerHTML=
+"WINNER : "+result;
+
+},6500);
 
 setTimeout(()=>{
 
@@ -491,7 +576,10 @@ timer=10;
 
 spinning=false;
 
-},6000);
+ball.style.animation=
+"ballSpin 1.2s linear infinite";
+
+},7000);
 
 }
 
