@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Lucky Wheel Pro</title>
+<title>لعبة الحظ</title>
 
 <style>
 
@@ -12,63 +11,42 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Tahoma;
+font-family:Arial;
 }
 
 body{
-background:#14002c;
-overflow:hidden;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
+background:radial-gradient(circle,#240046,#000);
 color:white;
-}
-
-body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background:
-radial-gradient(circle,#37006d,#120022);
-z-index:-2;
-}
-
-.container{
-width:100%;
-max-width:430px;
 text-align:center;
-padding-top:10px;
+overflow-x:hidden;
 }
 
 .balance{
-font-size:42px;
-font-weight:bold;
+font-size:70px;
 color:gold;
+font-weight:bold;
+margin-top:20px;
 text-shadow:0 0 20px gold;
-margin-bottom:10px;
-}
-
-.wheel-box{
-position:relative;
-width:340px;
-height:340px;
-margin:auto;
 }
 
 .pointer{
-position:absolute;
-top:-10px;
-left:50%;
-transform:translateX(-50%);
 width:0;
 height:0;
-border-left:25px solid transparent;
-border-right:25px solid transparent;
-border-top:55px solid gold;
-z-index:100;
-filter:drop-shadow(0 0 12px yellow);
+border-left:35px solid transparent;
+border-right:35px solid transparent;
+border-top:70px solid yellow;
+margin:auto;
+position:relative;
+z-index:10;
+top:40px;
+filter:drop-shadow(0 0 20px yellow);
+}
+
+.wheel-container{
+position:relative;
+width:380px;
+height:380px;
+margin:20px auto;
 }
 
 #wheel{
@@ -76,196 +54,160 @@ width:100%;
 height:100%;
 border-radius:50%;
 border:12px solid gold;
-background:#111;
-transition:transform 6s cubic-bezier(.17,.67,.12,.99);
+overflow:hidden;
+position:relative;
+transition:transform 5s cubic-bezier(0.17,0.67,0.12,0.99);
 box-shadow:
 0 0 40px gold,
-0 0 100px rgba(255,215,0,.6);
+0 0 80px yellow;
+background:#0f6fff;
 }
 
-.center{
+.slice{
 position:absolute;
-width:100px;
-height:100px;
-background:radial-gradient(circle,#ff0000,#5f0000);
-border:8px solid gold;
+width:50%;
+height:50%;
+left:50%;
+top:50%;
+transform-origin:0% 0%;
+clip-path:polygon(0 0,100% 0,0 100%);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:45px;
+font-weight:bold;
+color:white;
+}
+
+.center-circle{
+position:absolute;
+width:130px;
+height:130px;
+background:radial-gradient(circle,#ff0000,#5a0000);
 border-radius:50%;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
+border:8px solid gold;
+z-index:5;
 display:flex;
-justify-content:center;
 align-items:center;
-font-size:45px;
+justify-content:center;
+font-size:70px;
 font-weight:bold;
-box-shadow:0 0 25px gold;
+box-shadow:0 0 40px gold;
 }
 
-.history{
+.bet-area{
 display:flex;
 justify-content:center;
-gap:10px;
-margin-top:20px;
+gap:20px;
+margin-top:30px;
+flex-wrap:wrap;
 }
 
-.history div{
-width:45px;
-height:45px;
-background:#70008f;
-border:2px solid gold;
-border-radius:10px;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:25px;
-box-shadow:0 0 10px rgba(255,215,0,.4);
-}
-
-.bets{
-margin-top:18px;
-display:flex;
-justify-content:center;
-gap:15px;
-}
-
-.bet{
-width:105px;
-height:115px;
-background:linear-gradient(#a000c8,#5f006f);
-border:4px solid gold;
-border-radius:18px;
+.bet-box{
+width:140px;
+height:160px;
+background:linear-gradient(#d000ff,#5a0070);
+border-radius:25px;
+border:5px solid gold;
 display:flex;
 flex-direction:column;
-justify-content:center;
 align-items:center;
-box-shadow:0 0 18px rgba(255,215,0,.5);
-transition:.2s;
+justify-content:center;
+font-size:55px;
+font-weight:bold;
+box-shadow:0 0 25px #ff00ff;
 }
 
-.bet.active{
-transform:scale(1.08);
+.bet-box span{
+font-size:55px;
+color:gold;
+margin-top:10px;
+}
+
+.amounts{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:30px;
+}
+
+.amount{
+width:100px;
+height:100px;
+border-radius:50%;
+border:none;
+font-size:40px;
+font-weight:bold;
+background:white;
+box-shadow:0 0 20px white;
+}
+
+.active{
+border:8px solid gold;
 box-shadow:0 0 30px gold;
 }
 
-.bet span{
-font-size:50px;
-}
-
-.bet b{
-font-size:40px;
-color:gold;
-}
-
-.bet p{
-font-size:24px;
-margin-top:5px;
-}
-
-.chips{
-display:flex;
-justify-content:center;
-gap:15px;
-margin-top:25px;
-}
-
-.chip{
-width:72px;
-height:72px;
-border-radius:50%;
-background:white;
-border:7px solid #ddd;
-display:flex;
-justify-content:center;
-align-items:center;
-font-weight:bold;
-font-size:24px;
-color:black;
-box-shadow:0 0 15px white;
-transition:.2s;
-}
-
-.chip.active{
-transform:scale(1.15);
-box-shadow:0 0 25px gold;
-border-color:gold;
-}
-
-.spin-btn{
-margin-top:25px;
-width:240px;
-height:65px;
+#spinBtn{
+width:320px;
+height:100px;
+margin-top:40px;
 border:none;
-border-radius:18px;
+border-radius:25px;
+font-size:55px;
+font-weight:bold;
 background:linear-gradient(#666,#222);
 color:white;
-font-size:32px;
-font-weight:bold;
-box-shadow:0 0 20px rgba(255,255,255,.5);
+box-shadow:0 0 30px black;
 }
 
-.result-popup{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.75);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:999;
+.result{
+margin-top:30px;
+font-size:55px;
+color:gold;
+text-shadow:0 0 20px gold;
+min-height:80px;
 }
 
 .popup{
-width:320px;
-background:linear-gradient(#c00000,#500000);
-border:5px solid gold;
-border-radius:20px;
-padding:25px;
-box-shadow:0 0 35px gold;
-animation:pop .4s;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#5a0000;
+padding:40px;
+border-radius:30px;
+border:6px solid gold;
+z-index:999;
+box-shadow:0 0 50px gold;
+animation:pop .4s ease;
+}
+
+.popup h1{
+font-size:60px;
+color:gold;
+}
+
+.popup .emoji{
+font-size:120px;
+margin:20px 0;
+}
+
+.popup h2{
+font-size:60px;
 }
 
 @keyframes pop{
 from{
-transform:scale(.5);
+transform:translate(-50%,-50%) scale(.2);
 opacity:0;
 }
 to{
-transform:scale(1);
+transform:translate(-50%,-50%) scale(1);
 opacity:1;
 }
-}
-
-.popup h1{
-font-size:42px;
-color:gold;
-margin-bottom:15px;
-}
-
-.popup .emoji{
-font-size:90px;
-margin:20px 0;
-}
-
-.popup button{
-margin-top:15px;
-width:180px;
-height:55px;
-border:none;
-border-radius:15px;
-background:gold;
-font-size:28px;
-font-weight:bold;
-}
-
-.timer{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:55px;
-font-weight:bold;
-color:white;
-text-shadow:0 0 15px white;
-z-index:200;
 }
 
 </style>
@@ -273,269 +215,169 @@ z-index:200;
 
 <body>
 
-<div class="container">
-
 <div class="balance" id="balance">$5000</div>
-
-<div class="wheel-box">
 
 <div class="pointer"></div>
 
-<canvas id="wheel" width="340" height="340"></canvas>
+<div class="wheel-container">
 
-<div class="center"></div>
+<div id="wheel">
 
-<div class="timer" id="timer">5</div>
-
-</div>
-
-<div class="history" id="history">
-<div>🍉</div>
-<div>🍎</div>
-<div>7️⃣</div>
-</div>
-
-<div class="bets">
-
-<div class="bet" onclick="selectBet('🍉',this)">
-<span>🍉</span>
-<b>x2</b>
-<p id="bet1">0</p>
-</div>
-
-<div class="bet" onclick="selectBet('7️⃣',this)">
-<span>7️⃣</span>
-<b>x8</b>
-<p id="bet2">0</p>
-</div>
-
-<div class="bet" onclick="selectBet('🍎',this)">
-<span>🍎</span>
-<b>x2</b>
-<p id="bet3">0</p>
-</div>
+<div class="slice" style="transform:rotate(0deg);background:#1e88ff;">🍎</div>
+<div class="slice" style="transform:rotate(45deg);background:#1e88ff;">🍉</div>
+<div class="slice" style="transform:rotate(90deg);background:#ff00cc;">7️⃣</div>
+<div class="slice" style="transform:rotate(135deg);background:#1e88ff;">🍎</div>
+<div class="slice" style="transform:rotate(180deg);background:#1e88ff;">🍉</div>
+<div class="slice" style="transform:rotate(225deg);background:#1e88ff;">🍎</div>
+<div class="slice" style="transform:rotate(270deg);background:#1e88ff;">🍉</div>
+<div class="slice" style="transform:rotate(315deg);background:#1e88ff;">🍎</div>
 
 </div>
 
-<div class="chips">
-
-<div class="chip active" onclick="selectChip(100,this)">100</div>
-<div class="chip" onclick="selectChip(1000,this)">1K</div>
-<div class="chip" onclick="selectChip(10000,this)">10K</div>
+<div class="center-circle" id="timer">5</div>
 
 </div>
 
-<button class="spin-btn" onclick="spin()">SPIN</button>
+<div class="bet-area">
+
+<div class="bet-box">
+🍉
+<span>x2</span>
+</div>
+
+<div class="bet-box">
+7️⃣
+<span>x8</span>
+</div>
+
+<div class="bet-box">
+🍎
+<span>x2</span>
+</div>
 
 </div>
 
-<div class="result-popup" id="popup">
+<div class="amounts">
 
-<div class="popup">
-
-<h1>حظ سعيد!</h1>
-
-<div class="emoji" id="popupEmoji">🍉</div>
-
-<h2 id="popupText">ربحت</h2>
-
-<button onclick="closePopup()">إغلاق</button>
+<button class="amount">100</button>
+<button class="amount">1K</button>
+<button class="amount active">10K</button>
 
 </div>
 
-</div>
+<button id="spinBtn">SPIN</button>
+
+<div class="result" id="result">🍎 : النتيجة</div>
 
 <script>
 
-const canvas=document.getElementById("wheel");
-const ctx=canvas.getContext("2d");
+let spinning = false;
+let balance = 5000;
 
-const sections=[
-"🍉","🍎","🍉","7️⃣",
-"🍎","🍉","🍎","🍉"
+const wheel = document.getElementById("wheel");
+const spinBtn = document.getElementById("spinBtn");
+const resultText = document.getElementById("result");
+const balanceText = document.getElementById("balance");
+const timer = document.getElementById("timer");
+
+const items = [
+"🍎",
+"🍉",
+"7️⃣",
+"🍎",
+"🍉",
+"🍎",
+"🍉",
+"🍎"
 ];
 
-const colors=[
-"#0080ff",
-"#0066cc",
-"#0080ff",
-"#ff00cc",
-"#0066cc",
-"#0080ff",
-"#0066cc",
-"#0080ff"
-];
+const rewards = {
+"🍎":2,
+"🍉":2,
+"7️⃣":8
+};
 
-const arc=Math.PI*2/sections.length;
+function sound(type){
 
-function drawWheel(){
-
-for(let i=0;i<sections.length;i++){
-
-ctx.beginPath();
-
-ctx.fillStyle=colors[i];
-
-ctx.moveTo(170,170);
-
-ctx.arc(
-170,
-170,
-160,
-i*arc,
-(i+1)*arc
+const audio = new Audio(
+type=="win"
+?
+"https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3"
+:
+"https://assets.mixkit.co/sfx/preview/mixkit-fast-small-sweep-transition-166.mp3"
 );
 
-ctx.fill();
-
-ctx.lineWidth=4;
-ctx.strokeStyle="gold";
-ctx.stroke();
-
-ctx.save();
-
-ctx.translate(170,170);
-
-ctx.rotate(i*arc+arc/2);
-
-ctx.textAlign="center";
-
-ctx.font="45px Arial";
-
-ctx.fillText(sections[i],110,15);
-
-ctx.restore();
+audio.play();
 
 }
 
-}
+spinBtn.onclick = ()=>{
 
-drawWheel();
+if(spinning) return;
 
-let selectedChip=100;
-let selectedBet=null;
-let balance=5000;
-let deg=0;
+spinning = true;
 
-function selectChip(value,el){
+sound("spin");
 
-selectedChip=value;
+let count = 5;
 
-document.querySelectorAll(".chip")
-.forEach(c=>c.classList.remove("active"));
+timer.innerText = count;
 
-el.classList.add("active");
-
-}
-
-function selectBet(type,el){
-
-if(balance<selectedChip) return;
-
-selectedBet=type;
-
-balance-=selectedChip;
-
-document.getElementById("balance")
-.innerHTML="$"+balance;
-
-document.querySelectorAll(".bet")
-.forEach(b=>b.classList.remove("active"));
-
-el.classList.add("active");
-
-}
-
-function spin(){
-
-if(!selectedBet){
-alert("اختر رهان");
-return;
-}
-
-const wheel=document.getElementById("wheel");
-
-const random=Math.floor(Math.random()*360);
-
-deg+=3600+random;
-
-wheel.style.transform=`rotate(${deg}deg)`;
-
-let count=5;
-
-const timer=document.getElementById("timer");
-
-timer.innerHTML=count;
-
-const t=setInterval(()=>{
+const timerInt = setInterval(()=>{
 
 count--;
 
-timer.innerHTML=count;
+timer.innerText = count;
 
 if(count<=0){
-
-clearInterval(t);
-
-finish();
-
+clearInterval(timerInt);
 }
 
 },1000);
 
-}
+const randomDeg = 3000 + Math.floor(Math.random()*360);
 
-function finish(){
+wheel.style.transform = `rotate(${randomDeg}deg)`;
 
-const result=
-sections[Math.floor(Math.random()*sections.length)];
+setTimeout(()=>{
 
-document.getElementById("popupEmoji")
-.innerHTML=result;
+const index = Math.floor(Math.random()*items.length);
 
-let text="خسرت";
+const result = items[index];
 
-if(result===selectedBet){
+const reward = rewards[result];
 
-if(result==="7️⃣"){
+balance += reward * 100;
 
-balance+=selectedChip*8;
+balanceText.innerText = "$"+balance;
 
-}else{
+resultText.innerHTML = result + " : النتيجة";
 
-balance+=selectedChip*2;
+sound("win");
 
-}
+navigator.vibrate([200,100,200]);
 
-text="ربحت 🎉";
+const popup = document.createElement("div");
 
-}
+popup.className = "popup";
 
-document.getElementById("balance")
-.innerHTML="$"+balance;
+popup.innerHTML = `
+<h1>🎉 فوز</h1>
+<div class="emoji">${result}</div>
+<h2>X${reward}</h2>
+`;
 
-document.getElementById("popupText")
-.innerHTML=text;
+document.body.appendChild(popup);
 
-document.getElementById("popup")
-.style.display="flex";
+setTimeout(()=>{
+popup.remove();
+},3000);
 
-const history=document.getElementById("history");
+spinning = false;
 
-history.innerHTML=
-`<div>${result}</div>`+history.innerHTML;
+timer.innerText = "5";
 
-selectedBet=null;
-
-document.querySelectorAll(".bet")
-.forEach(b=>b.classList.remove("active"));
-
-}
-
-function closePopup(){
-
-document.getElementById("popup")
-.style.display="none";
+},5000);
 
 }
 
