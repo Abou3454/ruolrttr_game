@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>لعبة الروليت الاحترافية</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كازينو روليت</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:tahoma;
-}
 
 body{
+margin:0;
 background:#050505;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+font-family:tahoma;
 color:white;
-flex-direction:column;
+text-align:center;
+overflow-x:hidden;
 }
 
-.container{
+h1{
+margin-top:20px;
+font-size:42px;
+color:white;
+text-shadow:0 0 20px red;
+}
+
+.balance{
+font-size:30px;
+margin:15px;
+color:gold;
+}
+
+.wheel-container{
 position:relative;
-width:360px;
-height:360px;
-display:flex;
-justify-content:center;
-align-items:center;
+margin:auto;
+width:320px;
+height:320px;
 }
 
 #wheel{
@@ -38,200 +41,242 @@ width:320px;
 height:320px;
 border-radius:50%;
 border:10px solid gold;
-box-shadow:
-0 0 25px gold,
-0 0 60px red,
-0 0 120px orange;
-transition:transform 6s cubic-bezier(.17,.67,.2,1);
+transition:transform 5s cubic-bezier(.17,.67,.2,1);
 background:
 conic-gradient(
-#e60000 0deg 20deg,
-#111 20deg 40deg,
-#e60000 40deg 60deg,
-#111 60deg 80deg,
-#e60000 80deg 100deg,
-#111 100deg 120deg,
-#e60000 120deg 140deg,
-#111 140deg 160deg,
-#e60000 160deg 180deg,
-#111 180deg 200deg,
-#e60000 200deg 220deg,
-#111 220deg 240deg,
-#e60000 240deg 260deg,
-#111 260deg 280deg,
-#e60000 280deg 300deg,
-#111 300deg 320deg,
-#e60000 320deg 340deg,
-#111 340deg 360deg
+red 0deg 20deg,
+black 20deg 40deg,
+red 40deg 60deg,
+black 60deg 80deg,
+red 80deg 100deg,
+black 100deg 120deg,
+red 120deg 140deg,
+black 140deg 160deg,
+red 160deg 180deg,
+black 180deg 200deg,
+red 200deg 220deg,
+black 220deg 240deg,
+red 240deg 260deg,
+black 260deg 280deg,
+red 280deg 300deg,
+black 300deg 320deg,
+red 320deg 340deg,
+black 340deg 360deg
 );
-position:relative;
-}
-
-.number{
-position:absolute;
-width:100%;
-height:100%;
-left:0;
-top:0;
-}
-
-.number span{
-position:absolute;
-left:50%;
-top:50%;
-transform-origin:0 -135px;
-font-size:18px;
-font-weight:bold;
-color:white;
-text-shadow:0 0 10px #fff;
-}
-
-.ball{
-position:absolute;
-width:22px;
-height:22px;
-background:white;
-border-radius:50%;
-top:20px;
-left:50%;
-transform:translateX(-50%);
 box-shadow:
-0 0 15px white,
-0 0 30px cyan;
-z-index:10;
+0 0 20px gold,
+0 0 60px orange;
 }
 
 .pointer{
 position:absolute;
-top:-18px;
+top:-20px;
+left:50%;
+transform:translateX(-50%);
 width:0;
 height:0;
 border-left:18px solid transparent;
 border-right:18px solid transparent;
-border-bottom:35px solid gold;
-z-index:20;
-filter:drop-shadow(0 0 10px gold);
+border-bottom:35px solid yellow;
+}
+
+.controls{
+margin-top:25px;
+}
+
+input{
+padding:12px;
+font-size:22px;
+border:none;
+border-radius:10px;
+margin:10px;
+width:120px;
+text-align:center;
 }
 
 button{
-margin-top:40px;
-padding:18px 55px;
+padding:15px 45px;
 font-size:28px;
-border:none;
-border-radius:15px;
 background:red;
 color:white;
+border:none;
+border-radius:15px;
 cursor:pointer;
-box-shadow:
-0 0 20px red,
-0 0 50px crimson;
-transition:.3s;
+box-shadow:0 0 20px red;
 }
 
 button:hover{
-transform:scale(1.08);
+transform:scale(1.05);
 }
 
 .result{
-margin-top:30px;
-font-size:48px;
-font-weight:bold;
+margin-top:25px;
+font-size:36px;
 color:yellow;
-text-shadow:
-0 0 15px yellow,
-0 0 30px orange;
+text-shadow:0 0 20px yellow;
 }
 
-.title{
-font-size:42px;
-margin-bottom:25px;
-text-shadow:
-0 0 10px white,
-0 0 25px red;
+.numbers{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:8px;
+max-width:420px;
+margin:30px auto;
+padding:10px;
 }
+
+.num{
+padding:12px;
+border-radius:8px;
+font-weight:bold;
+font-size:20px;
+}
+
+.red{
+background:red;
+}
+
+.black{
+background:black;
+border:1px solid #555;
+}
+
+.selected{
+outline:4px solid gold;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="title">🎰 لعبة الروليت الاحترافية</div>
+<h1>🎰 كازينو الروليت</h1>
 
-<div class="container">
+<div class="balance">
+الرصيد: $<span id="balance">1000</span>
+</div>
+
+<div class="wheel-container">
 
 <div class="pointer"></div>
-
-<div class="ball" id="ball"></div>
 
 <div id="wheel"></div>
 
 </div>
 
-<button onclick="spin()">ابدأ</button>
+<div class="controls">
 
-<div class="result" id="result">؟</div>
+<input type="number" id="betAmount" placeholder="مبلغ الرهان">
 
-<audio id="sound">
-<source src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-random-wheel-1930.mp3">
-</audio>
+<input type="number" id="betNumber" placeholder="الرقم">
+
+<br><br>
+
+<button onclick="spin()">ابدأ الرهان</button>
+
+</div>
+
+<div class="result" id="result"></div>
+
+<div class="numbers" id="numbers"></div>
 
 <script>
 
-const wheel = document.getElementById("wheel");
-const result = document.getElementById("result");
-const sound = document.getElementById("sound");
+const wheel=document.getElementById("wheel");
+const result=document.getElementById("result");
+const balanceEl=document.getElementById("balance");
+const numbersDiv=document.getElementById("numbers");
 
-const numbers = [
+let balance=1000;
+
+const rouletteNumbers=[
 0,32,15,19,4,21,2,25,17,
 34,6,27,13,36,11,30,8,23,
 10,5,24,16,33,1,20,14,31,
 9,22,18,29,7,28,12,35,3,26
 ];
 
-for(let i=0;i<numbers.length;i++){
+rouletteNumbers.forEach((n,i)=>{
 
-const div = document.createElement("div");
-div.className = "number";
+const div=document.createElement("div");
 
-const span = document.createElement("span");
+div.className="num "+(i%2==0?"red":"black");
 
-span.innerHTML = numbers[i];
+div.innerHTML=n;
 
-span.style.transform =
-`rotate(${i*9.73}deg)`;
+numbersDiv.appendChild(div);
 
-div.appendChild(span);
-
-wheel.appendChild(div);
-
-}
-
-let rotating = false;
+});
 
 function spin(){
 
-if(rotating) return;
+const bet=
+parseInt(document.getElementById("betAmount").value);
 
-rotating = true;
+const chosen=
+parseInt(document.getElementById("betNumber").value);
 
-sound.play();
+if(isNaN(bet)||bet<=0){
 
-const randomIndex =
-Math.floor(Math.random()*numbers.length);
+alert("ضع مبلغ صحيح");
 
-const degree =
-3600 + (randomIndex * 9.73);
+return;
 
-wheel.style.transform =
-`rotate(-${degree}deg)`;
+}
+
+if(bet>balance){
+
+alert("رصيدك غير كافي");
+
+return;
+
+}
+
+if(isNaN(chosen)||chosen<0||chosen>36){
+
+alert("اختر رقم من 0 الى 36");
+
+return;
+
+}
+
+balance-=bet;
+
+balanceEl.innerHTML=balance;
+
+const randomIndex=
+Math.floor(Math.random()*rouletteNumbers.length);
+
+const winning=
+rouletteNumbers[randomIndex];
+
+const deg=
+3600+(randomIndex*9.73);
+
+wheel.style.transform=
+`rotate(-${deg}deg)`;
 
 setTimeout(()=>{
 
-result.innerHTML =
-"الرقم: " + numbers[randomIndex];
+if(chosen===winning){
 
-rotating = false;
+const win=bet*35;
 
-},6000);
+balance+=win;
+
+result.innerHTML=
+"🎉 ربحت $" + win + " الرقم " + winning;
+
+}else{
+
+result.innerHTML=
+"❌ خسرت - الرقم " + winning;
+
+}
+
+balanceEl.innerHTML=balance;
+
+},5000);
 
 }
 
