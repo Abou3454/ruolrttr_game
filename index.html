@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Casino Pro</title>
+<title>Roulette Casino</title>
 
 <style>
 
@@ -15,7 +15,10 @@ font-family:tahoma;
 }
 
 body{
-background:#021002;
+background:
+radial-gradient(circle at center,
+#0f4d00 0%,
+#001a00 100%);
 overflow:hidden;
 height:100vh;
 color:white;
@@ -28,11 +31,7 @@ padding:10px;
 display:flex;
 flex-direction:column;
 align-items:center;
-background:
-radial-gradient(circle at center,#066b12 0%,#021002 100%);
 }
-
-/* TOP */
 
 .top{
 width:100%;
@@ -43,211 +42,170 @@ margin-bottom:10px;
 }
 
 #balance{
-font-size:30px;
+font-size:34px;
 font-weight:bold;
 color:gold;
 text-shadow:
-0 0 10px gold,
-0 0 25px gold;
+0 0 15px gold,
+0 0 35px gold;
 }
 
 #timer{
-font-size:80px;
+font-size:90px;
 font-weight:bold;
 color:#00ff55;
 text-shadow:
-0 0 15px #00ff55,
-0 0 35px #00ff55;
+0 0 20px #00ff55,
+0 0 50px #00ff55;
 }
-
-/* HISTORY */
 
 .history{
 display:flex;
-gap:6px;
+gap:8px;
 margin-bottom:10px;
 }
 
 .history div{
-width:34px;
-height:34px;
+width:38px;
+height:38px;
 border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:15px;
 font-weight:bold;
-color:white;
+font-size:17px;
+box-shadow:0 0 10px rgba(255,255,255,0.4);
 }
 
-.red{
-background:#d90000;
-}
-
-.black{
-background:#111;
-}
-
-.green{
-background:#00aa33;
-}
-
-/* WHEEL AREA */
+.red{background:red;}
+.black{background:black;}
+.green{background:green;}
 
 .wheelWrap{
 position:relative;
-width:340px;
-height:340px;
+width:520px;
+height:520px;
 display:flex;
 justify-content:center;
 align-items:center;
-margin-bottom:15px;
+margin-top:-20px;
 }
-
-/* OUTER CASINO */
-
-.outer{
-position:absolute;
-width:340px;
-height:340px;
-border-radius:50%;
-background:
-radial-gradient(circle,#8b0000 0%,#300000 100%);
-border:12px solid gold;
-box-shadow:
-0 0 20px gold,
-0 0 60px gold;
-}
-
-/* POINTER */
 
 .pointer{
 position:absolute;
-top:-6px;
+top:10px;
 left:50%;
 transform:translateX(-50%);
 width:0;
 height:0;
-border-left:22px solid transparent;
-border-right:22px solid transparent;
-border-top:50px solid gold;
+border-left:35px solid transparent;
+border-right:35px solid transparent;
+border-bottom:70px solid yellow;
 z-index:200;
-filter:drop-shadow(0 0 15px gold);
+filter:drop-shadow(0 0 25px yellow);
 }
-
-/* WHEEL */
 
 #wheel{
-position:absolute;
-width:280px;
-height:280px;
+width:520px;
+height:520px;
 border-radius:50%;
+border:20px solid gold;
+box-shadow:
+0 0 40px gold,
+0 0 80px rgba(255,215,0,0.7);
+transition:transform 5s cubic-bezier(.17,.67,.2,1);
+position:relative;
 overflow:hidden;
-transition:
-transform 6s cubic-bezier(.17,.67,.2,1);
 background:
 conic-gradient(
-#00aa33 0deg 9.7deg,
-#e10000 9.7deg 19.4deg,
-#111 19.4deg 29.1deg,
-#e10000 29.1deg 38.8deg,
-#111 38.8deg 48.5deg,
-#e10000 48.5deg 58.2deg,
-#111 58.2deg 67.9deg,
-#e10000 67.9deg 77.6deg,
-#111 77.6deg 87.3deg,
-#e10000 87.3deg 97deg,
-#111 97deg 106.7deg,
-#e10000 106.7deg 116.4deg,
-#111 116.4deg 126.1deg,
-#e10000 126.1deg 135.8deg,
-#111 135.8deg 145.5deg,
-#e10000 145.5deg 155.2deg,
-#111 155.2deg 164.9deg,
-#e10000 164.9deg 174.6deg,
-#111 174.6deg 184.3deg,
-#e10000 184.3deg 194deg,
-#111 194deg 203.7deg,
-#e10000 203.7deg 213.4deg,
-#111 213.4deg 223.1deg,
-#e10000 223.1deg 232.8deg,
-#111 232.8deg 242.5deg,
-#e10000 242.5deg 252.2deg,
-#111 252.2deg 261.9deg,
-#e10000 261.9deg 271.6deg,
-#111 271.6deg 281.3deg,
-#e10000 281.3deg 291deg,
-#111 291deg 300.7deg,
-#e10000 300.7deg 310.4deg,
-#111 310.4deg 320.1deg,
-#e10000 320.1deg 329.8deg,
-#111 329.8deg 339.5deg,
-#e10000 339.5deg 349.2deg,
-#111 349.2deg 360deg
+green 0deg 9.7deg,
+red 9.7deg 19.4deg,
+black 19.4deg 29.1deg,
+red 29.1deg 38.8deg,
+black 38.8deg 48.5deg,
+red 48.5deg 58.2deg,
+black 58.2deg 67.9deg,
+red 67.9deg 77.6deg,
+black 77.6deg 87.3deg,
+red 87.3deg 97deg,
+black 97deg 106.7deg,
+red 106.7deg 116.4deg,
+black 116.4deg 126.1deg,
+red 126.1deg 135.8deg,
+black 135.8deg 145.5deg,
+red 145.5deg 155.2deg,
+black 155.2deg 164.9deg,
+red 164.9deg 174.6deg,
+black 174.6deg 184.3deg,
+red 184.3deg 194deg,
+black 194deg 203.7deg,
+red 203.7deg 213.4deg,
+black 213.4deg 223.1deg,
+red 223.1deg 232.8deg,
+black 232.8deg 242.5deg,
+red 242.5deg 252.2deg,
+black 252.2deg 261.9deg,
+red 261.9deg 271.6deg,
+black 271.6deg 281.3deg,
+red 281.3deg 291deg,
+black 291deg 300.7deg,
+red 300.7deg 310.4deg,
+black 310.4deg 320.1deg,
+red 320.1deg 329.8deg,
+black 329.8deg 339.5deg,
+red 339.5deg 349.2deg,
+black 349.2deg 360deg
 );
-
-box-shadow:
-0 0 20px rgba(255,255,255,0.3);
 }
 
-/* GOLD RING */
-
-.ring{
+.centerCircle{
 position:absolute;
-width:298px;
-height:298px;
-border-radius:50%;
-border:8px solid gold;
-box-shadow:
-0 0 20px gold;
-}
-
-/* CENTER */
-
-.center{
-position:absolute;
-width:95px;
-height:95px;
+width:120px;
+height:120px;
 border-radius:50%;
 background:
-radial-gradient(circle,#a30000 0%,#2a0000 100%);
+radial-gradient(circle,
+#aa0000,
+#550000);
 border:10px solid gold;
 z-index:100;
 box-shadow:
 0 0 20px gold,
-0 0 25px gold inset;
+0 0 50px rgba(255,215,0,0.7);
 }
-
-/* NUMBERS */
 
 .number{
 position:absolute;
 left:50%;
 top:50%;
-transform-origin:0 -126px;
-font-size:18px;
+transform-origin:0 -210px;
+font-size:22px;
 font-weight:bold;
 color:white;
-text-shadow:
-0 0 5px black,
-0 0 10px black;
+text-shadow:0 0 10px black;
 }
-
-/* BALL */
 
 .ball{
 position:absolute;
-width:20px;
-height:20px;
-background:white;
+width:24px;
+height:24px;
 border-radius:50%;
-z-index:300;
-
+background:
+radial-gradient(circle at 30% 30%,
+#ffffff,
+#dddddd 40%,
+#999999 70%,
+#666666 100%);
+top:50%;
+left:50%;
+margin-left:-12px;
+margin-top:-12px;
+z-index:150;
 box-shadow:
-0 0 15px white,
-0 0 35px white;
+0 0 25px white,
+0 0 50px rgba(255,255,255,0.8);
 
-animation:ballMove 1.5s linear infinite;
+animation:ballMove 2s linear infinite;
 }
 
 @keyframes ballMove{
@@ -255,156 +213,133 @@ animation:ballMove 1.5s linear infinite;
 0%{
 transform:
 rotate(0deg)
-translateY(-160px);
+translateY(-240px)
+scale(1);
+}
+
+25%{
+transform:
+rotate(90deg)
+translateY(-225px)
+scale(0.95);
+}
+
+50%{
+transform:
+rotate(180deg)
+translateY(-210px)
+scale(0.9);
+}
+
+75%{
+transform:
+rotate(270deg)
+translateY(-225px)
+scale(0.95);
 }
 
 100%{
 transform:
 rotate(360deg)
-translateY(-160px);
+translateY(-240px)
+scale(1);
 }
 
 }
-
-/* WIN EFFECT */
-
-.winFlash{
-animation:flash 0.5s infinite;
-}
-
-@keyframes flash{
-
-0%{
-box-shadow:
-0 0 10px white,
-0 0 30px white;
-}
-
-100%{
-box-shadow:
-0 0 10px gold,
-0 0 50px gold;
-}
-
-}
-
-/* BETS */
 
 .bets{
 width:100%;
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:10px;
-margin-top:10px;
+gap:12px;
+margin-top:-40px;
 }
 
 .bet{
-height:90px;
-border-radius:20px;
+height:120px;
+border-radius:22px;
 display:flex;
-justify-content:center;
 align-items:center;
-font-size:24px;
+justify-content:center;
+font-size:28px;
 font-weight:bold;
 position:relative;
-
-border:3px solid rgba(255,255,255,0.2);
-
+border:4px solid rgba(255,255,255,0.2);
 box-shadow:
-0 0 15px rgba(255,255,255,0.2);
-}
-
-.bet.active{
-transform:scale(1.03);
-
-box-shadow:
-0 0 30px white;
+0 0 15px rgba(255,255,255,0.3);
 }
 
 .bet span{
 position:absolute;
-top:6px;
-left:6px;
-
+top:8px;
+left:8px;
 background:black;
-
-padding:2px 12px;
-
+padding:4px 12px;
 border-radius:15px;
-
-font-size:18px;
-
+font-size:20px;
 color:yellow;
 }
 
-/* COLORS */
-
 .blackbox{
-background:#111;
+background:#050505;
 }
 
 .redbox{
-background:#ff0044;
+background:#ff004c;
 }
 
 .greenbox{
-background:#00cc44;
+background:#00d93b;
 }
 
 .darkbox{
-background:#940030;
+background:#a00040;
 }
-
-/* CHIPS */
 
 .chips{
 display:flex;
 justify-content:center;
-gap:12px;
+gap:15px;
 margin-top:18px;
 }
 
 .chip{
-width:82px;
-height:82px;
+width:95px;
+height:95px;
 border-radius:50%;
-
 background:white;
-
 display:flex;
 justify-content:center;
 align-items:center;
-
-font-size:22px;
+font-size:30px;
 font-weight:bold;
 color:black;
-
-border:5px solid #ddd;
+border:7px solid #ddd;
+box-shadow:0 0 20px rgba(255,255,255,0.4);
 }
 
 .chip.active{
-border:5px solid gold;
-
+border:7px solid gold;
 box-shadow:
-0 0 25px gold;
+0 0 25px gold,
+0 0 50px rgba(255,215,0,0.8);
 }
-
-/* TEXT */
 
 #currentBet{
 margin-top:15px;
-font-size:34px;
+font-size:42px;
+color:white;
+text-shadow:0 0 15px white;
 }
 
 #result{
 margin-top:10px;
-font-size:34px;
+font-size:40px;
 font-weight:bold;
 color:gold;
-
 text-shadow:
-0 0 15px gold,
-0 0 30px gold;
+0 0 20px gold,
+0 0 40px gold;
 }
 
 </style>
@@ -415,59 +350,52 @@ text-shadow:
 <div class="game">
 
 <div class="top">
-
 <div id="balance">$5000</div>
-
 <div id="timer">10</div>
-
 </div>
 
 <div class="history" id="history"></div>
 
 <div class="wheelWrap">
 
-<div class="outer"></div>
-
 <div class="pointer"></div>
 
-<div class="ring"></div>
+<div class="ball" id="ball"></div>
 
 <div id="wheel"></div>
 
-<div class="center"></div>
-
-<div class="ball" id="ball"></div>
+<div class="centerCircle"></div>
 
 </div>
 
 <div class="bets">
 
-<div class="bet blackbox" onclick="placeBet('black',this)">
+<div class="bet blackbox" onclick="placeBet('black')">
 <span id="blackAmount">0</span>
 BLACK
 </div>
 
-<div class="bet redbox" onclick="placeBet('red',this)">
+<div class="bet redbox" onclick="placeBet('red')">
 <span id="redAmount">0</span>
 RED
 </div>
 
-<div class="bet darkbox" onclick="placeBet('even',this)">
+<div class="bet darkbox" onclick="placeBet('even')">
 <span id="evenAmount">0</span>
 EVEN
 </div>
 
-<div class="bet greenbox" onclick="placeBet('zero',this)">
+<div class="bet greenbox" onclick="placeBet('zero')">
 <span id="zeroAmount">0</span>
 0
 </div>
 
-<div class="bet darkbox" onclick="placeBet('high',this)">
+<div class="bet darkbox" onclick="placeBet('high')">
 <span id="highAmount">0</span>
 19-36
 </div>
 
-<div class="bet darkbox" onclick="placeBet('odd',this)">
+<div class="bet darkbox" onclick="placeBet('odd')">
 <span id="oddAmount">0</span>
 ODD
 </div>
@@ -512,18 +440,15 @@ zero:0
 };
 
 const numbers=[
-0,32,15,19,4,21,2,25,17,34,
-6,27,13,36,11,30,8,23,10,
-5,24,16,33,1,20,14,31,9,
-22,18,29,7,28,12,35,3,26
+0,32,15,19,4,21,2,25,17,34,6,27,13,36,
+11,30,8,23,10,5,24,16,33,1,20,14,31,
+9,22,18,29,7,28,12,35,3,26
 ];
 
 const redNums=[
-1,3,5,7,9,12,14,16,18,
-19,21,23,25,27,30,32,34,36
+1,3,5,7,9,12,14,16,18,19,
+21,23,25,27,30,32,34,36
 ];
-
-/* CREATE NUMBERS */
 
 function createNumbers(){
 
@@ -538,7 +463,7 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-126px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-210px) rotate(90deg)";
 
 wheel.appendChild(div);
 
@@ -548,16 +473,11 @@ wheel.appendChild(div);
 
 createNumbers();
 
-/* UPDATE BALANCE */
-
 function updateBalance(){
 
-document.getElementById("balance").innerHTML=
-"$"+balance;
+document.getElementById("balance").innerHTML="$"+balance;
 
 }
-
-/* SELECT CHIP */
 
 function selectChip(value,el){
 
@@ -571,17 +491,13 @@ el.classList.add("active");
 
 }
 
-/* TOTAL BET */
-
 function totalBet(){
 
 return Object.values(bets).reduce((a,b)=>a+b,0);
 
 }
 
-/* PLACE BET */
-
-function placeBet(type,el){
+function placeBet(type){
 
 if(spinning)return;
 
@@ -593,17 +509,12 @@ updateBalance();
 
 bets[type]+=selectedChip;
 
-document.getElementById(type+"Amount").innerHTML=
-bets[type];
+document.getElementById(type+"Amount").innerHTML=bets[type];
 
 document.getElementById("currentBet").innerHTML=
 "الرهان: $"+totalBet();
 
-el.classList.add("active");
-
 }
-
-/* START ROUND */
 
 function startRound(){
 
@@ -611,10 +522,7 @@ if(spinning)return;
 
 spinning=true;
 
-document.getElementById("timer").innerHTML="SPIN";
-
-let result=
-numbers[Math.floor(Math.random()*numbers.length)];
+let result=numbers[Math.floor(Math.random()*numbers.length)];
 
 let index=numbers.indexOf(result);
 
@@ -625,34 +533,13 @@ let finalRotate=3600-degree;
 document.getElementById("wheel").style.transform=
 "rotate("+finalRotate+"deg)";
 
-/* SLOW BALL */
-
-document.getElementById("ball").style.animation=
-"ballMove 0.7s linear infinite";
-
-setTimeout(()=>{
-
-document.getElementById("ball").style.animation=
-"ballMove 1.2s linear infinite";
-
-},2000);
-
-setTimeout(()=>{
-
-document.getElementById("ball").style.animation=
-"ballMove 2s linear infinite";
-
-},4000);
-
 setTimeout(()=>{
 
 finishRound(result);
 
-},6000);
+},5000);
 
 }
-
-/* FINISH */
 
 function finishRound(number){
 
@@ -680,14 +567,10 @@ balance+=win;
 
 updateBalance();
 
-/* RESULT COLOR */
-
 let color="black";
 
 if(number===0)color="green";
 else if(redNums.includes(number))color="red";
-
-/* HISTORY */
 
 let div=document.createElement("div");
 
@@ -703,28 +586,8 @@ document.getElementById("history").lastChild.remove();
 
 }
 
-/* RESULT */
-
 document.getElementById("result").innerHTML=
 (win>0 ? "WIN +$"+win : "LOSE")+" | "+number;
-
-/* WIN FLASH */
-
-if(win>0){
-
-document.getElementById("result")
-.classList.add("winFlash");
-
-setTimeout(()=>{
-
-document.getElementById("result")
-.classList.remove("winFlash");
-
-},3000);
-
-}
-
-/* RESET BETS */
 
 for(let key in bets){
 
@@ -734,23 +597,14 @@ document.getElementById(key+"Amount").innerHTML="0";
 
 }
 
-document.querySelectorAll(".bet").forEach(b=>{
-b.classList.remove("active");
-});
-
 document.getElementById("currentBet").innerHTML=
 "الرهان: $0";
-
-document.getElementById("ball").style.animation=
-"ballMove 1.5s linear infinite";
 
 spinning=false;
 
 timer=10;
 
 }
-
-/* TIMER */
 
 setInterval(()=>{
 
@@ -761,6 +615,8 @@ timer--;
 document.getElementById("timer").innerHTML=timer;
 
 if(timer<=0){
+
+document.getElementById("timer").innerHTML="SPIN";
 
 startRound();
 
