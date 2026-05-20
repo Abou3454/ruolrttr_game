@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Ultra Pro</title>
+
+<title>Casino Roulette</title>
 
 <style>
 
@@ -15,104 +16,86 @@ font-family:tahoma;
 }
 
 body{
-
 background:
-radial-gradient(circle,#006400 0%,#002200 45%,#000 100%);
-
-overflow:hidden;
+radial-gradient(circle,#0d5f00,#001800);
 height:100vh;
+overflow:hidden;
 color:white;
-
 }
 
 .game{
-
 width:100%;
 height:100vh;
-
 display:flex;
 flex-direction:column;
 align-items:center;
-
-padding:10px;
-
+padding-top:20px;
 }
 
+/* TOP */
+
 .top{
-
-width:100%;
-
+width:95%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-
-margin-bottom:10px;
-
+margin-bottom:20px;
 }
 
 #balance{
-
-font-size:34px;
+font-size:42px;
 font-weight:bold;
-
 color:gold;
-
 text-shadow:
 0 0 10px gold,
-0 0 25px gold,
-0 0 50px gold;
-
+0 0 30px gold;
 }
 
 #timer{
-
 font-size:90px;
 font-weight:bold;
-
 color:#00ff55;
-
 text-shadow:
-0 0 10px #00ff55,
-0 0 25px #00ff55,
-0 0 50px #00ff55;
-
+0 0 15px #00ff55,
+0 0 40px #00ff55;
 }
 
+/* WHEEL */
+
 .wheelWrap{
-
 position:relative;
-
-width:330px;
-height:330px;
-
-margin-top:10px;
-
+width:380px;
+height:380px;
 display:flex;
 justify-content:center;
 align-items:center;
-
 }
 
-#wheel{
+/* OUTER GOLD */
 
+.outerRing{
+position:absolute;
 width:100%;
 height:100%;
-
 border-radius:50%;
-
-border:14px solid gold;
-
-overflow:hidden;
-
-position:relative;
-
-transition:
-transform 7s cubic-bezier(.15,.8,.2,1);
-
+background:
+radial-gradient(circle,
+#ffe600,
+#c18a00);
 box-shadow:
-0 0 20px gold,
-0 0 50px gold,
-0 0 100px gold;
+0 0 30px gold,
+0 0 70px gold;
+}
+
+/* INNER */
+
+#wheel{
+position:absolute;
+width:330px;
+height:330px;
+border-radius:50%;
+overflow:hidden;
+transition:transform 5s cubic-bezier(.17,.67,.2,1);
 
 background:
 conic-gradient(
@@ -155,191 +138,128 @@ red 339.5deg 349.2deg,
 black 349.2deg 360deg
 );
 
+box-shadow:
+inset 0 0 30px black,
+0 0 20px rgba(0,0,0,.6);
 }
 
+/* CENTER */
+
 .center{
-
 position:absolute;
-
-width:95px;
-height:95px;
-
+width:110px;
+height:110px;
 border-radius:50%;
-
 background:
-radial-gradient(circle,#aa0000,#550000);
+radial-gradient(circle,
+#c40000,
+#5a0000);
 
-border:8px solid gold;
+border:10px solid gold;
 
 z-index:20;
 
 box-shadow:
 0 0 20px gold,
-0 0 50px gold;
-
+inset 0 0 30px black;
 }
 
+/* POINTER */
+
 .pointer{
-
 position:absolute;
-
-top:-5px;
-left:50%;
-
-transform:translateX(-50%);
-
+top:10px;
 width:0;
 height:0;
 
-border-left:28px solid transparent;
-border-right:28px solid transparent;
-border-bottom:60px solid yellow;
-
-z-index:100;
-
-filter:
-drop-shadow(0 0 15px yellow);
-
-}
-
-.number{
-
-position:absolute;
-
-left:50%;
-top:50%;
-
-font-size:16px;
-font-weight:bold;
-
-color:white;
-
-transform-origin:0 -135px;
-
-text-shadow:
-0 0 5px black,
-0 0 10px black;
-
-}
-
-.ball{
-
-position:absolute;
-
-width:22px;
-height:22px;
-
-background:white;
-
-border-radius:50%;
-
-top:50%;
-left:50%;
-
-margin-left:-11px;
-margin-top:-150px;
+border-left:35px solid transparent;
+border-right:35px solid transparent;
+border-bottom:70px solid yellow;
 
 z-index:50;
 
-box-shadow:
-0 0 20px white,
-0 0 40px white,
-0 0 80px white;
-
-animation:ballSpin 1.2s linear infinite;
-
+filter:drop-shadow(0 0 15px yellow);
 }
 
-@keyframes ballSpin{
+/* BALL */
+
+.ball{
+position:absolute;
+width:24px;
+height:24px;
+border-radius:50%;
+background:white;
+
+box-shadow:
+0 0 20px white,
+0 0 50px white;
+
+z-index:40;
+
+animation:ballMove 2s linear infinite;
+}
+
+@keyframes ballMove{
 
 0%{
 transform:
 rotate(0deg)
-translateY(-150px);
+translateY(-170px);
 }
 
 100%{
 transform:
 rotate(360deg)
-translateY(-150px);
+translateY(-170px);
 }
 
 }
 
-.resultBox{
+/* NUMBERS */
 
-margin-top:15px;
-
-font-size:42px;
+.number{
+position:absolute;
+left:50%;
+top:50%;
+transform-origin:0 -145px;
+font-size:15px;
 font-weight:bold;
-
-color:gold;
-
-text-shadow:
-0 0 10px gold,
-0 0 30px gold;
-
-height:50px;
-
+color:white;
+text-shadow:0 0 5px black;
 }
+
+/* BETS */
 
 .bets{
-
-width:100%;
-
+width:95%;
 display:grid;
 grid-template-columns:1fr 1fr;
-
-gap:10px;
-
-margin-top:15px;
-
+gap:15px;
+margin-top:25px;
 }
 
 .bet{
-
-height:100px;
-
-border-radius:20px;
+height:105px;
+border-radius:25px;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-font-size:24px;
+font-size:28px;
 font-weight:bold;
 
 position:relative;
 
-border:3px solid rgba(255,255,255,.2);
+border:4px solid rgba(255,255,255,.2);
 
 box-shadow:
-0 0 15px rgba(255,255,255,.3),
-inset 0 0 15px rgba(255,255,255,.2);
-
-}
-
-.bet span{
-
-position:absolute;
-
-top:8px;
-left:8px;
-
-background:black;
-
-padding:4px 12px;
-
-border-radius:12px;
-
-font-size:18px;
-
-color:yellow;
-
+0 0 20px rgba(255,255,255,.25),
+inset 0 0 20px rgba(255,255,255,.1);
 }
 
 .blackbox{
-background:#000;
+background:black;
 }
 
 .redbox{
@@ -351,61 +271,63 @@ background:#00dd44;
 }
 
 .darkbox{
-background:#99003a;
+background:#99003d;
 }
 
+.bet span{
+position:absolute;
+top:8px;
+left:8px;
+
+background:black;
+color:yellow;
+
+padding:5px 12px;
+
+border-radius:15px;
+
+font-size:22px;
+}
+
+/* CHIPS */
+
 .chips{
-
 display:flex;
-gap:14px;
-
-margin-top:18px;
-
+justify-content:center;
+gap:15px;
+margin-top:20px;
 }
 
 .chip{
-
-width:85px;
-height:85px;
-
+width:90px;
+height:90px;
 border-radius:50%;
 
-background:white;
+background:#eee;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-font-size:24px;
+font-size:28px;
 font-weight:bold;
-
 color:black;
 
-border:6px solid #ddd;
-
+border:6px solid #ccc;
 }
 
 .chip.active{
-
 border:6px solid gold;
 
 box-shadow:
 0 0 20px gold,
 0 0 50px gold;
-
 }
 
 #currentBet{
-
-margin-top:15px;
-
-font-size:36px;
-
+margin-top:25px;
+font-size:48px;
 color:white;
-
-text-shadow:
-0 0 10px white;
-
 }
 
 </style>
@@ -425,17 +347,17 @@ text-shadow:
 
 <div class="wheelWrap">
 
+<div class="outerRing"></div>
+
 <div class="pointer"></div>
 
-<div class="ball" id="ball"></div>
+<div class="ball"></div>
 
 <div id="wheel"></div>
 
 <div class="center"></div>
 
 </div>
-
-<div class="resultBox" id="result"></div>
 
 <div class="bets">
 
@@ -474,17 +396,14 @@ ODD
 <div class="chips">
 
 <div class="chip">1K</div>
-
 <div class="chip">100</div>
-
 <div class="chip active">50</div>
-
 <div class="chip">10</div>
 
 </div>
 
 <div id="currentBet">
-0$: الرهان
+الرهان: 0$
 </div>
 
 </div>
@@ -492,9 +411,10 @@ ODD
 <script>
 
 const numbers=[
-0,32,15,19,4,21,2,25,17,34,6,27,13,36,
-11,30,8,23,10,5,24,16,33,1,20,14,31,
-9,22,18,29,7,28,12,35,3,26
+0,32,15,19,4,21,2,25,17,34,6,
+27,13,36,11,30,8,23,10,5,24,
+16,33,1,20,14,31,9,22,18,29,
+7,28,12,35,3,26
 ];
 
 const wheel=document.getElementById("wheel");
@@ -508,78 +428,9 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-135px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-145px) rotate(90deg)";
 
 wheel.appendChild(div);
-
-}
-
-let timer=10;
-
-let spinning=false;
-
-setInterval(()=>{
-
-if(spinning)return;
-
-timer--;
-
-document.getElementById("timer").innerHTML=timer;
-
-if(timer<=0){
-
-spin();
-
-}
-
-},1000);
-
-function spin(){
-
-spinning=true;
-
-document.getElementById("timer").innerHTML="SPIN";
-
-const randomIndex=
-Math.floor(Math.random()*numbers.length);
-
-const result=
-numbers[randomIndex];
-
-const degree=
-(randomIndex*9.73);
-
-const finalRotate=
-7200-degree;
-
-wheel.style.transform=
-"rotate("+finalRotate+"deg)";
-
-const ball=
-document.getElementById("ball");
-
-ball.style.animation=
-"ballSpin .4s linear infinite";
-
-setTimeout(()=>{
-
-ball.style.animation="none";
-
-document.getElementById("result").innerHTML=
-"WINNER : "+result;
-
-},6500);
-
-setTimeout(()=>{
-
-timer=10;
-
-spinning=false;
-
-ball.style.animation=
-"ballSpin 1.2s linear infinite";
-
-},7000);
 
 }
 
