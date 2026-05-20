@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Casino</title>
+<title>Roulette</title>
 
 <style>
 
@@ -15,7 +15,7 @@ font-family:tahoma;
 }
 
 body{
-background:#2b0000;
+background:#240000;
 overflow:hidden;
 height:100vh;
 color:white;
@@ -35,27 +35,27 @@ width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:8px;
+margin-bottom:5px;
 }
 
 #balance{
-font-size:30px;
+font-size:32px;
 font-weight:bold;
 color:gold;
 text-shadow:0 0 20px gold;
 }
 
 #timer{
-font-size:75px;
+font-size:70px;
 font-weight:bold;
 color:#00ff55;
-text-shadow:0 0 30px #00ff55;
+text-shadow:0 0 25px #00ff55;
 }
 
 .history{
 display:flex;
 gap:6px;
-margin-bottom:8px;
+margin-bottom:10px;
 }
 
 .history div{
@@ -63,10 +63,10 @@ width:34px;
 height:34px;
 border-radius:50%;
 display:flex;
-justify-content:center;
 align-items:center;
-font-size:15px;
+justify-content:center;
 font-weight:bold;
+font-size:15px;
 }
 
 .red{background:red;}
@@ -75,12 +75,8 @@ font-weight:bold;
 
 .wheelWrap{
 position:relative;
-width:280px;
-height:280px;
-display:flex;
-justify-content:center;
-align-items:center;
-margin-top:5px;
+width:310px;
+height:310px;
 }
 
 .pointer{
@@ -93,21 +89,20 @@ height:0;
 border-left:22px solid transparent;
 border-right:22px solid transparent;
 border-bottom:50px solid yellow;
-z-index:100;
-filter:drop-shadow(0 0 12px yellow);
+z-index:50;
+filter:drop-shadow(0 0 15px yellow);
 }
 
 #wheel{
-width:280px;
-height:280px;
+width:100%;
+height:100%;
 border-radius:50%;
 border:10px solid gold;
-box-shadow:
-0 0 20px gold,
-0 0 50px orange;
+box-shadow:0 0 35px gold;
+transition:
+transform 6s cubic-bezier(.08,.6,.2,1);
 position:relative;
 overflow:hidden;
-transition:transform 6s cubic-bezier(0.08,0.6,0.1,1);
 
 background:
 conic-gradient(
@@ -156,7 +151,7 @@ black 349.2deg 360deg
 position:absolute;
 left:50%;
 top:50%;
-transform-origin:0 -120px;
+transform-origin:0 -130px;
 font-size:15px;
 font-weight:bold;
 color:white;
@@ -165,19 +160,48 @@ text-shadow:0 0 5px black;
 
 .ball{
 position:absolute;
-width:16px;
-height:16px;
-background:white;
+width:22px;
+height:22px;
 border-radius:50%;
+
+background:
+radial-gradient(circle at 30% 30%,
+#ffffff,
+#dddddd 40%,
+#999999 70%,
+#666666 100%);
+
 top:50%;
 left:50%;
-margin-left:-8px;
-margin-top:-8px;
+
+margin-left:-11px;
+margin-top:-135px;
+
+z-index:100;
+
 box-shadow:
-0 0 10px white,
-0 0 25px white;
-z-index:50;
-transition:transform 6s cubic-bezier(0.08,0.6,0.1,1);
+0 0 25px white,
+0 0 50px rgba(255,255,255,0.8);
+
+animation:ballMove 2s linear infinite;
+}
+
+@keyframes ballMove{
+
+0%{
+transform:
+rotate(0deg)
+translateY(-135px)
+rotate(0deg);
+}
+
+100%{
+transform:
+rotate(-360deg)
+translateY(-135px)
+rotate(360deg);
+}
+
 }
 
 .bets{
@@ -189,7 +213,7 @@ margin-top:15px;
 }
 
 .bet{
-height:88px;
+height:90px;
 border-radius:18px;
 display:flex;
 align-items:center;
@@ -197,18 +221,18 @@ justify-content:center;
 font-size:24px;
 font-weight:bold;
 position:relative;
-border:3px solid rgba(255,255,255,0.15);
+border:3px solid rgba(255,255,255,0.2);
 }
 
 .bet.active{
-box-shadow:0 0 20px white;
-transform:scale(1.02);
+box-shadow:0 0 25px white;
+transform:scale(1.03);
 }
 
 .bet span{
 position:absolute;
-top:5px;
-left:5px;
+top:6px;
+left:6px;
 background:black;
 padding:2px 10px;
 border-radius:12px;
@@ -219,18 +243,18 @@ color:yellow;
 .blackbox{background:#111;}
 .redbox{background:#ff0040;}
 .greenbox{background:#00cc44;}
-.darkbox{background:#941232;}
+.darkbox{background:#8b1030;}
 
 .chips{
 display:flex;
 justify-content:center;
-gap:10px;
-margin-top:14px;
+gap:12px;
+margin-top:15px;
 }
 
 .chip{
-width:75px;
-height:75px;
+width:80px;
+height:80px;
 border-radius:50%;
 background:white;
 display:flex;
@@ -248,8 +272,8 @@ box-shadow:0 0 25px gold;
 }
 
 #currentBet{
-margin-top:10px;
-font-size:32px;
+margin-top:12px;
+font-size:28px;
 color:white;
 }
 
@@ -279,7 +303,7 @@ text-shadow:0 0 20px gold;
 
 <div class="pointer"></div>
 
-<div class="ball" id="ball"></div>
+<div class="ball"></div>
 
 <div id="wheel"></div>
 
@@ -337,8 +361,11 @@ ODD
 <script>
 
 let balance=5000;
+
 let selectedChip=50;
+
 let timer=10;
+
 let spinning=false;
 
 let bets={
@@ -374,7 +401,7 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-120px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-130px) rotate(90deg)";
 
 wheel.appendChild(div);
 
@@ -435,27 +462,16 @@ if(spinning)return;
 
 spinning=true;
 
-const wheel=document.getElementById("wheel");
-const ball=document.getElementById("ball");
-
 let result=numbers[Math.floor(Math.random()*numbers.length)];
 
 let index=numbers.indexOf(result);
 
 let degree=(360/numbers.length)*index;
 
-let extraSpin=3600;
+let finalRotate=3600-degree;
 
-let finalRotate=
-extraSpin-degree-(360/numbers.length/2);
-
-wheel.style.transform=
+document.getElementById("wheel").style.transform=
 "rotate("+finalRotate+"deg)";
-
-let ballRotate=-(finalRotate*1.15);
-
-ball.style.transform=
-`rotate(${ballRotate}deg) translateY(-115px)`;
 
 setTimeout(()=>{
 
