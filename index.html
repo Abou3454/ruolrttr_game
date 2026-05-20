@@ -1,16 +1,25 @@
+<!-- استبدل ملف index.html بالكامل بهذا الكود -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Casino</title>
+
+<title>Roulette Pro</title>
 
 <style>
 
-body{
+*{
 margin:0;
-background:#0b0b0b;
+padding:0;
+box-sizing:border-box;
 font-family:tahoma;
+}
+
+body{
+background:#070707;
 color:white;
 text-align:center;
 overflow-x:hidden;
@@ -18,147 +27,153 @@ overflow-x:hidden;
 
 h1{
 margin-top:20px;
-font-size:42px;
+font-size:45px;
 text-shadow:0 0 20px red;
 }
 
 .balance{
-font-size:30px;
+font-size:32px;
+margin-top:15px;
 color:gold;
-margin:15px;
 }
 
-#wheel-container{
+.timer{
+font-size:38px;
+margin-top:10px;
+color:#00ff99;
+text-shadow:0 0 20px #00ff99;
+}
+
+#wheelArea{
 position:relative;
-width:320px;
-height:320px;
-margin:auto;
+width:360px;
+height:360px;
+margin:25px auto;
 }
 
 #wheel{
-width:320px;
-height:320px;
+width:360px;
+height:360px;
 border-radius:50%;
-border:10px solid gold;
-background:
-conic-gradient(
-red 0deg 20deg,
-black 20deg 40deg,
-red 40deg 60deg,
-black 60deg 80deg,
-red 80deg 100deg,
-black 100deg 120deg,
-red 120deg 140deg,
-black 140deg 160deg,
-red 160deg 180deg,
-black 180deg 200deg,
-red 200deg 220deg,
-black 220deg 240deg,
-red 240deg 260deg,
-black 260deg 280deg,
-red 280deg 300deg,
-black 300deg 320deg,
-red 320deg 340deg,
-black 340deg 360deg
-);
+border:12px solid gold;
+position:relative;
+overflow:hidden;
 
 box-shadow:
 0 0 30px gold,
-0 0 80px orange;
+0 0 90px orange;
 
-transition:transform 5s cubic-bezier(.17,.67,.2,1);
+transition:transform 8s cubic-bezier(.17,.67,.2,1);
+}
+
+.slice{
+position:absolute;
+width:50%;
+height:50%;
+left:50%;
+top:50%;
+transform-origin:0% 0%;
+clip-path:polygon(0 0,100% 0,0 100%);
+}
+
+.number{
+position:absolute;
+left:52%;
+top:52%;
+transform-origin:0 -145px;
+font-size:18px;
+font-weight:bold;
+color:white;
+text-shadow:0 0 10px white;
 }
 
 .pointer{
 position:absolute;
-top:-18px;
+top:-20px;
 left:50%;
 transform:translateX(-50%);
 width:0;
 height:0;
-border-left:18px solid transparent;
-border-right:18px solid transparent;
-border-bottom:35px solid yellow;
-z-index:10;
+border-left:20px solid transparent;
+border-right:20px solid transparent;
+border-bottom:40px solid yellow;
+z-index:100;
 }
 
-.bet-buttons{
+.ball{
+position:absolute;
+width:24px;
+height:24px;
+border-radius:50%;
+background:white;
+top:15px;
+left:50%;
+transform:translateX(-50%);
+box-shadow:
+0 0 20px white,
+0 0 40px cyan;
+z-index:99;
+}
+
+.money{
 margin-top:20px;
 }
 
-.bet-buttons button{
-padding:12px 25px;
-margin:8px;
-font-size:22px;
+.money button{
+width:75px;
+height:75px;
+border-radius:50%;
 border:none;
-border-radius:50px;
+margin:10px;
+font-size:24px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.selected{
+outline:5px solid gold;
+}
+
+.betDisplay{
+font-size:32px;
+margin-top:10px;
+}
+
+.betButtons{
+margin-top:25px;
+}
+
+.betButtons button{
+padding:18px 30px;
+font-size:24px;
+border:none;
+border-radius:15px;
+margin:8px;
 cursor:pointer;
 font-weight:bold;
 }
 
-.redBtn{
-background:#ff4d6d;
+.red{
+background:#ff2d55;
 color:white;
 }
 
-.blackBtn{
-background:#444;
+.black{
+background:#333;
 color:white;
 }
 
-.greenBtn{
+.green{
 background:#00d000;
 color:white;
 }
 
-.range-buttons{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-width:90%;
-margin:25px auto;
-}
-
-.range-buttons button{
-padding:20px;
-font-size:28px;
-background:#1e90ff;
-color:white;
-border:none;
-border-radius:12px;
-cursor:pointer;
-font-weight:bold;
-}
-
-.money-buttons{
-margin-top:20px;
-}
-
-.money-buttons button{
-width:70px;
-height:70px;
-border-radius:50%;
-border:none;
-font-size:24px;
-margin:10px;
-cursor:pointer;
-font-weight:bold;
-}
-
-.selectedMoney{
-outline:5px solid gold;
-}
-
-.currentBet{
-font-size:30px;
-margin-top:10px;
-}
-
 .result{
-margin-top:25px;
-font-size:40px;
+margin-top:30px;
+font-size:42px;
 color:yellow;
 text-shadow:0 0 20px yellow;
+padding-bottom:40px;
 }
 
 </style>
@@ -169,71 +184,50 @@ text-shadow:0 0 20px yellow;
 <h1>🎰 كازينو الروليت</h1>
 
 <div class="balance">
-الرصيد: $<span id="balance">5000</span>
+الرصيد: $
+<span id="balance">5000</span>
 </div>
 
-<div id="wheel-container">
+<div class="timer">
+⏳ <span id="timer">15</span>
+</div>
+
+<div id="wheelArea">
 
 <div class="pointer"></div>
+
+<div class="ball" id="ball"></div>
 
 <div id="wheel"></div>
 
 </div>
 
-<div class="money-buttons">
+<div class="money">
 
 <button onclick="setBet(10)">10</button>
-
 <button onclick="setBet(50)">50</button>
-
 <button onclick="setBet(100)">100</button>
-
 <button onclick="setBet(1000)">1K</button>
 
 </div>
 
-<div class="currentBet">
+<div class="betDisplay">
 الرهان الحالي:
-<span id="currentBet">10</span>
-$
+<span id="bet">10</span>$
 </div>
 
-<div class="bet-buttons">
+<div class="betButtons">
 
-<button class="redBtn" onclick="play('red')">
+<button class="red" onclick="placeBet('red')">
 🔴 RED x2
 </button>
 
-<button class="blackBtn" onclick="play('black')">
+<button class="black" onclick="placeBet('black')">
 ⚫ BLACK x2
 </button>
 
-<button class="greenBtn" onclick="play('green')">
+<button class="green" onclick="placeBet('green')">
 🟢 GREEN x14
-</button>
-
-</div>
-
-<div class="range-buttons">
-
-<button onclick="playRange(1,12)">
-1 - 12
-</button>
-
-<button onclick="playRange(13,24)">
-13 - 24
-</button>
-
-<button onclick="playRange(25,36)">
-25 - 36
-</button>
-
-<button onclick="playEvenOdd('even')">
-EVEN
-</button>
-
-<button onclick="playEvenOdd('odd')">
-ODD
 </button>
 
 </div>
@@ -245,153 +239,183 @@ ODD
 const wheel=document.getElementById("wheel");
 const result=document.getElementById("result");
 const balanceEl=document.getElementById("balance");
-const currentBetEl=document.getElementById("currentBet");
+const timerEl=document.getElementById("timer");
+const ball=document.getElementById("ball");
 
 let balance=5000;
+
 let currentBet=10;
 
-function setBet(amount){
+let currentChoice=null;
 
-currentBet=amount;
+let countdown=15;
 
-currentBetEl.innerHTML=currentBet;
+const rouletteNumbers=[
+0,32,15,19,4,21,2,25,17,
+34,6,27,13,36,11,30,8,23,
+10,5,24,16,33,1,20,14,31,
+9,22,18,29,7,28,12,35,3,26
+];
+
+createWheel();
+
+function createWheel(){
+
+const deg=360/rouletteNumbers.length;
+
+for(let i=0;i<rouletteNumbers.length;i++){
+
+const slice=document.createElement("div");
+
+slice.className="slice";
+
+slice.style.transform=
+`rotate(${i*deg}deg) skewY(${90-deg}deg)`;
+
+slice.style.background=
+i%2===0?"red":"black";
+
+wheel.appendChild(slice);
+
+const num=document.createElement("div");
+
+num.className="number";
+
+num.innerHTML=rouletteNumbers[i];
+
+num.style.transform=
+`rotate(${i*deg}deg)`;
+
+wheel.appendChild(num);
 
 }
 
-function spinWheel(){
+}
 
-return new Promise(resolve=>{
+function setBet(v){
 
-const number=
-Math.floor(Math.random()*37);
+currentBet=v;
 
-const degree=
-3600+(number*9.73);
+document.getElementById("bet").innerHTML=v;
+
+}
+
+function placeBet(type){
+
+currentChoice=type;
+
+result.innerHTML=
+"✅ تم وضع الرهان على " + type;
+
+}
+
+function startTimer(){
+
+setInterval(()=>{
+
+countdown--;
+
+timerEl.innerHTML=countdown;
+
+if(countdown<=0){
+
+spin();
+
+countdown=15;
+
+}
+
+},1000);
+
+}
+
+async function spin(){
+
+if(currentChoice===null){
+
+result.innerHTML=
+"⚠️ لا يوجد رهان";
+
+return;
+
+}
+
+if(balance<currentBet){
+
+result.innerHTML=
+"❌ الرصيد غير كافي";
+
+return;
+
+}
+
+balance-=currentBet;
+
+updateBalance();
+
+const index=
+Math.floor(Math.random()*rouletteNumbers.length);
+
+const winning=
+rouletteNumbers[index];
+
+const deg=360/rouletteNumbers.length;
+
+const rotate=
+3600+(index*deg);
 
 wheel.style.transform=
-`rotate(-${degree}deg)`;
+`rotate(-${rotate}deg)`;
+
+ball.style.transition=
+"all 8s linear";
+
+ball.style.transform=
+`translateX(-50%) rotate(${rotate*2}deg)`;
 
 setTimeout(()=>{
 
-resolve(number);
+let color;
 
-},5000);
+if(winning===0){
 
-});
+color="green";
 
-}
+}else if(winning%2===0){
 
-async function play(color){
+color="red";
 
-if(balance<currentBet){
+}else{
 
-alert("الرصيد غير كافي");
-
-return;
+color="black";
 
 }
 
-balance-=currentBet;
+if(color===currentChoice){
+
+let reward=
+currentChoice==="green"
+?currentBet*14
+:currentBet*2;
+
+balance+=reward;
+
+result.innerHTML=
+"🎉 WIN +" + reward +
+" | الرقم " + winning;
+
+}else{
+
+result.innerHTML=
+"❌ خسرت | الرقم " + winning;
+
+}
 
 updateBalance();
 
-const number=await spinWheel();
+currentChoice=null;
 
-let win=false;
-
-if(color==="green" && number===0){
-
-balance+=currentBet*14;
-
-win=true;
-
-}
-
-else if(color==="red" && number!==0 && number%2===0){
-
-balance+=currentBet*2;
-
-win=true;
-
-}
-
-else if(color==="black" && number%2!==0){
-
-balance+=currentBet*2;
-
-win=true;
-
-}
-
-showResult(win,number);
-
-}
-
-async function playRange(min,max){
-
-if(balance<currentBet){
-
-alert("الرصيد غير كافي");
-
-return;
-
-}
-
-balance-=currentBet;
-
-updateBalance();
-
-const number=await spinWheel();
-
-let win=false;
-
-if(number>=min && number<=max){
-
-balance+=currentBet*3;
-
-win=true;
-
-}
-
-showResult(win,number);
-
-}
-
-async function playEvenOdd(type){
-
-if(balance<currentBet){
-
-alert("الرصيد غير كافي");
-
-return;
-
-}
-
-balance-=currentBet;
-
-updateBalance();
-
-const number=await spinWheel();
-
-let win=false;
-
-if(type==="even" && number!==0 && number%2===0){
-
-balance+=currentBet*2;
-
-win=true;
-
-}
-
-if(type==="odd" && number%2!==0){
-
-balance+=currentBet*2;
-
-win=true;
-
-}
-
-showResult(win,number);
+},8000);
 
 }
 
@@ -401,23 +425,7 @@ balanceEl.innerHTML=balance;
 
 }
 
-function showResult(win,number){
-
-if(win){
-
-result.innerHTML=
-"🎉 WIN +" + currentBet;
-
-}else{
-
-result.innerHTML=
-"❌ خسرت - الرقم " + number;
-
-}
-
-updateBalance();
-
-}
+startTimer();
 
 </script>
 
