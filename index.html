@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Pro</title>
+<title>Roulette</title>
 
 <style>
 
@@ -16,7 +16,7 @@ font-family:tahoma;
 
 body{
 background:
-radial-gradient(circle,#006400 0%,#002200 40%,#000 100%);
+radial-gradient(circle,#006400 0%,#002200 50%,#000 100%);
 overflow:hidden;
 height:100vh;
 color:white;
@@ -43,43 +43,46 @@ margin-bottom:10px;
 font-size:32px;
 font-weight:bold;
 color:gold;
-text-shadow:
-0 0 10px gold,
-0 0 20px gold,
-0 0 40px gold;
+text-shadow:0 0 25px gold;
 }
 
 #timer{
-font-size:90px;
+font-size:80px;
 font-weight:bold;
 color:#00ff55;
-text-shadow:
-0 0 10px #00ff55,
-0 0 30px #00ff55,
-0 0 60px #00ff55;
+text-shadow:0 0 25px #00ff55;
 }
 
 .wheelWrap{
+
 position:relative;
-width:520px;
-height:520px;
-margin-top:10px;
+
+width:320px;
+height:320px;
+
+margin-top:20px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
 }
 
 #wheel{
 
-width:100%;
-height:100%;
+width:320px;
+height:320px;
+
 border-radius:50%;
 
-border:18px solid gold;
+border:12px solid gold;
 
 box-shadow:
-0 0 20px gold,
-0 0 60px gold,
-0 0 120px gold;
+0 0 30px gold,
+0 0 80px gold;
 
 position:relative;
+
 overflow:hidden;
 
 transition:transform 6s cubic-bezier(.17,.67,.2,1);
@@ -130,24 +133,21 @@ black 349.2deg 360deg
 .center{
 
 position:absolute;
-width:120px;
-height:120px;
+
+width:90px;
+height:90px;
+
 border-radius:50%;
+
 background:
 radial-gradient(circle,#aa0000,#550000);
 
-border:10px solid gold;
+border:8px solid gold;
 
-top:50%;
-left:50%;
-
-transform:translate(-50%,-50%);
-
-z-index:20;
+z-index:10;
 
 box-shadow:
-0 0 20px gold,
-0 0 50px gold;
+0 0 25px gold;
 
 }
 
@@ -155,7 +155,7 @@ box-shadow:
 
 position:absolute;
 
-top:10px;
+top:-5px;
 left:50%;
 
 transform:translateX(-50%);
@@ -163,13 +163,13 @@ transform:translateX(-50%);
 width:0;
 height:0;
 
-border-left:35px solid transparent;
-border-right:35px solid transparent;
-border-top:70px solid yellow;
+border-left:28px solid transparent;
+border-right:28px solid transparent;
+border-bottom:55px solid yellow;
 
-z-index:50;
+z-index:20;
 
-filter:drop-shadow(0 0 20px yellow);
+filter:drop-shadow(0 0 15px yellow);
 
 }
 
@@ -180,15 +180,15 @@ position:absolute;
 left:50%;
 top:50%;
 
-font-size:18px;
+font-size:15px;
 font-weight:bold;
+
 color:white;
 
-transform-origin:0 -210px;
+transform-origin:0 -130px;
 
 text-shadow:
-0 0 5px black,
-0 0 10px black;
+0 0 5px black;
 
 }
 
@@ -196,8 +196,8 @@ text-shadow:
 
 position:absolute;
 
-width:28px;
-height:28px;
+width:22px;
+height:22px;
 
 background:white;
 
@@ -206,15 +206,14 @@ border-radius:50%;
 top:50%;
 left:50%;
 
-margin-left:-14px;
-margin-top:-240px;
+margin-left:-11px;
+margin-top:-150px;
 
-z-index:100;
+z-index:50;
 
 box-shadow:
 0 0 20px white,
-0 0 40px white,
-0 0 70px white;
+0 0 40px white;
 
 animation:ballMove 2s linear infinite;
 
@@ -223,11 +222,11 @@ animation:ballMove 2s linear infinite;
 @keyframes ballMove{
 
 0%{
-transform:rotate(0deg) translateY(-240px);
+transform:rotate(0deg) translateY(-150px);
 }
 
 100%{
-transform:rotate(360deg) translateY(-240px);
+transform:rotate(360deg) translateY(-150px);
 }
 
 }
@@ -235,9 +234,11 @@ transform:rotate(360deg) translateY(-240px);
 .bets{
 
 width:100%;
+
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:12px;
+
+gap:10px;
 
 margin-top:20px;
 
@@ -245,24 +246,23 @@ margin-top:20px;
 
 .bet{
 
-height:120px;
+height:100px;
 
-border-radius:22px;
+border-radius:20px;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-font-size:28px;
+font-size:24px;
 font-weight:bold;
 
 position:relative;
 
-border:4px solid rgba(255,255,255,.2);
+border:3px solid rgba(255,255,255,.2);
 
 box-shadow:
-inset 0 0 15px rgba(255,255,255,.2),
-0 0 20px rgba(255,255,255,.2);
+0 0 15px rgba(255,255,255,.3);
 
 }
 
@@ -275,13 +275,13 @@ left:8px;
 
 background:black;
 
-padding:4px 14px;
+padding:4px 12px;
 
-border-radius:15px;
+border-radius:12px;
 
 color:yellow;
 
-font-size:20px;
+font-size:18px;
 
 }
 
@@ -290,7 +290,7 @@ background:#000;
 }
 
 .redbox{
-background:#ff004c;
+background:#ff0055;
 }
 
 .greenbox{
@@ -304,7 +304,7 @@ background:#99003a;
 .chips{
 
 display:flex;
-gap:16px;
+gap:14px;
 
 margin-top:18px;
 
@@ -312,8 +312,8 @@ margin-top:18px;
 
 .chip{
 
-width:95px;
-height:95px;
+width:85px;
+height:85px;
 
 border-radius:50%;
 
@@ -323,52 +323,31 @@ display:flex;
 justify-content:center;
 align-items:center;
 
-font-size:28px;
+font-size:22px;
 font-weight:bold;
+
 color:black;
 
-border:7px solid #ddd;
-
-box-shadow:
-0 0 15px rgba(255,255,255,.4);
+border:6px solid #ddd;
 
 }
 
 .chip.active{
 
-border:7px solid gold;
+border:6px solid gold;
 
 box-shadow:
-0 0 20px gold,
-0 0 50px gold;
+0 0 20px gold;
 
 }
 
 #currentBet{
 
-margin-top:18px;
+margin-top:15px;
 
-font-size:42px;
+font-size:32px;
 
 color:white;
-
-text-shadow:
-0 0 10px white;
-
-}
-
-#result{
-
-margin-top:10px;
-
-font-size:50px;
-font-weight:bold;
-
-color:gold;
-
-text-shadow:
-0 0 10px gold,
-0 0 40px gold;
 
 }
 
@@ -449,8 +428,6 @@ ODD
 0$: الرهان
 </div>
 
-<div id="result"></div>
-
 </div>
 
 <script>
@@ -472,7 +449,7 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-210px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-130px) rotate(90deg)";
 
 wheel.appendChild(div);
 
