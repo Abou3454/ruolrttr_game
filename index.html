@@ -16,7 +16,7 @@ font-family:tahoma;
 
 body{
 background:
-radial-gradient(circle,#0d5a00 0%,#001a00 70%);
+radial-gradient(circle at center,#006400 0%,#001100 80%);
 overflow:hidden;
 height:100vh;
 color:white;
@@ -25,7 +25,7 @@ color:white;
 .game{
 width:100%;
 height:100vh;
-padding:15px;
+padding:10px;
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -42,35 +42,26 @@ margin-bottom:10px;
 }
 
 #balance{
-font-size:58px;
+font-size:40px;
 font-weight:bold;
 color:gold;
-text-shadow:0 0 25px gold;
+text-shadow:0 0 20px gold;
 }
 
 #timer{
-font-size:90px;
+font-size:70px;
 font-weight:bold;
 color:#00ff55;
-text-shadow:0 0 35px #00ff55;
+text-shadow:0 0 25px #00ff55;
 }
 
 /* WHEEL */
 
 .wheelWrap{
 position:relative;
-width:420px;
-height:420px;
-margin-top:10px;
-}
-
-.outerGlow{
-position:absolute;
-width:100%;
-height:100%;
-border-radius:50%;
-background:radial-gradient(circle,rgba(255,255,0,.2),transparent 70%);
-filter:blur(25px);
+width:340px;
+height:340px;
+margin-top:5px;
 }
 
 #wheel{
@@ -79,10 +70,13 @@ height:100%;
 border-radius:50%;
 position:absolute;
 overflow:hidden;
-border:14px solid gold;
+
+border:12px solid gold;
+
 box-shadow:
-0 0 25px gold,
-0 0 70px rgba(255,255,0,.6);
+0 0 20px gold,
+0 0 60px rgba(255,255,0,.5);
+
 transition:transform 5s cubic-bezier(.17,.67,.2,1);
 
 background:
@@ -125,70 +119,83 @@ black 330.82deg 340.55deg,
 red 340.55deg 350.28deg,
 black 350.28deg 360deg
 );
+
 }
 
 /* CENTER */
 
-.centerCircle{
+.center{
 position:absolute;
-width:120px;
-height:120px;
+width:100px;
+height:100px;
 border-radius:50%;
 background:
-radial-gradient(circle,#aa0000 0%,#550000 70%);
-border:10px solid gold;
+radial-gradient(circle,#aa0000 0%,#550000 80%);
+border:8px solid gold;
+
 top:50%;
 left:50%;
+
 transform:translate(-50%,-50%);
-z-index:20;
+
+z-index:10;
+
 box-shadow:
-0 0 25px gold,
-0 0 40px rgba(255,255,0,.5);
+0 0 20px gold;
 }
 
 /* POINTER */
 
 .pointer{
 position:absolute;
-top:-10px;
+top:-5px;
 left:50%;
 transform:translateX(-50%);
+
 width:0;
 height:0;
-border-left:40px solid transparent;
-border-right:40px solid transparent;
-border-bottom:70px solid yellow;
-z-index:50;
-filter:drop-shadow(0 0 15px yellow);
+
+border-left:30px solid transparent;
+border-right:30px solid transparent;
+border-bottom:55px solid yellow;
+
+z-index:20;
+
+filter:drop-shadow(0 0 10px yellow);
 }
 
 /* BALL */
 
 .ball{
 position:absolute;
-width:26px;
-height:26px;
-background:white;
+width:20px;
+height:20px;
 border-radius:50%;
+background:white;
+
 top:50%;
 left:50%;
-margin-left:-13px;
-margin-top:-190px;
+
+margin-left:-10px;
+margin-top:-145px;
+
 box-shadow:
-0 0 20px white,
-0 0 45px white;
-z-index:60;
-animation:ballSpin 1s linear infinite;
+0 0 15px white,
+0 0 30px white;
+
+z-index:30;
+
+animation:spinBall 1s linear infinite;
 }
 
-@keyframes ballSpin{
+@keyframes spinBall{
 
 0%{
-transform:rotate(0deg) translateY(-190px);
+transform:rotate(0deg) translateY(-145px);
 }
 
 100%{
-transform:rotate(360deg) translateY(-190px);
+transform:rotate(360deg) translateY(-145px);
 }
 
 }
@@ -199,11 +206,12 @@ transform:rotate(360deg) translateY(-190px);
 position:absolute;
 left:50%;
 top:50%;
-transform-origin:0 -175px;
-font-size:17px;
+transform-origin:0 -145px;
+
+font-size:16px;
 font-weight:bold;
 color:white;
-text-shadow:0 0 8px black;
+text-shadow:0 0 6px black;
 }
 
 /* BETS */
@@ -212,32 +220,40 @@ text-shadow:0 0 8px black;
 width:100%;
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:14px;
-margin-top:20px;
+gap:10px;
+margin-top:18px;
 }
 
 .bet{
-height:110px;
-border-radius:24px;
+height:90px;
+border-radius:22px;
+
 display:flex;
-align-items:center;
 justify-content:center;
-font-size:30px;
+align-items:center;
+
+font-size:24px;
 font-weight:bold;
+
 position:relative;
-border:4px solid rgba(255,255,255,.2);
+
+border:3px solid rgba(255,255,255,.15);
+
 box-shadow:
-0 0 20px rgba(255,255,255,.15);
+0 0 15px rgba(255,255,255,.15);
 }
 
 .bet span{
 position:absolute;
-top:8px;
-left:8px;
+top:6px;
+left:6px;
+
 background:black;
-padding:5px 14px;
-border-radius:18px;
-font-size:22px;
+padding:4px 12px;
+
+border-radius:14px;
+
+font-size:18px;
 color:yellow;
 }
 
@@ -262,46 +278,49 @@ background:#a00040;
 .chips{
 display:flex;
 justify-content:center;
-gap:15px;
-margin-top:18px;
+gap:12px;
+margin-top:15px;
 }
 
 .chip{
-width:95px;
-height:95px;
+width:82px;
+height:82px;
 border-radius:50%;
 background:white;
+
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:26px;
+
+font-size:24px;
 font-weight:bold;
 color:black;
-border:7px solid #ddd;
+
+border:5px solid #ddd;
 }
 
 .chip.active{
-border:7px solid gold;
+border:5px solid gold;
+
 box-shadow:
-0 0 25px gold,
-0 0 50px rgba(255,255,0,.7);
+0 0 20px gold,
+0 0 40px rgba(255,255,0,.6);
 }
 
 /* TEXT */
 
 #currentBet{
-margin-top:18px;
-font-size:42px;
-color:white;
+margin-top:15px;
+font-size:36px;
 text-shadow:0 0 10px white;
 }
 
 #result{
-margin-top:10px;
-font-size:40px;
+margin-top:8px;
+font-size:32px;
 font-weight:bold;
 color:gold;
-text-shadow:0 0 20px gold;
+text-shadow:0 0 15px gold;
 }
 
 </style>
@@ -321,15 +340,13 @@ text-shadow:0 0 20px gold;
 
 <div class="wheelWrap">
 
-<div class="outerGlow"></div>
-
 <div class="pointer"></div>
 
 <div class="ball"></div>
 
 <div id="wheel"></div>
 
-<div class="centerCircle"></div>
+<div class="center"></div>
 
 </div>
 
@@ -416,9 +433,9 @@ const redNums=[
 19,21,23,25,27,30,32,34,36
 ];
 
-/* CREATE NUMBERS */
-
 const wheel=document.getElementById("wheel");
+
+/* CREATE NUMBERS */
 
 for(let i=0;i<numbers.length;i++){
 
@@ -429,7 +446,7 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-175px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-145px) rotate(90deg)";
 
 wheel.appendChild(div);
 
@@ -465,7 +482,7 @@ return Object.values(bets).reduce((a,b)=>a+b,0);
 
 }
 
-/* BET */
+/* PLACE BET */
 
 function placeBet(type){
 
@@ -494,9 +511,8 @@ if(spinning)return;
 
 spinning=true;
 
-let result=numbers[
-Math.floor(Math.random()*numbers.length)
-];
+let result=
+numbers[Math.floor(Math.random()*numbers.length)];
 
 let index=numbers.indexOf(result);
 
