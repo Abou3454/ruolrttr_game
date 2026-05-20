@@ -75,8 +75,8 @@ font-size:15px;
 
 .wheelWrap{
 position:relative;
-width:310px;
-height:310px;
+width:320px;
+height:320px;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -98,11 +98,8 @@ filter:drop-shadow(0 0 20px yellow);
 }
 
 #wheel{
-width:310px;
-height:310px;
-min-width:310px;
-min-height:310px;
-
+width:320px;
+height:320px;
 border-radius:50%;
 border:10px solid gold;
 
@@ -111,11 +108,10 @@ box-shadow:
 0 0 80px rgba(255,215,0,0.7);
 
 transition:
-transform 6s cubic-bezier(.08,.6,.2,1);
+transform 7s cubic-bezier(.08,.6,.2,1);
 
 position:relative;
 overflow:hidden;
-flex-shrink:0;
 
 background:
 conic-gradient(
@@ -157,15 +153,14 @@ black 329.8deg 339.5deg,
 red 339.5deg 349.2deg,
 black 349.2deg 360deg
 );
-
 }
 
 .number{
 position:absolute;
 left:50%;
 top:50%;
-transform-origin:0 -130px;
-font-size:15px;
+transform-origin:0 -138px;
+font-size:16px;
 font-weight:bold;
 color:white;
 text-shadow:0 0 5px black;
@@ -173,30 +168,30 @@ text-shadow:0 0 5px black;
 
 .ball{
 position:absolute;
-width:22px;
-height:22px;
+width:24px;
+height:24px;
 border-radius:50%;
 
 background:
 radial-gradient(circle at 30% 30%,
 #ffffff,
-#dddddd 40%,
-#999999 70%,
-#666666 100%);
+#eeeeee 35%,
+#bbbbbb 60%,
+#777777 100%);
 
 top:50%;
 left:50%;
 
-margin-left:-11px;
-margin-top:-135px;
+margin-left:-12px;
+margin-top:-145px;
 
-z-index:100;
+z-index:150;
 
 box-shadow:
 0 0 25px white,
 0 0 50px rgba(255,255,255,0.8);
 
-animation:ballMove 2s linear infinite;
+animation:ballMove 1.2s linear infinite;
 }
 
 @keyframes ballMove{
@@ -204,14 +199,14 @@ animation:ballMove 2s linear infinite;
 0%{
 transform:
 rotate(0deg)
-translateY(-135px)
+translateY(-145px)
 rotate(0deg);
 }
 
 100%{
 transform:
 rotate(-360deg)
-translateY(-135px)
+translateY(-145px)
 rotate(360deg);
 }
 
@@ -235,11 +230,22 @@ font-size:24px;
 font-weight:bold;
 position:relative;
 border:3px solid rgba(255,255,255,0.2);
-box-shadow:0 0 20px rgba(255,255,255,0.2);
+
+box-shadow:
+0 0 20px rgba(255,255,255,0.2);
+
+transition:0.2s;
+}
+
+.bet:active{
+transform:scale(0.96);
 }
 
 .bet.active{
-box-shadow:0 0 25px white;
+box-shadow:
+0 0 30px white,
+0 0 60px rgba(255,255,255,0.5);
+
 transform:scale(1.03);
 }
 
@@ -278,11 +284,19 @@ font-size:22px;
 font-weight:bold;
 color:black;
 border:5px solid #ddd;
+
+transition:0.2s;
+}
+
+.chip:active{
+transform:scale(0.9);
 }
 
 .chip.active{
 border:5px solid gold;
-box-shadow:0 0 25px gold;
+box-shadow:
+0 0 25px gold,
+0 0 60px rgba(255,215,0,0.8);
 }
 
 #currentBet{
@@ -293,10 +307,10 @@ color:white;
 
 #result{
 margin-top:8px;
-font-size:34px;
+font-size:36px;
 font-weight:bold;
 color:gold;
-text-shadow:0 0 20px gold;
+text-shadow:0 0 25px gold;
 }
 
 </style>
@@ -317,7 +331,7 @@ text-shadow:0 0 20px gold;
 
 <div class="pointer"></div>
 
-<div class="ball"></div>
+<div class="ball" id="ball"></div>
 
 <div id="wheel"></div>
 
@@ -415,7 +429,7 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-130px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-138px) rotate(90deg)";
 
 wheel.appendChild(div);
 
@@ -476,6 +490,9 @@ if(spinning)return;
 
 spinning=true;
 
+document.getElementById("ball").style.animation=
+"ballMove 0.4s linear infinite";
+
 let result=numbers[Math.floor(Math.random()*numbers.length)];
 
 let index=numbers.indexOf(result);
@@ -489,9 +506,16 @@ document.getElementById("wheel").style.transform=
 
 setTimeout(()=>{
 
+document.getElementById("ball").style.animation=
+"ballMove 1.8s linear infinite";
+
+},4000);
+
+setTimeout(()=>{
+
 finishRound(result);
 
-},6000);
+},7000);
 
 }
 
