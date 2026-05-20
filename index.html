@@ -2,10 +2,11 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Roulette</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -14,20 +15,19 @@ font-family:tahoma;
 }
 
 body{
-background:#2a0000;
+background:#240000;
 overflow:hidden;
-color:white;
 height:100vh;
+color:white;
 }
 
-#game{
+.game{
 width:100%;
 height:100vh;
+padding:10px;
 display:flex;
 flex-direction:column;
 align-items:center;
-justify-content:flex-start;
-padding:10px;
 }
 
 .top{
@@ -39,46 +39,44 @@ margin-bottom:5px;
 }
 
 #balance{
-font-size:26px;
+font-size:32px;
 font-weight:bold;
 color:gold;
 text-shadow:0 0 20px gold;
 }
 
 #timer{
-font-size:60px;
+font-size:70px;
 font-weight:bold;
 color:#00ff55;
-text-shadow:0 0 20px #00ff55;
+text-shadow:0 0 25px #00ff55;
 }
 
 .history{
 display:flex;
 gap:6px;
-margin-top:5px;
-margin-bottom:8px;
+margin-bottom:10px;
 }
 
 .history div{
-width:32px;
-height:32px;
+width:34px;
+height:34px;
 border-radius:50%;
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 font-weight:bold;
-font-size:14px;
+font-size:15px;
 }
 
 .red{background:red;}
 .black{background:black;}
 .green{background:green;}
 
-.wheel-wrap{
+.wheelWrap{
 position:relative;
-width:300px;
-height:300px;
-margin-top:5px;
+width:310px;
+height:310px;
 }
 
 .pointer{
@@ -88,10 +86,10 @@ left:50%;
 transform:translateX(-50%);
 width:0;
 height:0;
-border-left:20px solid transparent;
-border-right:20px solid transparent;
-border-bottom:45px solid yellow;
-z-index:10;
+border-left:22px solid transparent;
+border-right:22px solid transparent;
+border-bottom:50px solid yellow;
+z-index:50;
 filter:drop-shadow(0 0 15px yellow);
 }
 
@@ -100,8 +98,10 @@ width:100%;
 height:100%;
 border-radius:50%;
 border:10px solid gold;
-box-shadow:0 0 40px gold;
+box-shadow:0 0 35px gold;
 transition:transform 5s cubic-bezier(.17,.67,.2,1);
+position:relative;
+overflow:hidden;
 background:
 conic-gradient(
 green 0deg 9.7deg,
@@ -144,6 +144,16 @@ black 349.2deg 360deg
 );
 }
 
+.number{
+position:absolute;
+left:50%;
+top:50%;
+transform-origin:0 -130px;
+font-size:15px;
+font-weight:bold;
+color:white;
+}
+
 .ball{
 position:absolute;
 width:18px;
@@ -153,45 +163,39 @@ border-radius:50%;
 top:50%;
 left:50%;
 margin-left:-9px;
-margin-top:-130px;
-box-shadow:0 0 15px white;
-animation:ballmove 1s linear infinite;
+margin-top:-145px;
+box-shadow:0 0 20px white;
+z-index:20;
+animation:ballSpin 1s linear infinite;
 }
 
-@keyframes ballmove{
-0%{transform:rotate(0deg) translateY(-130px);}
-100%{transform:rotate(360deg) translateY(-130px);}
+@keyframes ballSpin{
+0%{
+transform:rotate(0deg) translateY(-145px);
+}
+100%{
+transform:rotate(360deg) translateY(-145px);
+}
 }
 
 .bets{
 width:100%;
-margin-top:10px;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
+margin-top:15px;
 }
 
 .bet{
 height:90px;
 border-radius:18px;
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 font-size:24px;
 font-weight:bold;
 position:relative;
 border:3px solid rgba(255,255,255,0.2);
-}
-
-.bet span{
-position:absolute;
-top:5px;
-left:5px;
-background:black;
-padding:2px 8px;
-border-radius:10px;
-font-size:20px;
-color:yellow;
 }
 
 .bet.active{
@@ -199,8 +203,19 @@ box-shadow:0 0 25px white;
 transform:scale(1.03);
 }
 
-.redbox{background:#ff003c;}
+.bet span{
+position:absolute;
+top:6px;
+left:6px;
+background:black;
+padding:2px 10px;
+border-radius:12px;
+font-size:18px;
+color:yellow;
+}
+
 .blackbox{background:#111;}
+.redbox{background:#ff0040;}
 .greenbox{background:#00cc44;}
 .darkbox{background:#8b1030;}
 
@@ -212,16 +227,16 @@ margin-top:15px;
 }
 
 .chip{
-width:78px;
-height:78px;
+width:80px;
+height:80px;
 border-radius:50%;
 background:white;
-color:black;
 display:flex;
 justify-content:center;
 align-items:center;
 font-size:22px;
 font-weight:bold;
+color:black;
 border:5px solid #ddd;
 }
 
@@ -231,13 +246,13 @@ box-shadow:0 0 25px gold;
 }
 
 #currentBet{
-margin-top:10px;
-font-size:24px;
+margin-top:12px;
+font-size:28px;
 color:white;
 }
 
 #result{
-margin-top:10px;
+margin-top:8px;
 font-size:34px;
 font-weight:bold;
 color:gold;
@@ -249,7 +264,7 @@ text-shadow:0 0 20px gold;
 
 <body>
 
-<div id="game">
+<div class="game">
 
 <div class="top">
 <div id="balance">$5000</div>
@@ -258,7 +273,7 @@ text-shadow:0 0 20px gold;
 
 <div class="history" id="history"></div>
 
-<div class="wheel-wrap">
+<div class="wheelWrap">
 
 <div class="pointer"></div>
 
@@ -323,6 +338,10 @@ let balance=5000;
 
 let selectedChip=50;
 
+let timer=10;
+
+let spinning=false;
+
 let bets={
 red:0,
 black:0,
@@ -332,10 +351,6 @@ high:0,
 zero:0
 };
 
-let timer=10;
-
-let spinning=false;
-
 const numbers=[
 0,32,15,19,4,21,2,25,17,34,6,27,13,36,
 11,30,8,23,10,5,24,16,33,1,20,14,31,
@@ -343,12 +358,37 @@ const numbers=[
 ];
 
 const redNums=[
-1,3,5,7,9,12,14,16,18,19,21,23,
-25,27,30,32,34,36
+1,3,5,7,9,12,14,16,18,19,
+21,23,25,27,30,32,34,36
 ];
 
+function createNumbers(){
+
+const wheel=document.getElementById("wheel");
+
+for(let i=0;i<numbers.length;i++){
+
+let div=document.createElement("div");
+
+div.className="number";
+
+div.innerHTML=numbers[i];
+
+div.style.transform=
+"rotate("+(i*9.73)+"deg) translateY(-130px) rotate(90deg)";
+
+wheel.appendChild(div);
+
+}
+
+}
+
+createNumbers();
+
 function updateBalance(){
+
 document.getElementById("balance").innerHTML="$"+balance;
+
 }
 
 function selectChip(value,el){
@@ -363,6 +403,12 @@ el.classList.add("active");
 
 }
 
+function totalBet(){
+
+return Object.values(bets).reduce((a,b)=>a+b,0);
+
+}
+
 function placeBet(type,el){
 
 if(spinning)return;
@@ -371,26 +417,16 @@ if(balance<selectedChip)return;
 
 balance-=selectedChip;
 
-bets[type]+=selectedChip;
-
 updateBalance();
+
+bets[type]+=selectedChip;
 
 document.getElementById(type+"Amount").innerHTML=bets[type];
 
 document.getElementById("currentBet").innerHTML=
 "الرهان: $"+totalBet();
 
-document.querySelectorAll(".bet").forEach(b=>{
-b.classList.remove("active");
-});
-
 el.classList.add("active");
-
-}
-
-function totalBet(){
-
-return Object.values(bets).reduce((a,b)=>a+b,0);
 
 }
 
@@ -399,10 +435,6 @@ function startRound(){
 if(spinning)return;
 
 spinning=true;
-
-document.querySelectorAll(".bet").forEach(b=>{
-b.classList.remove("active");
-});
 
 let result=numbers[Math.floor(Math.random()*numbers.length)];
 
@@ -415,12 +447,7 @@ let finalRotate=3600-degree;
 document.getElementById("wheel").style.transform=
 "rotate("+finalRotate+"deg)";
 
-document.getElementById("ball").style.animation=
-"ballmove .4s linear infinite";
-
 setTimeout(()=>{
-
-document.getElementById("ball").style.animation="none";
 
 finishRound(result);
 
@@ -459,9 +486,6 @@ let color="black";
 if(number===0)color="green";
 else if(redNums.includes(number))color="red";
 
-document.getElementById("result").innerHTML=
-(win>0 ? "WIN +$"+win : "LOSE")+" | "+number;
-
 let div=document.createElement("div");
 
 div.className=color;
@@ -471,13 +495,25 @@ div.innerHTML=number;
 document.getElementById("history").prepend(div);
 
 if(document.getElementById("history").children.length>8){
+
 document.getElementById("history").lastChild.remove();
+
 }
 
+document.getElementById("result").innerHTML=
+(win>0 ? "WIN +$"+win : "LOSE")+" | "+number;
+
 for(let key in bets){
+
 bets[key]=0;
+
 document.getElementById(key+"Amount").innerHTML="0";
+
 }
+
+document.querySelectorAll(".bet").forEach(b=>{
+b.classList.remove("active");
+});
 
 document.getElementById("currentBet").innerHTML=
 "الرهان: $0";
