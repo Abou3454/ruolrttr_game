@@ -51,7 +51,7 @@ text-shadow:
 }
 
 #timer{
-font-size:90px;
+font-size:85px;
 font-weight:bold;
 color:#00ff55;
 text-shadow:
@@ -66,15 +66,14 @@ margin-bottom:10px;
 }
 
 .history div{
-width:38px;
-height:38px;
+width:36px;
+height:36px;
 border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
 font-weight:bold;
-font-size:17px;
-box-shadow:0 0 10px rgba(255,255,255,0.4);
+font-size:16px;
 }
 
 .red{background:red;}
@@ -83,39 +82,40 @@ box-shadow:0 0 10px rgba(255,255,255,0.4);
 
 .wheelWrap{
 position:relative;
-width:520px;
-height:520px;
+width:320px;
+height:320px;
 display:flex;
 justify-content:center;
 align-items:center;
-margin-top:-20px;
+margin-top:10px;
 }
 
 .pointer{
 position:absolute;
-top:10px;
+top:-8px;
 left:50%;
 transform:translateX(-50%);
 width:0;
 height:0;
-border-left:35px solid transparent;
-border-right:35px solid transparent;
-border-bottom:70px solid yellow;
+border-left:25px solid transparent;
+border-right:25px solid transparent;
+border-bottom:50px solid yellow;
 z-index:200;
-filter:drop-shadow(0 0 25px yellow);
+filter:drop-shadow(0 0 15px yellow);
 }
 
 #wheel{
-width:520px;
-height:520px;
+width:320px;
+height:320px;
 border-radius:50%;
-border:20px solid gold;
+border:12px solid gold;
 box-shadow:
-0 0 40px gold,
-0 0 80px rgba(255,215,0,0.7);
+0 0 30px gold,
+0 0 60px rgba(255,215,0,0.6);
 transition:transform 5s cubic-bezier(.17,.67,.2,1);
 position:relative;
 overflow:hidden;
+
 background:
 conic-gradient(
 green 0deg 9.7deg,
@@ -160,35 +160,35 @@ black 349.2deg 360deg
 
 .centerCircle{
 position:absolute;
-width:120px;
-height:120px;
+width:85px;
+height:85px;
 border-radius:50%;
 background:
 radial-gradient(circle,
 #aa0000,
 #550000);
-border:10px solid gold;
+border:7px solid gold;
 z-index:100;
 box-shadow:
-0 0 20px gold,
-0 0 50px rgba(255,215,0,0.7);
+0 0 15px gold,
+0 0 40px rgba(255,215,0,0.6);
 }
 
 .number{
 position:absolute;
 left:50%;
 top:50%;
-transform-origin:0 -210px;
-font-size:22px;
+transform-origin:0 -130px;
+font-size:15px;
 font-weight:bold;
 color:white;
-text-shadow:0 0 10px black;
+text-shadow:0 0 5px black;
 }
 
 .ball{
 position:absolute;
-width:24px;
-height:24px;
+width:20px;
+height:20px;
 border-radius:50%;
 background:
 radial-gradient(circle at 30% 30%,
@@ -198,12 +198,13 @@ radial-gradient(circle at 30% 30%,
 #666666 100%);
 top:50%;
 left:50%;
-margin-left:-12px;
-margin-top:-12px;
+margin-left:-10px;
+margin-top:-10px;
 z-index:150;
+
 box-shadow:
-0 0 25px white,
-0 0 50px rgba(255,255,255,0.8);
+0 0 20px white,
+0 0 40px rgba(255,255,255,0.7);
 
 animation:ballMove 2s linear infinite;
 }
@@ -213,35 +214,35 @@ animation:ballMove 2s linear infinite;
 0%{
 transform:
 rotate(0deg)
-translateY(-240px)
+translateY(-145px)
 scale(1);
 }
 
 25%{
 transform:
 rotate(90deg)
-translateY(-225px)
+translateY(-138px)
 scale(0.95);
 }
 
 50%{
 transform:
 rotate(180deg)
-translateY(-210px)
+translateY(-132px)
 scale(0.9);
 }
 
 75%{
 transform:
 rotate(270deg)
-translateY(-225px)
+translateY(-138px)
 scale(0.95);
 }
 
 100%{
 transform:
 rotate(360deg)
-translateY(-240px)
+translateY(-145px)
 scale(1);
 }
 
@@ -252,11 +253,11 @@ width:100%;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:12px;
-margin-top:-40px;
+margin-top:20px;
 }
 
 .bet{
-height:120px;
+height:110px;
 border-radius:22px;
 display:flex;
 align-items:center;
@@ -265,6 +266,7 @@ font-size:28px;
 font-weight:bold;
 position:relative;
 border:4px solid rgba(255,255,255,0.2);
+
 box-shadow:
 0 0 15px rgba(255,255,255,0.3);
 }
@@ -300,26 +302,25 @@ background:#a00040;
 display:flex;
 justify-content:center;
 gap:15px;
-margin-top:18px;
+margin-top:20px;
 }
 
 .chip{
-width:95px;
-height:95px;
+width:90px;
+height:90px;
 border-radius:50%;
 background:white;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:30px;
+font-size:28px;
 font-weight:bold;
 color:black;
-border:7px solid #ddd;
-box-shadow:0 0 20px rgba(255,255,255,0.4);
+border:6px solid #ddd;
 }
 
 .chip.active{
-border:7px solid gold;
+border:6px solid gold;
 box-shadow:
 0 0 25px gold,
 0 0 50px rgba(255,215,0,0.8);
@@ -327,14 +328,13 @@ box-shadow:
 
 #currentBet{
 margin-top:15px;
-font-size:42px;
+font-size:38px;
 color:white;
-text-shadow:0 0 15px white;
 }
 
 #result{
-margin-top:10px;
-font-size:40px;
+margin-top:8px;
+font-size:36px;
 font-weight:bold;
 color:gold;
 text-shadow:
@@ -360,7 +360,7 @@ text-shadow:
 
 <div class="pointer"></div>
 
-<div class="ball" id="ball"></div>
+<div class="ball"></div>
 
 <div id="wheel"></div>
 
@@ -463,7 +463,7 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-210px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-130px) rotate(90deg)";
 
 wheel.appendChild(div);
 
