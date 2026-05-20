@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Casino</title>
+<title>Roulette Pro</title>
 
 <style>
 
@@ -15,7 +15,7 @@ font-family:tahoma;
 }
 
 body{
-background:#2b0000;
+background:#041b05;
 overflow:hidden;
 height:100vh;
 color:white;
@@ -24,11 +24,15 @@ color:white;
 .game{
 width:100%;
 height:100vh;
-padding:10px;
 display:flex;
 flex-direction:column;
 align-items:center;
+padding:10px;
+background:
+radial-gradient(circle at center,#0b4d12 0%,#031104 100%);
 }
+
+/* TOP */
 
 .top{
 width:100%;
@@ -39,214 +43,209 @@ margin-bottom:10px;
 }
 
 #balance{
-font-size:32px;
+font-size:30px;
 font-weight:bold;
 color:gold;
 text-shadow:0 0 20px gold;
 }
 
 #timer{
-font-size:80px;
+font-size:70px;
 font-weight:bold;
-color:#00ff55;
-text-shadow:0 0 30px #00ff55;
+color:#00ff66;
+text-shadow:0 0 25px #00ff66;
 }
+
+/* HISTORY */
 
 .history{
 display:flex;
-gap:5px;
-margin-bottom:8px;
+gap:6px;
+margin-bottom:10px;
 }
 
 .history div{
-width:35px;
-height:35px;
+width:34px;
+height:34px;
 border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-font-weight:bold;
 font-size:15px;
+font-weight:bold;
+color:white;
 }
 
-.red{background:red;}
-.black{background:black;}
-.green{background:green;}
+.red{
+background:#d50000;
+}
+
+.black{
+background:#111;
+}
+
+.green{
+background:#00aa33;
+}
+
+/* WHEEL */
 
 .wheelWrap{
 position:relative;
-width:320px;
-height:320px;
+width:330px;
+height:330px;
 display:flex;
 justify-content:center;
 align-items:center;
-margin-top:5px;
+margin-bottom:15px;
 }
 
 .pointer{
 position:absolute;
-top:-8px;
+top:-5px;
 left:50%;
 transform:translateX(-50%);
 width:0;
 height:0;
-border-left:22px solid transparent;
-border-right:22px solid transparent;
-border-bottom:50px solid yellow;
-z-index:200;
-filter:drop-shadow(0 0 20px yellow);
+border-left:18px solid transparent;
+border-right:18px solid transparent;
+border-top:40px solid gold;
+z-index:50;
+filter:drop-shadow(0 0 15px gold);
 }
 
 #wheel{
-width:320px;
-height:320px;
+width:100%;
+height:100%;
 border-radius:50%;
-border:10px solid gold;
-
+border:12px solid gold;
 box-shadow:
-0 0 35px gold,
-0 0 80px rgba(255,215,0,0.7);
-
-transition:
-transform 7s cubic-bezier(.08,.6,.2,1);
-
+0 0 20px gold,
+0 0 50px gold;
 position:relative;
 overflow:hidden;
+transition:transform 5s cubic-bezier(.17,.67,.2,1);
 
 background:
 conic-gradient(
-green 0deg 9.7deg,
-red 9.7deg 19.4deg,
-black 19.4deg 29.1deg,
-red 29.1deg 38.8deg,
-black 38.8deg 48.5deg,
-red 48.5deg 58.2deg,
-black 58.2deg 67.9deg,
-red 67.9deg 77.6deg,
-black 77.6deg 87.3deg,
-red 87.3deg 97deg,
-black 97deg 106.7deg,
-red 106.7deg 116.4deg,
-black 116.4deg 126.1deg,
-red 126.1deg 135.8deg,
-black 135.8deg 145.5deg,
-red 145.5deg 155.2deg,
-black 155.2deg 164.9deg,
-red 164.9deg 174.6deg,
-black 174.6deg 184.3deg,
-red 184.3deg 194deg,
-black 194deg 203.7deg,
-red 203.7deg 213.4deg,
-black 213.4deg 223.1deg,
-red 223.1deg 232.8deg,
-black 232.8deg 242.5deg,
-red 242.5deg 252.2deg,
-black 252.2deg 261.9deg,
-red 261.9deg 271.6deg,
-black 271.6deg 281.3deg,
-red 281.3deg 291deg,
-black 291deg 300.7deg,
-red 300.7deg 310.4deg,
-black 310.4deg 320.1deg,
-red 320.1deg 329.8deg,
-black 329.8deg 339.5deg,
-red 339.5deg 349.2deg,
-black 349.2deg 360deg
+#00aa33 0deg 9.7deg,
+#e10000 9.7deg 19.4deg,
+#111 19.4deg 29.1deg,
+#e10000 29.1deg 38.8deg,
+#111 38.8deg 48.5deg,
+#e10000 48.5deg 58.2deg,
+#111 58.2deg 67.9deg,
+#e10000 67.9deg 77.6deg,
+#111 77.6deg 87.3deg,
+#e10000 87.3deg 97deg,
+#111 97deg 106.7deg,
+#e10000 106.7deg 116.4deg,
+#111 116.4deg 126.1deg,
+#e10000 126.1deg 135.8deg,
+#111 135.8deg 145.5deg,
+#e10000 145.5deg 155.2deg,
+#111 155.2deg 164.9deg,
+#e10000 164.9deg 174.6deg,
+#111 174.6deg 184.3deg,
+#e10000 184.3deg 194deg,
+#111 194deg 203.7deg,
+#e10000 203.7deg 213.4deg,
+#111 213.4deg 223.1deg,
+#e10000 223.1deg 232.8deg,
+#111 232.8deg 242.5deg,
+#e10000 242.5deg 252.2deg,
+#111 252.2deg 261.9deg,
+#e10000 261.9deg 271.6deg,
+#111 271.6deg 281.3deg,
+#e10000 281.3deg 291deg,
+#111 291deg 300.7deg,
+#e10000 300.7deg 310.4deg,
+#111 310.4deg 320.1deg,
+#e10000 320.1deg 329.8deg,
+#111 329.8deg 339.5deg,
+#e10000 339.5deg 349.2deg,
+#111 349.2deg 360deg
 );
 }
+
+.center{
+position:absolute;
+width:90px;
+height:90px;
+background:
+radial-gradient(circle,#6b0000,#2b0000);
+border-radius:50%;
+border:8px solid gold;
+z-index:20;
+box-shadow:0 0 20px gold inset;
+}
+
+/* NUMBERS */
 
 .number{
 position:absolute;
 left:50%;
 top:50%;
-transform-origin:0 -138px;
-font-size:16px;
+transform-origin:0 -145px;
+font-size:18px;
 font-weight:bold;
 color:white;
-text-shadow:0 0 5px black;
+text-shadow:0 0 10px black;
 }
+
+/* BALL */
 
 .ball{
 position:absolute;
-width:24px;
-height:24px;
+width:20px;
+height:20px;
+background:white;
 border-radius:50%;
-
-background:
-radial-gradient(circle at 30% 30%,
-#ffffff,
-#eeeeee 35%,
-#bbbbbb 60%,
-#777777 100%);
-
-top:50%;
-left:50%;
-
-margin-left:-12px;
-margin-top:-145px;
-
-z-index:150;
-
 box-shadow:
-0 0 25px white,
-0 0 50px rgba(255,255,255,0.8);
-
-animation:ballMove 1.2s linear infinite;
+0 0 15px white,
+0 0 35px white;
+z-index:100;
+animation:ballMove 2s linear infinite;
 }
 
 @keyframes ballMove{
 
 0%{
-transform:
-rotate(0deg)
-translateY(-145px)
-rotate(0deg);
+transform:rotate(0deg) translateY(-145px);
 }
 
 100%{
-transform:
-rotate(-360deg)
-translateY(-145px)
-rotate(360deg);
+transform:rotate(360deg) translateY(-145px);
 }
 
 }
+
+/* BETS */
 
 .bets{
 width:100%;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
-margin-top:15px;
+margin-top:10px;
 }
 
 .bet{
 height:90px;
 border-radius:18px;
 display:flex;
-align-items:center;
 justify-content:center;
-font-size:24px;
+align-items:center;
+font-size:22px;
 font-weight:bold;
 position:relative;
 border:3px solid rgba(255,255,255,0.2);
-
-box-shadow:
-0 0 20px rgba(255,255,255,0.2);
-
-transition:0.2s;
-}
-
-.bet:active{
-transform:scale(0.96);
+box-shadow:0 0 15px rgba(255,255,255,0.2);
 }
 
 .bet.active{
-box-shadow:
-0 0 30px white,
-0 0 60px rgba(255,255,255,0.5);
-
 transform:scale(1.03);
+box-shadow:0 0 30px white;
 }
 
 .bet span{
@@ -255,26 +254,39 @@ top:6px;
 left:6px;
 background:black;
 padding:2px 10px;
-border-radius:12px;
+border-radius:15px;
 font-size:18px;
 color:yellow;
 }
 
-.blackbox{background:#111;}
-.redbox{background:#ff0040;}
-.greenbox{background:#00cc44;}
-.darkbox{background:#8b1030;}
+.blackbox{
+background:#111;
+}
+
+.redbox{
+background:#ff0044;
+}
+
+.greenbox{
+background:#00cc44;
+}
+
+.darkbox{
+background:#930033;
+}
+
+/* CHIPS */
 
 .chips{
 display:flex;
 justify-content:center;
-gap:12px;
-margin-top:15px;
+gap:14px;
+margin-top:18px;
 }
 
 .chip{
-width:80px;
-height:80px;
+width:82px;
+height:82px;
 border-radius:50%;
 background:white;
 display:flex;
@@ -284,33 +296,29 @@ font-size:22px;
 font-weight:bold;
 color:black;
 border:5px solid #ddd;
-
-transition:0.2s;
-}
-
-.chip:active{
-transform:scale(0.9);
 }
 
 .chip.active{
 border:5px solid gold;
-box-shadow:
-0 0 25px gold,
-0 0 60px rgba(255,215,0,0.8);
+box-shadow:0 0 25px gold;
 }
 
+/* BET */
+
 #currentBet{
-margin-top:12px;
-font-size:28px;
+margin-top:15px;
+font-size:32px;
 color:white;
 }
 
+/* RESULT */
+
 #result{
-margin-top:8px;
-font-size:36px;
+margin-top:10px;
+font-size:34px;
 font-weight:bold;
 color:gold;
-text-shadow:0 0 25px gold;
+text-shadow:0 0 20px gold;
 }
 
 </style>
@@ -321,8 +329,11 @@ text-shadow:0 0 25px gold;
 <div class="game">
 
 <div class="top">
+
 <div id="balance">$5000</div>
+
 <div id="timer">10</div>
+
 </div>
 
 <div class="history" id="history"></div>
@@ -331,9 +342,11 @@ text-shadow:0 0 25px gold;
 
 <div class="pointer"></div>
 
-<div class="ball" id="ball"></div>
-
 <div id="wheel"></div>
+
+<div class="center"></div>
+
+<div class="ball"></div>
 
 </div>
 
@@ -374,8 +387,11 @@ ODD
 <div class="chips">
 
 <div class="chip" onclick="selectChip(1000,this)">1K</div>
+
 <div class="chip" onclick="selectChip(100,this)">100</div>
+
 <div class="chip active" onclick="selectChip(50,this)">50</div>
+
 <div class="chip" onclick="selectChip(10,this)">10</div>
 
 </div>
@@ -412,8 +428,8 @@ const numbers=[
 ];
 
 const redNums=[
-1,3,5,7,9,12,14,16,18,19,
-21,23,25,27,30,32,34,36
+1,3,5,7,9,12,14,16,18,
+19,21,23,25,27,30,32,34,36
 ];
 
 function createNumbers(){
@@ -429,7 +445,7 @@ div.className="number";
 div.innerHTML=numbers[i];
 
 div.style.transform=
-"rotate("+(i*9.73)+"deg) translateY(-138px) rotate(90deg)";
+"rotate("+(i*9.73)+"deg) translateY(-145px) rotate(90deg)";
 
 wheel.appendChild(div);
 
@@ -490,8 +506,7 @@ if(spinning)return;
 
 spinning=true;
 
-document.getElementById("ball").style.animation=
-"ballMove 0.4s linear infinite";
+document.getElementById("timer").innerHTML="SPIN";
 
 let result=numbers[Math.floor(Math.random()*numbers.length)];
 
@@ -506,16 +521,9 @@ document.getElementById("wheel").style.transform=
 
 setTimeout(()=>{
 
-document.getElementById("ball").style.animation=
-"ballMove 1.8s linear infinite";
-
-},4000);
-
-setTimeout(()=>{
-
 finishRound(result);
 
-},7000);
+},5000);
 
 }
 
@@ -597,8 +605,6 @@ timer--;
 document.getElementById("timer").innerHTML=timer;
 
 if(timer<=0){
-
-document.getElementById("timer").innerHTML="SPIN";
 
 startRound();
 
