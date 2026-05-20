@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لعبة واربح</title>
+<title>لعبة الروليت</title>
 
 <style>
 
@@ -11,352 +11,224 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Tahoma;
+font-family:Arial;
 }
 
 body{
-
-background:
-radial-gradient(circle,#32004d,#12001f,#000);
-
+background:radial-gradient(#3d0057,#000);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
 overflow-x:hidden;
-
-overflow-y:auto;
-
 color:white;
-text-align:center;
-
-padding-bottom:220px;
-
 }
-.game{
 
-width:100%;
-max-width:430px;
-margin:auto;
-
-padding-bottom:260px;
-
-overflow:visible;
-
-}
 .balance{
-
-font-size:58px;
+font-size:70px;
 font-weight:bold;
 color:gold;
 margin-top:20px;
-
-text-shadow:
-0 0 20px gold,
-0 0 40px yellow;
-
+text-shadow:0 0 25px gold;
 }
 
 .pointer{
-
 width:0;
 height:0;
-
-border-left:25px solid transparent;
-border-right:25px solid transparent;
-border-top:60px solid yellow;
-
-margin:5px auto -20px;
-position:relative;
+border-left:28px solid transparent;
+border-right:28px solid transparent;
+border-top:70px solid yellow;
+margin-top:-5px;
 z-index:10;
-
-filter:drop-shadow(0 0 20px yellow);
-
+filter:drop-shadow(0 0 15px yellow);
 }
 
-.wheel-box{
-
+.wheel-container{
 position:relative;
-
-width:64vw;
-height:64vw;
-
-max-width:240px;
-max-height:240px;
-
-margin:20px auto 30px;
-
+width:85vw;
+height:85vw;
+max-width:380px;
+max-height:380px;
+margin-top:-10px;
 }
-#wheel{
 
+#wheel{
 width:100%;
 height:100%;
-
 border-radius:50%;
-
 border:12px solid gold;
-
 position:relative;
-
 overflow:hidden;
-
-background:#1e90ff;
-
+background:#2d8cf0;
 box-shadow:
 0 0 40px gold,
 0 0 80px #ff00ff;
-
-transition:transform 5s cubic-bezier(.17,.67,.2,1);
-
+transition:transform 5s cubic-bezier(.17,.67,.25,1);
 }
 
 .slice{
-
 position:absolute;
-
 width:50%;
 height:50%;
-
 left:50%;
 top:50%;
-
 transform-origin:0% 0%;
-
 display:flex;
 justify-content:center;
 align-items:center;
-
-font-size:34px;
-
+font-size:42px;
+font-weight:bold;
+color:white;
 }
 
 .slice span{
-
-transform:rotate(45deg);
-
+transform:rotate(22deg);
 }
 
+.slice:nth-child(1){transform:rotate(0deg) skewY(-45deg);}
+.slice:nth-child(2){transform:rotate(45deg) skewY(-45deg);}
+.slice:nth-child(3){transform:rotate(90deg) skewY(-45deg);}
+.slice:nth-child(4){transform:rotate(135deg) skewY(-45deg);}
+.slice:nth-child(5){transform:rotate(180deg) skewY(-45deg);}
+.slice:nth-child(6){transform:rotate(225deg) skewY(-45deg);}
+.slice:nth-child(7){transform:rotate(270deg) skewY(-45deg);}
+.slice:nth-child(8){transform:rotate(315deg) skewY(-45deg);}
+
 .center{
-
 position:absolute;
-
-width:95px;
-height:95px;
-
-background:
-radial-gradient(circle,red,#8b0000);
-
+width:120px;
+height:120px;
+background:radial-gradient(red,#990000);
+border:8px solid gold;
 border-radius:50%;
-
 top:50%;
 left:50%;
-
 transform:translate(-50%,-50%);
-
-border:8px solid gold;
-
 display:flex;
 justify-content:center;
 align-items:center;
-
-font-size:52px;
+font-size:70px;
 font-weight:bold;
-
-box-shadow:
-0 0 30px yellow;
-
+color:white;
+box-shadow:0 0 30px yellow;
 z-index:5;
-
 }
 
-.cards{
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
+.bet-area{
+display:flex;
+justify-content:center;
+align-items:center;
 gap:10px;
-
-padding:0 14px;
-
-margin-top:40px;
-
+width:100%;
+margin-top:20px;
+padding:0 10px;
 }
+
 .card{
-
-background:
-linear-gradient(#ff00ff,#7b009e);
-
+background:linear-gradient(#ff00ff,#7b009e);
 border:3px solid gold;
-
-border-radius:16px;
-
-padding:8px 4px;
-
-min-height:92px;
-
-width:92%;
-
-margin:auto;
+border-radius:18px;
+width:30%;
+height:150px;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-
 box-shadow:
-0 0 20px #ff00ff;
-
-cursor:pointer;
-
-transition:.2s;
-
+0 0 20px #ff00ff,
+0 0 40px #ff00ff;
 }
 
-.card:active{
-
-transform:scale(.95);
-
+.card .emoji{
+font-size:55px;
+margin-bottom:5px;
 }
 
-.icon{
-
-font-size:30px;
-margin-bottom:10px;
-
-}
-
-.multi{
-
-font-size:28px;
+.card .x{
+font-size:32px;
 font-weight:bold;
 color:gold;
-
-text-shadow:
-0 0 10px yellow;
-
+text-shadow:0 0 12px gold;
 }
 
-.bet{
-
-font-size:18px;
-margin-top:2px;
-color:white;
-font-weight:bold;
-.apple{
-
-grid-column:1/3;
-
-width:42%;
-
-margin:auto;
-
+.card .bet{
+font-size:22px;
+margin-top:5px;
 }
 
 .chips{
-
 display:flex;
-justify-content:center;
-gap:10px;
-
-margin-top:30px;
-
-margin-bottom:60px;
-
-flex-wrap:wrap;
-
+gap:12px;
+margin-top:25px;
 }
 
 .chip{
-
-width:65px;
-height:65px;
-
+width:70px;
+height:70px;
 border-radius:50%;
-
 background:white;
-
+color:black;
 display:flex;
 justify-content:center;
 align-items:center;
-
-font-size:26px;
+font-size:28px;
 font-weight:bold;
-color:black;
-
 border:5px solid #ddd;
-
+box-shadow:0 0 20px white;
 cursor:pointer;
-
 }
 
-.active-chip{
-
-border-color:gold;
-
-box-shadow:
-0 0 20px yellow;
-
+.chip.active{
+border:6px solid gold;
+box-shadow:0 0 25px gold;
 }
 
 .result{
-
-font-size:40px;
-margin-top:20px;
+margin-top:18px;
+font-size:36px;
+font-weight:bold;
 color:gold;
-
-text-shadow:
-0 0 10px yellow;
-
+text-shadow:0 0 15px gold;
 }
 
 @media(max-width:430px){
 
 .balance{
-
-font-size:44px;
-
+font-size:58px;
 }
 
-.slice{
-
-font-size:28px;
-
+.pointer{
+border-left:24px solid transparent;
+border-right:24px solid transparent;
+border-top:60px solid yellow;
 }
 
 .center{
-
-width:90px;
-height:90px;
-font-size:45px;
-
+width:100px;
+height:100px;
+font-size:55px;
 }
 
 .card{
-
-min-height:150px;
-
+height:130px;
 }
 
-.icon{
-
+.card .emoji{
 font-size:42px;
-
 }
 
-.multi{
-
-font-size:38px;
-
+.card .x{
+font-size:26px;
 }
 
-.bet{
-
-font-size:20px;
-
+.card .bet{
+font-size:18px;
 }
 
 .chip{
-
-width:58px;
-height:58px;
-font-size:20px;
-
+width:60px;
+height:60px;
+font-size:22px;
 }
 
 }
@@ -366,31 +238,22 @@ font-size:20px;
 
 <body>
 
-<div class="game">
-
 <div class="balance" id="balance">$5000</div>
 
 <div class="pointer"></div>
 
-<div class="wheel-box">
+<div class="wheel-container">
 
 <div id="wheel">
 
-<div class="slice" style="transform:rotate(0deg) skewY(-45deg);"><span>🍉</span></div>
-
-<div class="slice" style="transform:rotate(45deg) skewY(-45deg);"><span>🍎</span></div>
-
-<div class="slice" style="transform:rotate(90deg) skewY(-45deg);"><span>🍉</span></div>
-
-<div class="slice" style="transform:rotate(135deg) skewY(-45deg);"><span>🍎</span></div>
-
-<div class="slice" style="transform:rotate(180deg) skewY(-45deg);"><span>7️⃣</span></div>
-
-<div class="slice" style="transform:rotate(225deg) skewY(-45deg);"><span>🍎</span></div>
-
-<div class="slice" style="transform:rotate(270deg) skewY(-45deg);"><span>🍉</span></div>
-
-<div class="slice" style="transform:rotate(315deg) skewY(-45deg);"><span>🍎</span></div>
+<div class="slice"><span>🍉</span></div>
+<div class="slice"><span>🍎</span></div>
+<div class="slice"><span>7️⃣</span></div>
+<div class="slice"><span>🍎</span></div>
+<div class="slice"><span>🍉</span></div>
+<div class="slice"><span>🍎</span></div>
+<div class="slice"><span>🍉</span></div>
+<div class="slice"><span>🍎</span></div>
 
 </div>
 
@@ -398,206 +261,152 @@ font-size:20px;
 
 </div>
 
-<div class="cards">
+<div class="bet-area">
 
-<div class="card" onclick="betOn('melon')">
-
-<div class="icon">🍉</div>
-
-<div class="multi">x2</div>
-
-<div class="bet">الرهان: <span id="melonBet">0</span></div>
-
+<div class="card" onclick="bet('melon')">
+<div class="emoji">🍉</div>
+<div class="x">x2</div>
+<div class="bet" id="melonBet">0</div>
 </div>
 
-<div class="card" onclick="betOn('seven')">
-
-<div class="icon">7️⃣</div>
-
-<div class="multi">x8</div>
-
-<div class="bet">الرهان: <span id="sevenBet">0</span></div>
-
+<div class="card" onclick="bet('seven')">
+<div class="emoji">7️⃣</div>
+<div class="x">x8</div>
+<div class="bet" id="sevenBet">0</div>
 </div>
 
-<div class="card apple" onclick="betOn('apple')">
-
-<div class="icon">🍎</div>
-
-<div class="multi">x2</div>
-
-<div class="bet">الرهان: <span id="appleBet">0</span></div>
-
+<div class="card" onclick="bet('apple')">
+<div class="emoji">🍎</div>
+<div class="x">x2</div>
+<div class="bet" id="appleBet">0</div>
 </div>
 
 </div>
 
 <div class="chips">
 
-<div class="chip" onclick="setChip(100)">100</div>
-
-<div class="chip active-chip" onclick="setChip(1000)">1K</div>
-
-<div class="chip" onclick="setChip(10000)">10K</div>
+<div class="chip active" onclick="selectChip(100,this)">100</div>
+<div class="chip" onclick="selectChip(1000,this)">1K</div>
+<div class="chip" onclick="selectChip(10000,this)">10K</div>
 
 </div>
 
-<div class="result" id="result">
-النتيجة :
-</div>
-
-</div>
+<div class="result" id="result">النتيجة : ؟</div>
 
 <script>
 
-let balance=5000;
+let balance = 5000;
+let selectedChip = 100;
 
-let chip=1000;
-
-let bets={
+let bets = {
 melon:0,
 apple:0,
 seven:0
 };
 
-const wheel=document.getElementById("wheel");
+function selectChip(value,el){
 
-const timer=document.getElementById("timer");
+selectedChip=value;
 
-const result=document.getElementById("result");
+document.querySelectorAll('.chip').forEach(c=>{
+c.classList.remove('active');
+});
 
-function updateUI(){
+el.classList.add('active');
+
+}
+
+function bet(type){
+
+if(balance < selectedChip) return;
+
+balance -= selectedChip;
+
+bets[type] += selectedChip;
 
 document.getElementById("balance").innerText="$"+balance;
 
-document.getElementById("melonBet").innerText=bets.melon;
-
-document.getElementById("appleBet").innerText=bets.apple;
-
-document.getElementById("sevenBet").innerText=bets.seven;
+document.getElementById(type+"Bet").innerText=bets[type];
 
 }
 
-function setChip(v){
+let timer = 5;
 
-chip=v;
+setInterval(()=>{
 
-document.querySelectorAll(".chip").forEach(c=>{
+timer--;
 
-c.classList.remove("active-chip");
+document.getElementById("timer").innerText=timer;
 
-});
+if(timer<=0){
 
-event.target.classList.add("active-chip");
+spinWheel();
 
-}
-
-function betOn(type){
-
-if(balance<chip)return;
-
-balance-=chip;
-
-bets[type]+=chip;
-
-updateUI();
-
-}
-
-const items=[
-"melon",
-"apple",
-"melon",
-"apple",
-"seven",
-"apple",
-"melon",
-"apple"
-];
-
-function spin(){
-
-let random=Math.floor(Math.random()*8);
-
-let degree=(360*5)+(random*45);
-
-wheel.style.transform=`rotate(${degree}deg)`;
-
-let current=5;
-
-timer.innerText=current;
-
-let countdown=setInterval(()=>{
-
-current--;
-
-timer.innerText=current;
-
-if(current<=0){
-
-clearInterval(countdown);
-
-finishRound(random);
+timer=5;
 
 }
 
 },1000);
 
+function spinWheel(){
+
+let wheel = document.getElementById("wheel");
+
+let random = Math.floor(Math.random()*360)+1440;
+
+wheel.style.transform="rotate("+random+"deg)";
+
+let final = random % 360;
+
+let result="apple";
+
+if(final>=0 && final<90){
+result="melon";
+}
+else if(final>=90 && final<180){
+result="apple";
+}
+else if(final>=180 && final<270){
+result="seven";
+}
+else{
+result="apple";
 }
 
-function finishRound(index){
-
-let item=items[index];
-
-let text="";
+setTimeout(()=>{
 
 let win=0;
 
-if(item==="melon"){
-
-text="🍉";
-
+if(result=="melon"){
 win=bets.melon*2;
-
+document.getElementById("result").innerText="النتيجة : 🍉";
 }
 
-if(item==="apple"){
-
-text="🍎";
-
+if(result=="apple"){
 win=bets.apple*2;
-
+document.getElementById("result").innerText="النتيجة : 🍎";
 }
 
-if(item==="seven"){
-
-text="7️⃣";
-
+if(result=="seven"){
 win=bets.seven*8;
-
+document.getElementById("result").innerText="النتيجة : 7️⃣";
 }
 
-balance+=win;
+balance += win;
 
-result.innerHTML="النتيجة : "+text;
+document.getElementById("balance").innerText="$"+balance;
 
 bets.melon=0;
 bets.apple=0;
 bets.seven=0;
 
-updateUI();
+document.getElementById("melonBet").innerText="0";
+document.getElementById("appleBet").innerText="0";
+document.getElementById("sevenBet").innerText="0";
 
-setTimeout(()=>{
-
-spin();
-
-},3000);
+},5200);
 
 }
-
-updateUI();
-
-spin();
 
 </script>
 
