@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
 
 <title>كازينو الروليت</title>
 
@@ -87,10 +94,13 @@ top:12px;
 left:50%;
 margin-left:-9px;
 z-index:90;
+
 box-shadow:
 0 0 10px white,
 0 0 20px cyan;
-transition:transform 6s cubic-bezier(.17,.67,.19,1);
+
+transition:
+transform 6s cubic-bezier(.17,.67,.19,1);
 }
 
 .wheel{
@@ -105,7 +115,8 @@ box-shadow:
 0 0 20px gold,
 0 0 50px orange;
 
-transition:transform 6s cubic-bezier(.17,.67,.19,1);
+transition:
+transform 6s cubic-bezier(.17,.67,.19,1);
 }
 
 .number{
@@ -142,10 +153,12 @@ border:none;
 font-size:6vw;
 font-weight:bold;
 background:white;
+transition:.2s;
 }
 
 .money button.active{
 background:gold;
+transform:scale(1.08);
 }
 
 .types{
@@ -163,6 +176,7 @@ border-radius:12px;
 font-size:5vw;
 font-weight:bold;
 color:white;
+transition:.2s;
 }
 
 .red{
@@ -192,7 +206,7 @@ box-shadow:0 0 25px red;
 
 .result{
 height:45px;
-font-size:7vw;
+font-size:6vw;
 font-weight:bold;
 margin-top:8px;
 text-align:center;
@@ -209,13 +223,16 @@ text-shadow:0 0 15px red;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-<div class="title">🎰 كازينو الروليت</div>
+<div class="title">
+🎰 كازينو الروليت
+</div>
 
 <div class="balance" id="balance">
 الرصيد: $5000
@@ -236,64 +253,88 @@ text-shadow:0 0 15px red;
 </div>
 
 <div class="bet-title">
-الرهان: <span id="betAmount">10</span>$
+الرهان:
+<span id="betAmount">10</span>$
 </div>
 
 <div class="money">
 
-<button onclick="setBet(10)">10</button>
-<button onclick="setBet(50)">50</button>
-<button onclick="setBet(100)">100</button>
-<button onclick="setBet(1000)">1K</button>
+<button onclick="setBet(10,this)">
+10
+</button>
+
+<button onclick="setBet(50,this)">
+50
+</button>
+
+<button onclick="setBet(100,this)">
+100
+</button>
+
+<button onclick="setBet(1000,this)">
+1K
+</button>
 
 </div>
 
 <div class="types">
 
-<button class="red" onclick="setType('red')">
+<button class="red"
+onclick="setType('red',this)">
 أحمر
 </button>
 
-<button class="black" onclick="setType('black')">
+<button class="black"
+onclick="setType('black',this)">
 أسود
 </button>
 
-<button class="green" onclick="setType('green')">
+<button class="green"
+onclick="setType('green',this)">
 0
 </button>
 
 </div>
 
-<button class="spin" onclick="manualSpin()">
+<button class="spin"
+onclick="manualSpin()">
 ابدأ الرهان
 </button>
 
-<div class="result" id="result"></div>
+<div class="result"
+id="result"></div>
 
 </div>
 
 <script>
 
-const wheel=document.getElementById("wheel");
-const ball=document.getElementById("ball");
+const wheel =
+document.getElementById("wheel");
 
-const numbers=[
+const ball =
+document.getElementById("ball");
+
+const numbers = [
 0,32,15,19,4,21,2,25,17,34,6,
 27,13,36,11,30,8,23,10,5,
 24,16,33,1,20,14,31,9,22,
 18,29,7,28,12,35,3,26
 ];
 
-let balance=5000;
-let bet=10;
-let type="red";
-let spinning=false;
+let balance = 5000;
+
+let bet = 10;
+
+let type = "red";
+
+let spinning = false;
 
 function createWheel(){
 
-const angle=360/numbers.length;
+const angle =
+360 / numbers.length;
 
-let gradient="";
+let gradient = "";
 
 for(let i=0;i<numbers.length;i++){
 
@@ -302,22 +343,28 @@ let color;
 if(i===0){
 color="#00aa33";
 }else{
-color=i%2===0?"red":"black";
+color=i%2===0
+? "red"
+: "black";
 }
 
-gradient += `${color} ${i*angle}deg ${(i+1)*angle}deg`;
+gradient +=
+`${color}
+${i*angle}deg
+${(i+1)*angle}deg`;
 
 if(i<numbers.length-1){
 gradient += ",";
 }
 
-const n=document.createElement("div");
+const n =
+document.createElement("div");
 
-n.className="number";
+n.className = "number";
 
-n.innerHTML=numbers[i];
+n.innerHTML = numbers[i];
 
-n.style.transform=
+n.style.transform =
 `rotate(${i*angle}deg)
 translateY(-34vw)
 rotate(90deg)`;
@@ -326,32 +373,88 @@ wheel.appendChild(n);
 
 }
 
-wheel.style.background=
+wheel.style.background =
 `conic-gradient(${gradient})`;
 
 }
 
 createWheel();
 
-function setBet(amount){
+function setBet(amount,el){
 
-bet=amount;
+bet = amount;
 
-document.getElementById("betAmount").innerHTML=amount;
+document.getElementById("betAmount")
+.innerHTML = amount;
+
+document
+.querySelectorAll(".money button")
+.forEach(btn=>{
+btn.classList.remove("active");
+});
+
+el.classList.add("active");
 
 }
 
-function setType(t){
+function setType(t,el){
 
-type=t;
+type = t;
+
+/* إزالة التحديد القديم */
+
+document
+.querySelectorAll(".types button")
+.forEach(btn=>{
+
+btn.style.boxShadow="none";
+
+btn.style.transform="scale(1)";
+
+btn.style.border="none";
+
+});
+
+/* تحديد الرهان */
+
+el.style.transform="scale(1.05)";
+
+el.style.border=
+"4px solid white";
+
+el.style.boxShadow=
+"0 0 20px white";
+
+/* رسالة الرهان */
+
+let msg = "";
+
+if(t==="red"){
+msg="🔴 راهنت على الأحمر";
+}
+
+if(t==="black"){
+msg="⚫ راهنت على الأسود";
+}
+
+if(t==="green"){
+msg="🟢 راهنت على الصفر";
+}
+
+document.getElementById("result")
+.className="result";
+
+document.getElementById("result")
+.innerHTML=msg;
 
 }
 
 function getColor(num){
 
-if(num===0) return "green";
+if(num===0)
+return "green";
 
-const reds=[
+const reds = [
 1,3,5,7,9,12,14,16,18,19,
 21,23,25,27,30,32,34,36
 ];
@@ -364,7 +467,8 @@ return reds.includes(num)
 
 function updateBalance(){
 
-document.getElementById("balance").innerHTML=
+document.getElementById("balance")
+.innerHTML=
 `الرصيد: $${balance}`;
 
 }
@@ -373,11 +477,12 @@ function manualSpin(){
 
 if(spinning) return;
 
-if(balance<bet){
+if(balance < bet){
 
 alert("الرصيد غير كافي");
 
 return;
+
 }
 
 spin();
@@ -386,47 +491,52 @@ spin();
 
 function spin(){
 
-spinning=true;
+spinning = true;
 
-balance-=bet;
+balance -= bet;
 
 updateBalance();
 
-document.getElementById("result").innerHTML="";
+const index =
+Math.floor(
+Math.random()*numbers.length
+);
 
-const index=
-Math.floor(Math.random()*numbers.length);
+const result =
+numbers[index];
 
-const result=numbers[index];
+const color =
+getColor(result);
 
-const color=getColor(result);
+const slice =
+360/numbers.length;
 
-const slice=360/numbers.length;
+const rotate =
+(360*8)+(index*slice);
 
-const rotate=(360*8)+(index*slice);
-
-wheel.style.transform=
+wheel.style.transform =
 `rotate(-${rotate}deg)`;
 
-ball.style.transform=
+ball.style.transform =
 `rotate(${rotate+720}deg)
 translateY(36vw)`;
 
 setTimeout(()=>{
 
-let reward=0;
-let win=false;
+let reward = 0;
+
+let win = false;
 
 if(type===color){
 
-win=true;
+win = true;
 
-reward=
+reward =
 color==="green"
 ? bet*14
 : bet*2;
 
-balance+=reward;
+balance += reward;
 
 }
 
@@ -434,16 +544,24 @@ updateBalance();
 
 if(win){
 
-document.getElementById("result").className="result win";
+document
+.getElementById("result")
+.className="result win";
 
-document.getElementById("result").innerHTML=
+document
+.getElementById("result")
+.innerHTML=
 `✅ ربحت ${reward}$`;
 
 }else{
 
-document.getElementById("result").className="result lose";
+document
+.getElementById("result")
+.className="result lose";
 
-document.getElementById("result").innerHTML=
+document
+.getElementById("result")
+.innerHTML=
 `❌ خسرت | ${result}`;
 
 }
@@ -454,7 +572,7 @@ spinning=false;
 
 }
 
-let time=10;
+let time = 10;
 
 setInterval(()=>{
 
@@ -462,7 +580,9 @@ if(spinning) return;
 
 time--;
 
-document.getElementById("timer").innerHTML=time;
+document
+.getElementById("timer")
+.innerHTML=time;
 
 if(time<=0){
 
