@@ -52,17 +52,23 @@ margin:auto;
 }
 
 #wheel{
+#wheel{
 width:100%;
 height:100%;
 border-radius:50%;
-border:10px solid gold;
-position:relative;
 overflow:hidden;
-background:#1e88ff;
+position:relative;
 transition:transform 5s cubic-bezier(0.17,0.67,0.12,0.99);
 box-shadow:
 0 0 30px gold,
 0 0 80px yellow;
+}
+
+#wheelImage{
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:50%;
 }
 
 .slice{
@@ -232,14 +238,7 @@ opacity:1;
 
 <div id="wheel">
 
-<div class="slice">🍎</div>
-<div class="slice">🍉</div>
-<div class="slice">7️⃣</div>
-<div class="slice">🍎</div>
-<div class="slice">🍉</div>
-<div class="slice">🍎</div>
-<div class="slice">🍉</div>
-<div class="slice">🍎</div>
+<img src="https://i.imgur.com/2xX6Q9v.png" id="wheelImage">
 
 </div>
 
