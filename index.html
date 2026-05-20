@@ -1,56 +1,240 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Game</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>لعبة الروليت الاحترافية</title>
 
 <style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:tahoma;
+}
+
 body{
-    background:#111;
-    color:white;
-    font-family:Arial;
-    text-align:center;
-    margin-top:60px;
+background:#050505;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+flex-direction:column;
+}
+
+.container{
+position:relative;
+width:360px;
+height:360px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+#wheel{
+width:320px;
+height:320px;
+border-radius:50%;
+border:10px solid gold;
+box-shadow:
+0 0 25px gold,
+0 0 60px red,
+0 0 120px orange;
+transition:transform 6s cubic-bezier(.17,.67,.2,1);
+background:
+conic-gradient(
+#e60000 0deg 20deg,
+#111 20deg 40deg,
+#e60000 40deg 60deg,
+#111 60deg 80deg,
+#e60000 80deg 100deg,
+#111 100deg 120deg,
+#e60000 120deg 140deg,
+#111 140deg 160deg,
+#e60000 160deg 180deg,
+#111 180deg 200deg,
+#e60000 200deg 220deg,
+#111 220deg 240deg,
+#e60000 240deg 260deg,
+#111 260deg 280deg,
+#e60000 280deg 300deg,
+#111 300deg 320deg,
+#e60000 320deg 340deg,
+#111 340deg 360deg
+);
+position:relative;
+}
+
+.number{
+position:absolute;
+width:100%;
+height:100%;
+left:0;
+top:0;
+}
+
+.number span{
+position:absolute;
+left:50%;
+top:50%;
+transform-origin:0 -135px;
+font-size:18px;
+font-weight:bold;
+color:white;
+text-shadow:0 0 10px #fff;
+}
+
+.ball{
+position:absolute;
+width:22px;
+height:22px;
+background:white;
+border-radius:50%;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+box-shadow:
+0 0 15px white,
+0 0 30px cyan;
+z-index:10;
+}
+
+.pointer{
+position:absolute;
+top:-18px;
+width:0;
+height:0;
+border-left:18px solid transparent;
+border-right:18px solid transparent;
+border-bottom:35px solid gold;
+z-index:20;
+filter:drop-shadow(0 0 10px gold);
 }
 
 button{
-    padding:15px 40px;
-    font-size:25px;
-    border:none;
-    border-radius:10px;
-    background:red;
-    color:white;
-    cursor:pointer;
+margin-top:40px;
+padding:18px 55px;
+font-size:28px;
+border:none;
+border-radius:15px;
+background:red;
+color:white;
+cursor:pointer;
+box-shadow:
+0 0 20px red,
+0 0 50px crimson;
+transition:.3s;
 }
 
-#result{
-    margin-top:30px;
-    font-size:40px;
-    color:yellow;
+button:hover{
+transform:scale(1.08);
+}
+
+.result{
+margin-top:30px;
+font-size:48px;
+font-weight:bold;
+color:yellow;
+text-shadow:
+0 0 15px yellow,
+0 0 30px orange;
+}
+
+.title{
+font-size:42px;
+margin-bottom:25px;
+text-shadow:
+0 0 10px white,
+0 0 25px red;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎰 لعبة الروليت</h1>
+<div class="title">🎰 لعبة الروليت الاحترافية</div>
+
+<div class="container">
+
+<div class="pointer"></div>
+
+<div class="ball" id="ball"></div>
+
+<div id="wheel"></div>
+
+</div>
 
 <button onclick="spin()">ابدأ</button>
 
-<div id="result"></div>
+<div class="result" id="result">؟</div>
+
+<audio id="sound">
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-random-wheel-1930.mp3">
+</audio>
 
 <script>
-function spin(){
-    let num = Math.floor(Math.random()*37);
 
-    document.getElementById("result").innerHTML =
-    "الرقم هو: " + num;
+const wheel = document.getElementById("wheel");
+const result = document.getElementById("result");
+const sound = document.getElementById("sound");
 
-    if(window.Telegram.WebApp){
-        Telegram.WebApp.sendData(num.toString());
-    }
+const numbers = [
+0,32,15,19,4,21,2,25,17,
+34,6,27,13,36,11,30,8,23,
+10,5,24,16,33,1,20,14,31,
+9,22,18,29,7,28,12,35,3,26
+];
+
+for(let i=0;i<numbers.length;i++){
+
+const div = document.createElement("div");
+div.className = "number";
+
+const span = document.createElement("span");
+
+span.innerHTML = numbers[i];
+
+span.style.transform =
+`rotate(${i*9.73}deg)`;
+
+div.appendChild(span);
+
+wheel.appendChild(div);
+
 }
+
+let rotating = false;
+
+function spin(){
+
+if(rotating) return;
+
+rotating = true;
+
+sound.play();
+
+const randomIndex =
+Math.floor(Math.random()*numbers.length);
+
+const degree =
+3600 + (randomIndex * 9.73);
+
+wheel.style.transform =
+`rotate(-${degree}deg)`;
+
+setTimeout(()=>{
+
+result.innerHTML =
+"الرقم: " + numbers[randomIndex];
+
+rotating = false;
+
+},6000);
+
+}
+
 </script>
 
 </body>
