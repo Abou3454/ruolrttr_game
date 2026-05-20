@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette</title>
+<title>Roulette Pro</title>
 
 <style>
 
@@ -196,6 +196,7 @@ font-size:24px;
 font-weight:bold;
 position:relative;
 border:3px solid rgba(255,255,255,0.2);
+transition:0.2s;
 }
 
 .bet.active{
@@ -413,20 +414,31 @@ function placeBet(type,el){
 
 if(spinning)return;
 
-if(balance<selectedChip)return;
+if(timer<=0)return;
 
-balance-=selectedChip;
+if(balance < selectedChip)return;
+
+/* خصم الرصيد */
+balance -= selectedChip;
 
 updateBalance();
 
-bets[type]+=selectedChip;
+/* إضافة الرهان */
+bets[type] += selectedChip;
 
-document.getElementById(type+"Amount").innerHTML=bets[type];
+/* تحديث الخانة */
+document.getElementById(type+"Amount").innerHTML = bets[type];
 
-document.getElementById("currentBet").innerHTML=
-"الرهان: $"+totalBet();
+/* تحديث إجمالي الرهان */
+document.getElementById("currentBet").innerHTML =
+"الرهان: $" + totalBet();
 
+/* تأثير */
 el.classList.add("active");
+
+setTimeout(()=>{
+el.classList.remove("active");
+},300);
 
 }
 
@@ -510,10 +522,6 @@ bets[key]=0;
 document.getElementById(key+"Amount").innerHTML="0";
 
 }
-
-document.querySelectorAll(".bet").forEach(b=>{
-b.classList.remove("active");
-});
 
 document.getElementById("currentBet").innerHTML=
 "الرهان: $0";
