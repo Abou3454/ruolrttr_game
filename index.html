@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لعبة الروليت</title>
+<title>Roulette Game</title>
 
 <style>
 body{
@@ -11,84 +11,45 @@ body{
     color:white;
     font-family:Arial;
     text-align:center;
-    margin:0;
-    padding:0;
+    margin-top:60px;
 }
-
-h1{
-    margin-top:30px;
-    color:gold;
-}
-
-#wheel{
-    width:300px;
-    height:300px;
-    border-radius:50%;
-    border:10px solid white;
-    margin:30px auto;
-    position:relative;
-    overflow:hidden;
-    transition:transform 4s ease-out;
-}
-
-.slice{
-    width:50%;
-    height:50%;
-    position:absolute;
-    transform-origin:100% 100%;
-}
-
-.red{ background:red; }
-.black{ background:black; }
 
 button{
     padding:15px 40px;
-    font-size:22px;
+    font-size:25px;
     border:none;
     border-radius:10px;
-    background:gold;
+    background:red;
+    color:white;
     cursor:pointer;
-    margin-top:20px;
 }
 
 #result{
-    margin-top:20px;
-    font-size:28px;
-    color:lime;
+    margin-top:30px;
+    font-size:40px;
+    color:yellow;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎰 لعبة الروليت 🎰</h1>
+<h1>🎰 لعبة الروليت</h1>
 
-<div id="wheel"></div>
-
-<button onclick="spin()">SPIN</button>
+<button onclick="spin()">ابدأ</button>
 
 <div id="result"></div>
 
 <script>
-const wheel = document.getElementById("wheel");
-
-for(let i=0;i<12;i++){
-    let div = document.createElement("div");
-    div.className = "slice " + (i%2==0 ? "red":"black");
-    div.style.transform = `rotate(${i*30}deg) skewY(-60deg)`;
-    wheel.appendChild(div);
-}
-
 function spin(){
-    let deg = Math.floor(Math.random()*3600)+1000;
-    wheel.style.transform = `rotate(${deg}deg)`;
+    let num = Math.floor(Math.random()*37);
 
-    let number = Math.floor(Math.random()*12)+1;
+    document.getElementById("result").innerHTML =
+    "الرقم هو: " + num;
 
-    setTimeout(()=>{
-        document.getElementById("result").innerHTML =
-        "الرقم الفائز: " + number;
-    },4000);
+    if(window.Telegram.WebApp){
+        Telegram.WebApp.sendData(num.toString());
+    }
 }
 </script>
 
