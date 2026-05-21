@@ -358,21 +358,42 @@ const timer = document.getElementById("timer");
 
 let count = 15;
 
+const timer = document.getElementById("centerNumber");
+
 timer.innerText = count;
 
-setInterval(() => {
+let canBet = true;
+
+/* بدء العد */
+
+const countdown = setInterval(() => {
 
     count--;
 
     timer.innerText = count;
 
+    /* عند انتهاء الوقت */
+
     if(count <= 0){
+
+        canBet = false;
+
+        timer.innerText = "✔";
 
         spin();
 
-        count = 15;
+        /* انتظار ظهور النتيجة */
 
-        timer.innerText = count;
+        setTimeout(() => {
+
+            count = 15;
+
+            canBet = true;
+
+            timer.innerText = count;
+
+        },5000);
+
     }
 
 },1000);
