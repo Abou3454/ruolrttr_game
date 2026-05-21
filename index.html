@@ -11,54 +11,31 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <style>
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 :root{
     --gold:#ffd76a;
-    --gold2:#ff9f1c;
     --pink:#ff3bd4;
     --blue:#30c7ff;
-    --red:#ff3b55;
-    --green:#35e48b;
-    --dark:#080611;
-    --panel:rgba(17,13,34,.82);
-    --panel2:rgba(255,255,255,.08);
 }
 
 body{
     margin:0;
     min-height:100dvh;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     color:white;
     text-align:center;
     overflow-x:hidden;
     background:
         radial-gradient(circle at 20% 10%,rgba(255,59,212,.35),transparent 28%),
         radial-gradient(circle at 80% 8%,rgba(48,199,255,.28),transparent 28%),
-        radial-gradient(circle at 50% 92%,rgba(255,215,106,.18),transparent 34%),
         linear-gradient(180deg,#10071e,#070411 55%,#020106);
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background-image:
-        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.04) 1px, transparent 1px);
-    background-size:42px 42px;
-    mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 80%);
 }
 
 .app{
     width:min(100%,720px);
     margin:0 auto;
     padding:10px 10px 18px;
-    position:relative;
-    z-index:1;
 }
 
 .top-card{
@@ -66,7 +43,7 @@ body::before{
     border:1px solid rgba(255,215,106,.45);
     border-radius:22px;
     padding:12px;
-    box-shadow:0 0 28px rgba(255,215,106,.18), inset 0 0 30px rgba(255,255,255,.04);
+    box-shadow:0 0 28px rgba(255,215,106,.18);
 }
 
 .brand{
@@ -76,11 +53,9 @@ body::before{
     gap:10px;
 }
 
-.brand-name{
-    text-align:right;
-}
+.brand-name{text-align:right}
 
-.brand-name .title{
+.title{
     font-size:clamp(24px,6vw,40px);
     font-weight:900;
     color:var(--gold);
@@ -88,7 +63,7 @@ body::before{
     line-height:1;
 }
 
-.brand-name .sub{
+.sub{
     margin-top:4px;
     font-size:clamp(12px,3vw,15px);
     color:rgba(255,255,255,.72);
@@ -131,7 +106,6 @@ body::before{
     border:1px solid rgba(48,199,255,.45);
     color:white;
     font-size:clamp(13px,3.5vw,17px);
-    box-shadow:0 0 14px rgba(48,199,255,.16);
     cursor:pointer;
     user-select:none;
     white-space:nowrap;
@@ -161,7 +135,6 @@ body::before{
 
 .arena{
     margin-top:10px;
-    padding:8px 0 0;
 }
 
 .pointer{
@@ -189,7 +162,7 @@ body::before{
     position:absolute;
     inset:-15px;
     border-radius:50%;
-    background:conic-gradient(from 0deg,var(--gold),var(--pink),var(--blue),var(--gold));
+    background:conic-gradient(var(--gold),var(--pink),var(--blue),var(--gold));
     filter:blur(18px);
     opacity:.48;
 }
@@ -202,9 +175,7 @@ body::before{
     border-radius:50%;
     border:clamp(8px,2vw,14px) solid var(--gold);
     background:#1488ff;
-    box-shadow:
-        0 0 34px rgba(255,215,106,.8),
-        inset 0 0 32px rgba(0,0,0,.25);
+    box-shadow:0 0 34px rgba(255,215,106,.8),inset 0 0 32px rgba(0,0,0,.25);
     display:block;
 }
 
@@ -225,7 +196,7 @@ body::before{
     font-size:clamp(38px,10vw,70px);
     font-weight:900;
     color:white;
-    box-shadow:0 0 34px rgba(255,96,0,.75), inset 0 0 20px rgba(0,0,0,.25);
+    box-shadow:0 0 34px rgba(255,96,0,.75);
 }
 
 .history{
@@ -245,7 +216,6 @@ body::before{
     justify-content:center;
     align-items:center;
     font-size:clamp(24px,7vw,38px);
-    box-shadow:0 0 16px rgba(255,215,106,.24);
 }
 
 .bets{
@@ -256,7 +226,6 @@ body::before{
 }
 
 .bet-box{
-    min-width:0;
     height:clamp(124px,32vw,184px);
     border-radius:20px;
     border:1px solid rgba(255,215,106,.7);
@@ -264,7 +233,7 @@ body::before{
         linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05)),
         radial-gradient(circle at 50% 10%,rgba(255,59,212,.55),transparent 54%),
         linear-gradient(180deg,#231043,#10061d);
-    box-shadow:0 0 20px rgba(255,59,212,.2), inset 0 0 24px rgba(255,255,255,.05);
+    box-shadow:0 0 20px rgba(255,59,212,.2);
     cursor:pointer;
     user-select:none;
     display:flex;
@@ -281,10 +250,6 @@ body::before{
         linear-gradient(180deg,#4a2100,#120804);
 }
 
-.bet-box:hover{
-    transform:translateY(-2px) scale(1.02);
-}
-
 .bet-box .emoji{
     font-size:clamp(42px,12vw,72px);
     line-height:1;
@@ -295,7 +260,6 @@ body::before{
     color:var(--gold);
     font-weight:900;
     line-height:1;
-    text-shadow:0 0 16px rgba(255,215,106,.7);
 }
 
 .bet-box .amount{
@@ -322,8 +286,7 @@ body::before{
     aspect-ratio:1;
     max-height:92px;
     border-radius:50%;
-    background:
-        radial-gradient(circle at 35% 28%,#fff,#f4f4f4 38%,#d2d2d2 39%,#fff 57%,#cfcfcf);
+    background:radial-gradient(circle at 35% 28%,#fff,#f4f4f4 38%,#d2d2d2 39%,#fff 57%,#cfcfcf);
     border:clamp(5px,1.5vw,8px) dashed #d92b2b;
     color:#161616;
     font-size:clamp(18px,5vw,28px);
@@ -339,7 +302,6 @@ body::before{
 .chip.active{
     border-color:var(--gold);
     box-shadow:0 0 28px rgba(255,215,106,.95);
-    transform:translateY(-2px);
 }
 
 #popup{
@@ -355,10 +317,7 @@ body::before{
 
 .popup-box{
     width:min(88vw,420px);
-    background:
-        linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.05)),
-        radial-gradient(circle at 50% 0%,rgba(255,215,106,.42),transparent 48%),
-        linear-gradient(180deg,#230a2d,#120513);
+    background:linear-gradient(180deg,#230a2d,#120513);
     border:1px solid rgba(255,215,106,.85);
     border-radius:26px;
     padding:24px;
@@ -369,7 +328,6 @@ body::before{
     color:var(--gold);
     font-size:clamp(32px,9vw,52px);
     margin:0 0 10px;
-    text-shadow:0 0 18px rgba(255,215,106,.7);
 }
 
 .popup-emoji{
@@ -383,25 +341,136 @@ body::before{
     font-weight:900;
 }
 
-@media(max-height:720px){
-    .app{ padding-top:6px; }
-    .top-card{ padding:9px; }
-    .brand-name .title{ font-size:25px; }
-    .brand-name .sub{ display:none; }
-    .balance{ font-size:31px; }
-    .account-row{ margin-top:7px; }
-    .daily-btn,.player-id{ padding:7px 10px; font-size:13px; }
-    .wheel-container{ width:246px; height:246px; }
-    .pointer{
-        border-left-width:17px;
-        border-right-width:17px;
-        border-top-width:38px;
+@media(max-width:480px){
+    body{overflow:hidden}
+
+    .app{
+        height:100dvh;
+        padding:5px 7px;
+        display:flex;
+        flex-direction:column;
     }
-    .history{ margin-top:9px; }
-    .bets{ margin-top:9px; }
-    .bet-box{ height:112px; border-radius:16px; }
-    .chips{ margin-top:9px; }
-    .chip{ max-height:68px; }
+
+    .top-card{
+        padding:7px;
+        border-radius:16px;
+        flex-shrink:0;
+    }
+
+    .title{font-size:22px}
+    .sub{display:none}
+
+    .balance-box{
+        min-width:105px;
+        padding:7px 10px;
+        border-radius:14px;
+    }
+
+    .balance-label{font-size:10px}
+    .balance{font-size:28px}
+
+    .account-row{
+        margin-top:6px;
+        gap:6px;
+    }
+
+    .player-id,
+    .daily-btn{
+        padding:7px 8px;
+        border-radius:12px;
+        font-size:12px;
+    }
+
+    .arena{
+        margin-top:4px;
+        flex-shrink:0;
+    }
+
+    .pointer{
+        margin-bottom:-5px;
+        border-left-width:15px;
+        border-right-width:15px;
+        border-top-width:32px;
+    }
+
+    .wheel-container{
+        width:min(58vw,245px);
+        height:min(58vw,245px);
+    }
+
+    .center-circle{
+        width:64px;
+        height:64px;
+        font-size:34px;
+        border-width:4px;
+    }
+
+    .history{
+        margin-top:7px;
+        gap:7px;
+        flex-shrink:0;
+    }
+
+    .history div{
+        width:36px;
+        height:36px;
+        border-radius:10px;
+        font-size:22px;
+    }
+
+    .bets{
+        margin-top:7px;
+        gap:6px;
+        flex-shrink:0;
+    }
+
+    .bet-box{
+        height:88px;
+        border-radius:14px;
+    }
+
+    .bet-box .emoji{font-size:34px}
+    .bet-box .multi{font-size:26px}
+
+    .bet-box .amount{
+        min-height:22px;
+        font-size:18px;
+        padding:2px 7px;
+        margin-top:2px;
+    }
+
+    .chips{
+        margin-top:7px;
+        gap:9px;
+        padding-bottom:0;
+        flex-shrink:0;
+    }
+
+    .chip{
+        max-height:54px;
+        font-size:16px;
+        border-width:5px;
+    }
+
+    .popup-box{
+        padding:18px;
+        border-radius:20px;
+    }
+}
+
+@media(max-width:380px){
+    .wheel-container{
+        width:210px;
+        height:210px;
+    }
+
+    .bet-box{height:80px}
+    .chip{max-height:48px}
+
+    .player-id,
+    .daily-btn{
+        font-size:11px;
+    }
 }
 </style>
 </head>
@@ -501,12 +570,7 @@ if(window.Telegram && Telegram.WebApp){
 
 let playerId = "guest";
 
-if(
-    window.Telegram &&
-    Telegram.WebApp &&
-    Telegram.WebApp.initDataUnsafe &&
-    Telegram.WebApp.initDataUnsafe.user
-){
+if(window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user){
     playerId = String(Telegram.WebApp.initDataUnsafe.user.id);
 }else{
     let guestId = localStorage.getItem("luckyGameGuestId");
@@ -547,17 +611,17 @@ let spinning = false;
 let audioContext = null;
 
 let bets = {
-    "🍉": 0,
-    "🍎": 0,
-    "7️⃣": 0
+    "🍉":0,
+    "🍎":0,
+    "7️⃣":0
 };
 
 function initPlayer(){
     playerRef.once("value").then(snapshot=>{
         if(!snapshot.exists()){
             playerRef.set({
-                balance: 5000,
-                lastDailyReward: 0
+                balance:5000,
+                lastDailyReward:0
             });
         }
     });
@@ -575,9 +639,7 @@ function initPlayer(){
 }
 
 function saveBalance(){
-    playerRef.update({
-        balance: balance
-    });
+    playerRef.update({balance:balance});
 }
 
 function updateBalance(){
@@ -598,7 +660,7 @@ function initAudio(){
 document.addEventListener("click", initAudio, {once:true});
 document.addEventListener("touchstart", initAudio, {once:true});
 
-function playTone(frequency, duration, type = "sine", volume = 0.18){
+function playTone(frequency,duration,type="sine",volume=.18){
     if(!audioContext) return;
 
     const oscillator = audioContext.createOscillator();
@@ -607,8 +669,8 @@ function playTone(frequency, duration, type = "sine", volume = 0.18){
     oscillator.type = type;
     oscillator.frequency.value = frequency;
 
-    gain.gain.setValueAtTime(volume, audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+    gain.gain.setValueAtTime(volume,audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime + duration);
 
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
@@ -618,35 +680,35 @@ function playTone(frequency, duration, type = "sine", volume = 0.18){
 }
 
 function playWinSound(){
-    playTone(523, 0.12, "sine");
-    setTimeout(()=>playTone(659, 0.12, "sine"), 120);
-    setTimeout(()=>playTone(784, 0.18, "sine"), 240);
+    playTone(523,.12,"sine");
+    setTimeout(()=>playTone(659,.12,"sine"),120);
+    setTimeout(()=>playTone(784,.18,"sine"),240);
 }
 
 function playLoseSound(){
-    playTone(220, 0.18, "sawtooth", 0.12);
-    setTimeout(()=>playTone(160, 0.22, "sawtooth", 0.1), 160);
+    playTone(220,.18,"sawtooth",.12);
+    setTimeout(()=>playTone(160,.22,"sawtooth",.1),160);
 }
 
 function playErrorSound(){
-    playTone(120, 0.12, "square", 0.1);
-    setTimeout(()=>playTone(100, 0.12, "square", 0.1), 130);
+    playTone(120,.12,"square",.1);
+    setTimeout(()=>playTone(100,.12,"square",.1),130);
 }
 
 function playRewardSound(){
-    playTone(440, 0.1, "triangle");
-    setTimeout(()=>playTone(660, 0.1, "triangle"), 100);
-    setTimeout(()=>playTone(880, 0.18, "triangle"), 200);
+    playTone(440,.1,"triangle");
+    setTimeout(()=>playTone(660,.1,"triangle"),100);
+    setTimeout(()=>playTone(880,.18,"triangle"),200);
 }
 
-function showPopup(emoji, text, duration = 2000){
+function showPopup(emoji,text,duration=2000){
     popup.style.display = "flex";
     popupEmoji.innerText = emoji;
     popupText.innerText = text;
 
     setTimeout(()=>{
         popup.style.display = "none";
-    }, duration);
+    },duration);
 }
 
 function formatTime(ms){
@@ -687,12 +749,12 @@ dailyBtn.addEventListener("click",()=>{
             balance += dailyRewardAmount;
 
             playerRef.update({
-                balance: balance,
-                lastDailyReward: now
+                balance:balance,
+                lastDailyReward:now
             });
 
             playRewardSound();
-            showPopup("🎁", "حصلت على $1000", 2000);
+            showPopup("🎁","حصلت على $1000",2000);
         }else{
             updateDailyButton();
             playErrorSound();
@@ -702,7 +764,7 @@ dailyBtn.addEventListener("click",()=>{
 
 playerIdBox.addEventListener("click",()=>{
     navigator.clipboard.writeText(String(playerId));
-    showPopup("✅", "تم نسخ ID", 1200);
+    showPopup("✅","تم نسخ ID",1200);
 });
 
 function drawWheel(){
@@ -712,7 +774,7 @@ function drawWheel(){
 
     ctx.clearRect(0,0,500,500);
 
-    for(let i = 0; i < sections.length; i++){
+    for(let i=0;i<sections.length;i++){
         const start = i * angle;
         const end = start + angle;
 
@@ -742,7 +804,7 @@ function drawWheel(){
         ctx.textBaseline = "middle";
         ctx.shadowColor = "rgba(0,0,0,.7)";
         ctx.shadowBlur = 8;
-        ctx.fillText(sections[i], radius - 82, 0);
+        ctx.fillText(sections[i],radius - 82,0);
 
         ctx.restore();
     }
@@ -750,9 +812,9 @@ function drawWheel(){
 
 function resetBets(){
     bets = {
-        "🍉": 0,
-        "🍎": 0,
-        "7️⃣": 0
+        "🍉":0,
+        "🍎":0,
+        "7️⃣":0
     };
 
     document.querySelectorAll(".bet-box").forEach(box=>{
@@ -763,7 +825,7 @@ function resetBets(){
 function updateHistory(result){
     const items = Array.from(historyEl.children);
 
-    for(let i = items.length - 1; i > 0; i--){
+    for(let i=items.length - 1;i>0;i--){
         items[i].innerText = items[i - 1].innerText;
     }
 
@@ -796,7 +858,7 @@ function spinWheel(){
     setTimeout(()=>{
         showResult();
         spinning = false;
-    }, 4300);
+    },4300);
 }
 
 function showResult(){
@@ -836,9 +898,10 @@ document.querySelectorAll(".chip").forEach(chip=>{
 
         document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
         chip.classList.add("active");
+
         selectedChip = Number(chip.dataset.value);
 
-        playTone(700, 0.06, "triangle", 0.08);
+        playTone(700,.06,"triangle",.08);
     });
 });
 
@@ -850,7 +913,7 @@ document.querySelectorAll(".bet-box").forEach(box=>{
 
         if(balance < selectedChip){
             playErrorSound();
-            showPopup("❌", "الرصيد غير كافي", 1500);
+            showPopup("❌","الرصيد غير كافي",1500);
             return;
         }
 
@@ -859,7 +922,7 @@ document.querySelectorAll(".bet-box").forEach(box=>{
         balance -= selectedChip;
         bets[emoji] += selectedChip;
 
-        playTone(520, 0.07, "triangle", 0.08);
+        playTone(520,.07,"triangle",.08);
         updateBalance();
         box.querySelector(".amount").innerText = bets[emoji];
     });
