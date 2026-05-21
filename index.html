@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,6 @@
 <title>لعبة الحظ</title>
 
 <style>
-
 body{
     margin:0;
     padding:0;
@@ -103,6 +102,7 @@ body{
     justify-content:center;
     gap:20px;
     margin-top:25px;
+    flex-wrap:wrap;
 }
 
 .bet-box{
@@ -113,6 +113,12 @@ body{
     border:5px solid gold;
     box-shadow:0 0 25px #ff00ff;
     position:relative;
+    cursor:pointer;
+    user-select:none;
+}
+
+.bet-box:hover{
+    transform:scale(1.04);
 }
 
 .bet-box .emoji{
@@ -137,6 +143,7 @@ body{
     justify-content:center;
     gap:25px;
     margin-top:35px;
+    flex-wrap:wrap;
 }
 
 .chip{
@@ -152,6 +159,8 @@ body{
     justify-content:center;
     align-items:center;
     box-shadow:0 0 25px white;
+    cursor:pointer;
+    user-select:none;
 }
 
 .active{
@@ -182,6 +191,7 @@ body{
 .popup-box h1{
     color:gold;
     font-size:55px;
+    margin:0 0 20px;
 }
 
 .popup-emoji{
@@ -192,218 +202,307 @@ body{
     font-size:45px;
 }
 
+@media(max-width:600px){
+    .balance{
+        font-size:48px;
+    }
+
+    .center-circle{
+        width:90px;
+        height:90px;
+        font-size:48px;
+    }
+
+    .bet-box{
+        width:120px;
+        height:150px;
+    }
+
+    .bet-box .emoji{
+        font-size:55px;
+    }
+
+    .bet-box .multi{
+        font-size:45px;
+    }
+
+    .bet-box .amount{
+        font-size:38px;
+    }
+
+    .chip{
+        width:80px;
+        height:80px;
+        font-size:22px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="balance">$5000</div>
+<div class="balance" id="balance">$5000</div>
 
 <div class="pointer"></div>
 
 <div class="wheel-container">
-
-<canvas id="wheel" width="500" height="500"></canvas>
-
-<div class="center-circle" id="timer">15</div>
-
+    <canvas id="wheel" width="500" height="500"></canvas>
+    <div class="center-circle" id="timer">15</div>
 </div>
 
-<div class="history">
-<div>🍉</div>
-<div>🍎</div>
-<div>7️⃣</div>
+<div class="history" id="history">
+    <div>🍉</div>
+    <div>🍎</div>
+    <div>7️⃣</div>
 </div>
 
 <div class="bets">
 
-<div class="bet-box">
-<div class="emoji">🍉</div>
-<div class="multi">x2</div>
-<div class="amount">0</div>
-</div>
+    <div class="bet-box" data-emoji="🍉" data-multi="2">
+        <div class="emoji">🍉</div>
+        <div class="multi">x2</div>
+        <div class="amount">0</div>
+    </div>
 
-<div class="bet-box">
-<div class="emoji">7️⃣</div>
-<div class="multi">x8</div>
-<div class="amount">0</div>
-</div>
+    <div class="bet-box" data-emoji="7️⃣" data-multi="8">
+        <div class="emoji">7️⃣</div>
+        <div class="multi">x8</div>
+        <div class="amount">0</div>
+    </div>
 
-<div class="bet-box">
-<div class="emoji">🍎</div>
-<div class="multi">x2</div>
-<div class="amount">0</div>
-</div>
+    <div class="bet-box" data-emoji="🍎" data-multi="2">
+        <div class="emoji">🍎</div>
+        <div class="multi">x2</div>
+        <div class="amount">0</div>
+    </div>
 
 </div>
 
 <div class="chips">
-
-<div class="chip active">100</div>
-<div class="chip">1K</div>
-<div class="chip">10K</div>
-
+    <div class="chip active" data-value="100">100</div>
+    <div class="chip" data-value="1000">1K</div>
+    <div class="chip" data-value="10000">10K</div>
 </div>
 
 <div id="popup">
-
-<div class="popup-box">
-
-<h1>النتيجة</h1>
-
-<div class="popup-emoji" id="popupEmoji">🍉</div>
-
-<div class="popup-text" id="popupText">ربحت</div>
-
-</div>
-
+    <div class="popup-box">
+        <h1>النتيجة</h1>
+        <div class="popup-emoji" id="popupEmoji">🍉</div>
+        <div class="popup-text" id="popupText">انتهت الجولة</div>
+    </div>
 </div>
 
 <script>
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
 
-const canvas=document.getElementById("wheel");
-const ctx=canvas.getContext("2d");
+const balanceEl = document.getElementById("balance");
+const timer = document.getElementById("timer");
+const popup = document.getElementById("popup");
+const popupEmoji = document.getElementById("popupEmoji");
+const popupText = document.getElementById("popupText");
+const historyEl = document.getElementById("history");
 
-const sections=[
-"🍉","🍎","🍉","7️⃣",
-"🍎","🍉","🍎","🍉"
+const sections = [
+    "🍉","🍎","🍉","7️⃣",
+    "🍎","🍉","🍎","🍉"
 ];
 
-const colors=[
-"#1488ff",
-"#1488ff",
-"#1488ff",
-"#ff00cc",
-"#1488ff",
-"#1488ff",
-"#1488ff",
-"#1488ff"
+const colors = [
+    "#1488ff",
+    "#1488ff",
+    "#1488ff",
+    "#ff00cc",
+    "#1488ff",
+    "#1488ff",
+    "#1488ff",
+    "#1488ff"
 ];
 
-let currentAngle=0;
+let balance = 5000;
+let currentAngle = 0;
+let timeLeft = 15;
+let selectedChip = 100;
+let spinning = false;
+
+let bets = {
+    "🍉": 0,
+    "🍎": 0,
+    "7️⃣": 0
+};
+
+function updateBalance(){
+    balanceEl.innerText = "$" + balance;
+}
 
 function drawWheel(){
-
-    const center=250;
-    const radius=235;
+    const center = 250;
+    const radius = 235;
+    const angle = (Math.PI * 2) / sections.length;
 
     ctx.clearRect(0,0,500,500);
 
-    for(let i=0;i<sections.length;i++){
-
-        const angle=(Math.PI*2)/sections.length;
-
-        const start=i*angle;
-        const end=start+angle;
+    for(let i = 0; i < sections.length; i++){
+        const start = i * angle;
+        const end = start + angle;
 
         ctx.beginPath();
         ctx.moveTo(center,center);
         ctx.arc(center,center,radius,start,end);
         ctx.closePath();
 
-        ctx.fillStyle=colors[i];
+        ctx.fillStyle = colors[i];
         ctx.fill();
 
-        ctx.lineWidth=4;
-        ctx.strokeStyle="gold";
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "gold";
         ctx.stroke();
 
         ctx.save();
-
         ctx.translate(center,center);
-        ctx.rotate(start+angle/2);
+        ctx.rotate(start + angle / 2);
 
-        ctx.font="50px Arial";
-        ctx.textAlign="center";
-
-        ctx.fillText(
-        sections[i],
-        radius-80,
-        15
-        );
+        ctx.font = "50px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(sections[i], radius - 80, 0);
 
         ctx.restore();
     }
 }
 
-drawWheel();
+function resetBets(){
+    bets = {
+        "🍉": 0,
+        "🍎": 0,
+        "7️⃣": 0
+    };
 
+    document.querySelectorAll(".bet-box").forEach(box=>{
+        box.querySelector(".amount").innerText = "0";
+    });
+}
 
+function updateHistory(result){
+    const items = Array.from(historyEl.children);
 
-
-
-let timeLeft=15;
-
-const timer=document.getElementById("timer");
-
-timer.innerText=timeLeft;
-
-setInterval(()=>{
-
-    timeLeft--;
-
-    timer.innerText=timeLeft;
-
-    if(timeLeft<=0){
-
-        spinWheel();
-
+    for(let i = items.length - 1; i > 0; i--){
+        items[i].innerText = items[i - 1].innerText;
     }
 
-},1000);
+    items[0].innerText = result;
+}
 
+function getResultFromWheel(){
+    const sectionAngle = 360 / sections.length;
 
+    /*
+        السهم في الأعلى، والكانفاس يبدأ من جهة اليمين.
+        لذلك نستخدم زاوية 270 درجة لأنها تمثل أعلى الدائرة.
+    */
+    const normalizedAngle = ((currentAngle % 360) + 360) % 360;
+    const pointerAngle = (270 - normalizedAngle + 360) % 360;
 
+    const index = Math.floor(pointerAngle / sectionAngle);
 
+    return sections[index];
+}
 
 function spinWheel(){
+    if(spinning) return;
 
-    timeLeft=15;
+    spinning = true;
+    timeLeft = 15;
+    timer.innerText = timeLeft;
 
-    const randomDeg=
-    Math.floor(Math.random()*360)+1440;
+    const randomDeg = Math.floor(Math.random() * 360) + 1440;
 
-    currentAngle+=randomDeg;
+    currentAngle += randomDeg;
 
-    canvas.style.transition=
-    "transform 4s cubic-bezier(.17,.67,.25,1)";
-
-    canvas.style.transform=
-    `rotate(${currentAngle}deg)`;
-
+    canvas.style.transition = "transform 4s cubic-bezier(.17,.67,.25,1)";
+    canvas.style.transform = `rotate(${currentAngle}deg)`;
 
     setTimeout(()=>{
-
         showResult();
-
-    },4500);
+        spinning = false;
+    }, 4300);
 }
-
-
-
-
 
 function showResult(){
+    const result = getResultFromWheel();
+    const betAmount = bets[result];
+    const box = document.querySelector(`.bet-box[data-emoji="${result}"]`);
+    const multiplier = Number(box.dataset.multi);
 
-    const result=
-    sections[Math.floor(Math.random()*sections.length)];
+    let message = "خسرت";
 
-    document.getElementById("popup").style.display="flex";
+    if(betAmount > 0){
+        const winAmount = betAmount * multiplier;
+        balance += winAmount;
+        message = "ربحت $" + winAmount;
+    }
 
-    document.getElementById("popupEmoji").innerText=result;
+    updateBalance();
+    updateHistory(result);
 
-    document.getElementById("popupText").innerText="انتهت الجولة";
+    popup.style.display = "flex";
+    popupEmoji.innerText = result;
+    popupText.innerText = message;
 
-
+    resetBets();
 
     setTimeout(()=>{
-
-        document.getElementById("popup").style.display="none";
-
+        popup.style.display = "none";
     },3000);
-
 }
 
+document.querySelectorAll(".chip").forEach(chip=>{
+    chip.addEventListener("click",()=>{
+        document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+        chip.classList.add("active");
+        selectedChip = Number(chip.dataset.value);
+    });
+});
+
+document.querySelectorAll(".bet-box").forEach(box=>{
+    box.addEventListener("click",()=>{
+        if(spinning) return;
+
+        if(balance < selectedChip){
+            popup.style.display = "flex";
+            popupEmoji.innerText = "❌";
+            popupText.innerText = "الرصيد غير كافي";
+
+            setTimeout(()=>{
+                popup.style.display = "none";
+            },1500);
+
+            return;
+        }
+
+        const emoji = box.dataset.emoji;
+
+        balance -= selectedChip;
+        bets[emoji] += selectedChip;
+
+        updateBalance();
+        box.querySelector(".amount").innerText = bets[emoji];
+    });
+});
+
+setInterval(()=>{
+    if(spinning) return;
+
+    timeLeft--;
+    timer.innerText = timeLeft;
+
+    if(timeLeft <= 0){
+        spinWheel();
+    }
+},1000);
+
+drawWheel();
+updateBalance();
 </script>
 
 </body>
