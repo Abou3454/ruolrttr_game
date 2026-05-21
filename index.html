@@ -4,297 +4,472 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>لعبة الحظ</title>
+<title>Lucky Royale</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <style>
-*{ box-sizing:border-box; }
+*{
+    box-sizing:border-box;
+}
+
+:root{
+    --gold:#ffd76a;
+    --gold2:#ff9f1c;
+    --pink:#ff3bd4;
+    --blue:#30c7ff;
+    --red:#ff3b55;
+    --green:#35e48b;
+    --dark:#080611;
+    --panel:rgba(17,13,34,.82);
+    --panel2:rgba(255,255,255,.08);
+}
 
 body{
     margin:0;
-    padding:8px;
     min-height:100dvh;
-    background:radial-gradient(circle,#3d0066,#12001f,#000);
-    font-family:Arial;
-    overflow-x:hidden;
-    text-align:center;
+    font-family:Arial, sans-serif;
     color:white;
+    text-align:center;
+    overflow-x:hidden;
+    background:
+        radial-gradient(circle at 20% 10%,rgba(255,59,212,.35),transparent 28%),
+        radial-gradient(circle at 80% 8%,rgba(48,199,255,.28),transparent 28%),
+        radial-gradient(circle at 50% 92%,rgba(255,215,106,.18),transparent 34%),
+        linear-gradient(180deg,#10071e,#070411 55%,#020106);
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size:42px 42px;
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 80%);
+}
+
+.app{
+    width:min(100%,720px);
+    margin:0 auto;
+    padding:10px 10px 18px;
+    position:relative;
+    z-index:1;
+}
+
+.top-card{
+    background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
+    border:1px solid rgba(255,215,106,.45);
+    border-radius:22px;
+    padding:12px;
+    box-shadow:0 0 28px rgba(255,215,106,.18), inset 0 0 30px rgba(255,255,255,.04);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.brand-name{
+    text-align:right;
+}
+
+.brand-name .title{
+    font-size:clamp(24px,6vw,40px);
+    font-weight:900;
+    color:var(--gold);
+    text-shadow:0 0 20px rgba(255,215,106,.85);
+    line-height:1;
+}
+
+.brand-name .sub{
+    margin-top:4px;
+    font-size:clamp(12px,3vw,15px);
+    color:rgba(255,255,255,.72);
+}
+
+.balance-box{
+    min-width:130px;
+    padding:10px 14px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#2a1900,#6a3b00 55%,#2a1900);
+    border:1px solid rgba(255,215,106,.85);
+    box-shadow:0 0 22px rgba(255,215,106,.35);
+}
+
+.balance-label{
+    font-size:12px;
+    color:rgba(255,255,255,.72);
 }
 
 .balance{
-    font-size:clamp(34px,8vw,70px);
-    color:gold;
-    font-weight:bold;
-    margin-top:4px;
-    text-shadow:0 0 24px gold;
+    font-size:clamp(28px,7vw,48px);
+    color:var(--gold);
+    font-weight:900;
+    line-height:1.05;
+    text-shadow:0 0 18px rgba(255,215,106,.85);
+}
+
+.account-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:8px;
+    margin-top:10px;
 }
 
 .player-id{
-    width:fit-content;
-    max-width:95vw;
-    margin:6px auto 0;
-    padding:8px 14px;
-    border:2px solid gold;
-    border-radius:14px;
+    min-width:0;
+    padding:10px 12px;
+    border-radius:16px;
     background:rgba(0,0,0,.35);
+    border:1px solid rgba(48,199,255,.45);
     color:white;
-    font-size:clamp(15px,4vw,20px);
-    box-shadow:0 0 14px rgba(255,215,0,.6);
+    font-size:clamp(13px,3.5vw,17px);
+    box-shadow:0 0 14px rgba(48,199,255,.16);
     cursor:pointer;
     user-select:none;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .daily-btn{
-    margin-top:8px;
-    padding:12px 24px;
+    padding:10px 14px;
     border:none;
-    border-radius:18px;
-    background:linear-gradient(#ffe066,#ff9900);
-    color:#3b1400;
-    font-size:clamp(18px,5vw,26px);
-    font-weight:bold;
-    box-shadow:0 0 22px gold;
+    border-radius:16px;
+    background:linear-gradient(135deg,#fff1a8,#ffb321,#ff7a00);
+    color:#2a1200;
+    font-size:clamp(13px,3.4vw,17px);
+    font-weight:900;
+    box-shadow:0 0 20px rgba(255,179,33,.45);
     cursor:pointer;
+    white-space:nowrap;
 }
 
 .daily-btn:disabled{
-    background:linear-gradient(#999,#555);
+    background:linear-gradient(135deg,#777,#3a3a3a);
     color:#ddd;
     box-shadow:none;
     cursor:not-allowed;
 }
 
+.arena{
+    margin-top:10px;
+    padding:8px 0 0;
+}
+
 .pointer{
     width:0;
     height:0;
-    margin:2px auto 0;
-    border-left:clamp(18px,5vw,35px) solid transparent;
-    border-right:clamp(18px,5vw,35px) solid transparent;
-    border-top:clamp(42px,9vw,80px) solid yellow;
-    filter:drop-shadow(0 0 16px gold);
+    margin:0 auto -8px;
+    border-left:clamp(18px,5vw,34px) solid transparent;
+    border-right:clamp(18px,5vw,34px) solid transparent;
+    border-top:clamp(42px,9vw,76px) solid var(--gold);
+    filter:drop-shadow(0 0 16px rgba(255,215,106,.95));
     position:relative;
     z-index:10;
 }
 
 .wheel-container{
     position:relative;
-    width:clamp(245px,72vw,500px);
-    height:clamp(245px,72vw,500px);
+    width:clamp(252px,75vw,500px);
+    height:clamp(252px,75vw,500px);
     margin:0 auto;
-    margin-top:-4px;
+    border-radius:50%;
+}
+
+.wheel-container::before{
+    content:"";
+    position:absolute;
+    inset:-15px;
+    border-radius:50%;
+    background:conic-gradient(from 0deg,var(--gold),var(--pink),var(--blue),var(--gold));
+    filter:blur(18px);
+    opacity:.48;
 }
 
 #wheel{
+    position:relative;
+    z-index:1;
     width:100%;
     height:100%;
     border-radius:50%;
-    border:clamp(7px,2vw,14px) solid gold;
+    border:clamp(8px,2vw,14px) solid var(--gold);
     background:#1488ff;
-    box-shadow:0 0 35px gold,0 0 55px #ff00ff;
+    box-shadow:
+        0 0 34px rgba(255,215,106,.8),
+        inset 0 0 32px rgba(0,0,0,.25);
     display:block;
 }
 
 .center-circle{
     position:absolute;
+    z-index:3;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:clamp(72px,17vw,120px);
-    height:clamp(72px,17vw,120px);
+    width:clamp(74px,18vw,124px);
+    height:clamp(74px,18vw,124px);
     border-radius:50%;
-    background:radial-gradient(circle,#ff4444,#990000);
-    border:clamp(4px,1.5vw,8px) solid gold;
+    background:radial-gradient(circle at 35% 25%,#fff0a6,#ff345f 38%,#72001b);
+    border:clamp(5px,1.5vw,8px) solid var(--gold);
     display:flex;
     justify-content:center;
     align-items:center;
     font-size:clamp(38px,10vw,70px);
-    font-weight:bold;
+    font-weight:900;
     color:white;
-    box-shadow:0 0 30px orange;
+    box-shadow:0 0 34px rgba(255,96,0,.75), inset 0 0 20px rgba(0,0,0,.25);
 }
 
 .history{
     display:flex;
     justify-content:center;
-    gap:clamp(8px,2vw,15px);
-    margin-top:clamp(10px,2.5vw,25px);
+    gap:10px;
+    margin-top:14px;
 }
 
 .history div{
-    width:clamp(42px,11vw,65px);
-    height:clamp(42px,11vw,65px);
-    border-radius:14px;
-    background:#8000aa;
-    border:3px solid gold;
+    width:clamp(42px,11vw,64px);
+    height:clamp(42px,11vw,64px);
+    border-radius:16px;
+    background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.04));
+    border:1px solid rgba(255,215,106,.68);
     display:flex;
     justify-content:center;
     align-items:center;
     font-size:clamp(24px,7vw,38px);
-    box-shadow:0 0 16px gold;
+    box-shadow:0 0 16px rgba(255,215,106,.24);
 }
 
 .bets{
-    display:flex;
-    justify-content:center;
-    gap:clamp(8px,2.5vw,20px);
-    margin-top:clamp(12px,3vw,25px);
-    flex-wrap:nowrap;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:14px;
 }
 
 .bet-box{
-    width:clamp(96px,28vw,170px);
-    height:clamp(118px,31vw,190px);
-    background:linear-gradient(#ff00ff,#660099);
-    border-radius:18px;
-    border:clamp(3px,1vw,5px) solid gold;
-    box-shadow:0 0 20px #ff00ff;
-    position:relative;
+    min-width:0;
+    height:clamp(124px,32vw,184px);
+    border-radius:20px;
+    border:1px solid rgba(255,215,106,.7);
+    background:
+        linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05)),
+        radial-gradient(circle at 50% 10%,rgba(255,59,212,.55),transparent 54%),
+        linear-gradient(180deg,#231043,#10061d);
+    box-shadow:0 0 20px rgba(255,59,212,.2), inset 0 0 24px rgba(255,255,255,.05);
     cursor:pointer;
     user-select:none;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
 }
 
-.bet-box:hover{ transform:scale(1.03); }
+.bet-box:nth-child(2){
+    background:
+        linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05)),
+        radial-gradient(circle at 50% 10%,rgba(255,215,106,.6),transparent 54%),
+        linear-gradient(180deg,#4a2100,#120804);
+}
+
+.bet-box:hover{
+    transform:translateY(-2px) scale(1.02);
+}
 
 .bet-box .emoji{
-    font-size:clamp(42px,12vw,75px);
-    margin-top:-8px;
+    font-size:clamp(42px,12vw,72px);
+    line-height:1;
 }
 
 .bet-box .multi{
-    font-size:clamp(34px,11vw,70px);
-    color:gold;
-    font-weight:bold;
-    margin-top:-8px;
+    font-size:clamp(28px,8vw,56px);
+    color:var(--gold);
+    font-weight:900;
+    line-height:1;
+    text-shadow:0 0 16px rgba(255,215,106,.7);
 }
 
 .bet-box .amount{
-    font-size:clamp(28px,9vw,60px);
-    margin-top:-6px;
+    min-height:32px;
+    margin-top:4px;
+    padding:3px 10px;
+    border-radius:999px;
+    background:rgba(0,0,0,.34);
+    color:white;
+    font-size:clamp(20px,6vw,36px);
+    font-weight:900;
+    line-height:1.1;
 }
 
 .chips{
-    display:flex;
-    justify-content:center;
-    gap:clamp(10px,4vw,25px);
-    margin-top:clamp(16px,4vw,35px);
-    padding-bottom:10px;
-    flex-wrap:nowrap;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:14px;
+    padding-bottom:6px;
 }
 
 .chip{
-    width:clamp(68px,20vw,110px);
-    height:clamp(68px,20vw,110px);
+    aspect-ratio:1;
+    max-height:92px;
     border-radius:50%;
-    background:white;
-    border:clamp(5px,1.5vw,8px) solid #ddd;
-    color:black;
+    background:
+        radial-gradient(circle at 35% 28%,#fff,#f4f4f4 38%,#d2d2d2 39%,#fff 57%,#cfcfcf);
+    border:clamp(5px,1.5vw,8px) dashed #d92b2b;
+    color:#161616;
     font-size:clamp(18px,5vw,28px);
-    font-weight:bold;
+    font-weight:900;
     display:flex;
     justify-content:center;
     align-items:center;
-    box-shadow:0 0 18px white;
+    box-shadow:0 0 18px rgba(255,255,255,.45);
     cursor:pointer;
     user-select:none;
 }
 
-.active{
-    border-color:gold;
-    box-shadow:0 0 28px gold;
+.chip.active{
+    border-color:var(--gold);
+    box-shadow:0 0 28px rgba(255,215,106,.95);
+    transform:translateY(-2px);
 }
 
 #popup{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.7);
+    background:rgba(0,0,0,.72);
     display:none;
     justify-content:center;
     align-items:center;
     z-index:999;
+    padding:20px;
 }
 
 .popup-box{
-    width:min(86vw,400px);
-    background:linear-gradient(red,#770000);
-    border:6px solid gold;
-    border-radius:25px;
+    width:min(88vw,420px);
+    background:
+        linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.05)),
+        radial-gradient(circle at 50% 0%,rgba(255,215,106,.42),transparent 48%),
+        linear-gradient(180deg,#230a2d,#120513);
+    border:1px solid rgba(255,215,106,.85);
+    border-radius:26px;
     padding:24px;
-    box-shadow:0 0 40px gold;
+    box-shadow:0 0 44px rgba(255,215,106,.35);
 }
 
 .popup-box h1{
-    color:gold;
-    font-size:clamp(34px,10vw,55px);
-    margin:0 0 12px;
+    color:var(--gold);
+    font-size:clamp(32px,9vw,52px);
+    margin:0 0 10px;
+    text-shadow:0 0 18px rgba(255,215,106,.7);
 }
 
-.popup-emoji{ font-size:clamp(76px,22vw,120px); }
-.popup-text{ font-size:clamp(28px,8vw,45px); }
+.popup-emoji{
+    font-size:clamp(76px,22vw,120px);
+    line-height:1;
+}
 
-@media(max-height:700px){
-    body{ padding:4px; }
-    .balance{ font-size:34px; margin-top:0; }
-    .player-id{ padding:6px 10px; font-size:14px; }
-    .daily-btn{ padding:8px 18px; font-size:18px; margin-top:4px; }
-    .wheel-container{ width:245px; height:245px; }
+.popup-text{
+    margin-top:8px;
+    font-size:clamp(26px,7vw,42px);
+    font-weight:900;
+}
+
+@media(max-height:720px){
+    .app{ padding-top:6px; }
+    .top-card{ padding:9px; }
+    .brand-name .title{ font-size:25px; }
+    .brand-name .sub{ display:none; }
+    .balance{ font-size:31px; }
+    .account-row{ margin-top:7px; }
+    .daily-btn,.player-id{ padding:7px 10px; font-size:13px; }
+    .wheel-container{ width:246px; height:246px; }
     .pointer{
-        border-left-width:18px;
-        border-right-width:18px;
+        border-left-width:17px;
+        border-right-width:17px;
         border-top-width:38px;
     }
-    .history{ margin-top:8px; }
-    .bets{ margin-top:8px; }
-    .chips{ margin-top:10px; }
+    .history{ margin-top:9px; }
+    .bets{ margin-top:9px; }
+    .bet-box{ height:112px; border-radius:16px; }
+    .chips{ margin-top:9px; }
+    .chip{ max-height:68px; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="balance" id="balance">$0</div>
-<div class="player-id" id="playerIdBox">ID الشحن: ...</div>
-<button class="daily-btn" id="dailyBtn">مكافأة يومية +1000</button>
+<div class="app">
 
-<div class="pointer"></div>
+    <div class="top-card">
+        <div class="brand">
+            <div class="brand-name">
+                <div class="title">Lucky Royale</div>
+                <div class="sub">عجلة الحظ الملكية</div>
+            </div>
 
-<div class="wheel-container">
-    <canvas id="wheel" width="500" height="500"></canvas>
-    <div class="center-circle" id="timer">15</div>
-</div>
+            <div class="balance-box">
+                <div class="balance-label">الرصيد</div>
+                <div class="balance" id="balance">$0</div>
+            </div>
+        </div>
 
-<div class="history" id="history">
-    <div>🍉</div>
-    <div>🍎</div>
-    <div>7️⃣</div>
-</div>
-
-<div class="bets">
-    <div class="bet-box" data-emoji="🍉" data-multi="2">
-        <div class="emoji">🍉</div>
-        <div class="multi">x2</div>
-        <div class="amount">0</div>
+        <div class="account-row">
+            <div class="player-id" id="playerIdBox">ID الشحن: ...</div>
+            <button class="daily-btn" id="dailyBtn">مكافأة يومية +1000</button>
+        </div>
     </div>
 
-    <div class="bet-box" data-emoji="7️⃣" data-multi="8">
-        <div class="emoji">7️⃣</div>
-        <div class="multi">x8</div>
-        <div class="amount">0</div>
+    <div class="arena">
+        <div class="pointer"></div>
+
+        <div class="wheel-container">
+            <canvas id="wheel" width="500" height="500"></canvas>
+            <div class="center-circle" id="timer">15</div>
+        </div>
     </div>
 
-    <div class="bet-box" data-emoji="🍎" data-multi="2">
-        <div class="emoji">🍎</div>
-        <div class="multi">x2</div>
-        <div class="amount">0</div>
+    <div class="history" id="history">
+        <div>🍉</div>
+        <div>🍎</div>
+        <div>7️⃣</div>
     </div>
-</div>
 
-<div class="chips">
-    <div class="chip active" data-value="100">100</div>
-    <div class="chip" data-value="1000">1K</div>
-    <div class="chip" data-value="10000">10K</div>
+    <div class="bets">
+        <div class="bet-box" data-emoji="🍉" data-multi="2">
+            <div class="emoji">🍉</div>
+            <div class="multi">x2</div>
+            <div class="amount">0</div>
+        </div>
+
+        <div class="bet-box" data-emoji="7️⃣" data-multi="8">
+            <div class="emoji">7️⃣</div>
+            <div class="multi">x8</div>
+            <div class="amount">0</div>
+        </div>
+
+        <div class="bet-box" data-emoji="🍎" data-multi="2">
+            <div class="emoji">🍎</div>
+            <div class="multi">x2</div>
+            <div class="amount">0</div>
+        </div>
+    </div>
+
+    <div class="chips">
+        <div class="chip active" data-value="100">100</div>
+        <div class="chip" data-value="1000">1K</div>
+        <div class="chip" data-value="10000">10K</div>
+    </div>
+
 </div>
 
 <div id="popup">
@@ -359,7 +534,7 @@ const playerIdBox = document.getElementById("playerIdBox");
 playerIdBox.innerText = "ID الشحن: " + playerId;
 
 const sections = ["🍉","🍎","🍉","7️⃣","🍎","🍉","🍎","🍉"];
-const colors = ["#1488ff","#1488ff","#1488ff","#ff00cc","#1488ff","#1488ff","#1488ff","#1488ff"];
+const colors = ["#188bff","#1bb8ff","#188bff","#ff2fd0","#1bb8ff","#188bff","#1bb8ff","#188bff"];
 
 const dailyRewardAmount = 1000;
 const dailyRewardTime = 24 * 60 * 60 * 1000;
@@ -495,7 +670,7 @@ function updateDailyButton(){
             dailyBtn.innerText = "مكافأة يومية +1000";
         }else{
             dailyBtn.disabled = true;
-            dailyBtn.innerText = "المكافأة بعد " + formatTime(remaining);
+            dailyBtn.innerText = "بعد " + formatTime(remaining);
         }
     });
 }
@@ -541,26 +716,33 @@ function drawWheel(){
         const start = i * angle;
         const end = start + angle;
 
+        const gradient = ctx.createRadialGradient(center,center,20,center,center,radius);
+        gradient.addColorStop(0,"#fff2a5");
+        gradient.addColorStop(.2,colors[i]);
+        gradient.addColorStop(1,colors[i]);
+
         ctx.beginPath();
         ctx.moveTo(center,center);
         ctx.arc(center,center,radius,start,end);
         ctx.closePath();
 
-        ctx.fillStyle = colors[i];
+        ctx.fillStyle = gradient;
         ctx.fill();
 
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = "gold";
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "#ffd76a";
         ctx.stroke();
 
         ctx.save();
         ctx.translate(center,center);
         ctx.rotate(start + angle / 2);
 
-        ctx.font = "50px Arial";
+        ctx.font = "54px Arial";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(sections[i], radius - 80, 0);
+        ctx.shadowColor = "rgba(0,0,0,.7)";
+        ctx.shadowBlur = 8;
+        ctx.fillText(sections[i], radius - 82, 0);
 
         ctx.restore();
     }
