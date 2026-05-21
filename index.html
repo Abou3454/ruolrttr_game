@@ -49,7 +49,27 @@ color:gold;
 text-shadow:0 0 20px gold;
 margin-bottom:10px;
 }
+#timer{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:radial-gradient(circle,#ff0000,#990000);
+    border:8px solid gold;
 
+    margin:20px auto;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:70px;
+    font-weight:bold;
+    color:white;
+
+    box-shadow:
+    0 0 20px gold,
+    0 0 40px red;
+}
 .wheel-box{
 position:relative;
 width:340px;
@@ -276,7 +296,7 @@ z-index:200;
 <div class="timer" id="timer">5</div>
 
 </div>
-
+<div id="timer">5</div>
 <div class="history" id="history">
 <div>🍉</div>
 <div>🍎</div>
@@ -447,7 +467,7 @@ deg+=3600+random;
 
 wheel.style.transform=`rotate(${deg}deg)`;
 
-let count=5;
+let count=15;
 
 const timer=document.getElementById("timer");
 
