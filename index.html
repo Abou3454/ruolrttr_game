@@ -566,7 +566,11 @@ document.getElementById("popupText")
 
 document.getElementById("popup")
 .style.display="flex";
+setTimeout(() => {
 
+    document.getElementById("popup").style.display = "none";
+
+}, 3000);
 const history=document.getElementById("history");
 
 history.innerHTML=
