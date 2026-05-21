@@ -355,7 +355,28 @@ z-index:200;
 
 const canvas=document.getElementById("wheel");
 const ctx=canvas.getContext("2d");
+const timer = document.getElementById("timer");
 
+let count = 15;
+
+timer.innerText = count;
+
+setInterval(() => {
+
+    count--;
+
+    timer.innerText = count;
+
+    if(count <= 0){
+
+        spin();
+
+        count = 15;
+
+        timer.innerText = count;
+    }
+
+},1000);
 const sections=[
 "🍉","🍎","🍉","7️⃣",
 "🍎","🍉","🍎","🍉"
