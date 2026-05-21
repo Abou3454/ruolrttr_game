@@ -6,6 +6,8 @@
 
 <title>لعبة الحظ</title>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <style>
 *{
     box-sizing:border-box;
@@ -28,6 +30,21 @@ body{
     font-weight:bold;
     margin-top:4px;
     text-shadow:0 0 24px gold;
+}
+
+.player-id{
+    width:fit-content;
+    max-width:95vw;
+    margin:6px auto 0;
+    padding:8px 14px;
+    border:2px solid gold;
+    border-radius:14px;
+    background:rgba(0,0,0,.35);
+    color:white;
+    font-size:clamp(15px,4vw,20px);
+    box-shadow:0 0 14px rgba(255,215,0,.6);
+    cursor:pointer;
+    user-select:none;
 }
 
 .daily-btn{
@@ -236,6 +253,11 @@ body{
         margin-top:0;
     }
 
+    .player-id{
+        padding:6px 10px;
+        font-size:14px;
+    }
+
     .daily-btn{
         padding:8px 18px;
         font-size:18px;
@@ -271,6 +293,8 @@ body{
 <body>
 
 <div class="balance" id="balance">$5000</div>
+
+<div class="player-id" id="playerIdBox">ID الشحن: guest</div>
 
 <button class="daily-btn" id="dailyBtn">مكافأة يومية +1000</button>
 
@@ -324,6 +348,24 @@ body{
 </div>
 
 <script>
+if(window.Telegram && Telegram.WebApp){
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
+}
+
+let playerId = "guest";
+
+if(
+    window.Telegram &&
+    Telegram.WebApp &&
+    Telegram.WebApp.initDataUnsafe &&
+    Telegram.WebApp.initDataUnsafe.user
+){
+    playerId = Telegram.WebApp.initDataUnsafe.user.id;
+}
+
+const storagePrefix = "luckyGame_" + playerId + "_";
+
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 
@@ -334,6 +376,14 @@ const popupEmoji = document.getElementById("popupEmoji");
 const popupText = document.getElementById("popupText");
 const historyEl = document.getElementById("history");
 const dailyBtn = document.getElementById("dailyBtn");
+const playerIdBox = document.getElementById("playerIdBox");
+
+playerIdBox.innerText = "ID الشحن: " + playerId;
+
+playerIdBox.addEventListener("click",()=>{
+    navigator.clipboard.writeText(String(playerId));
+    showPopup("✅", "تم نسخ ID", 1200);
+});
 
 const sections = [
     "🍉","🍎","🍉","7️⃣",
@@ -354,7 +404,7 @@ const colors = [
 const dailyRewardAmount = 1000;
 const dailyRewardTime = 24 * 60 * 60 * 1000;
 
-let savedBalance = localStorage.getItem("luckyGameBalance");
+let savedBalance = localStorage.getItem(storagePrefix + "balance");
 let balance = savedBalance !== null ? Number(savedBalance) : 5000;
 
 let currentAngle = 0;
@@ -425,7 +475,7 @@ function playRewardSound(){
 
 function updateBalance(){
     balanceEl.innerText = "$" + balance;
-    localStorage.setItem("luckyGameBalance", balance);
+    localStorage.setItem(storagePrefix + "balance", balance);
 }
 
 function showPopup(emoji, text, duration = 2000){
@@ -448,7 +498,7 @@ function formatTime(ms){
 }
 
 function updateDailyButton(){
-    const lastReward = Number(localStorage.getItem("luckyGameLastDailyReward")) || 0;
+    const lastReward = Number(localStorage.getItem(storagePrefix + "lastDailyReward")) || 0;
     const now = Date.now();
     const remaining = dailyRewardTime - (now - lastReward);
 
@@ -464,12 +514,12 @@ function updateDailyButton(){
 dailyBtn.addEventListener("click",()=>{
     initAudio();
 
-    const lastReward = Number(localStorage.getItem("luckyGameLastDailyReward")) || 0;
+    const lastReward = Number(localStorage.getItem(storagePrefix + "lastDailyReward")) || 0;
     const now = Date.now();
 
     if(now - lastReward >= dailyRewardTime){
         balance += dailyRewardAmount;
-        localStorage.setItem("luckyGameLastDailyReward", now);
+        localStorage.setItem(storagePrefix + "lastDailyReward", now);
         updateBalance();
         updateDailyButton();
         playRewardSound();
