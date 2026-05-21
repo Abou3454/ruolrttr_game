@@ -361,12 +361,67 @@ let currentAngle = 0;
 let timeLeft = 15;
 let selectedChip = 100;
 let spinning = false;
+let audioContext = null;
 
 let bets = {
     "🍉": 0,
     "🍎": 0,
     "7️⃣": 0
 };
+
+function initAudio(){
+    if(!audioContext){
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    if(audioContext.state === "suspended"){
+        audioContext.resume();
+    }
+}
+
+document.addEventListener("click", initAudio, {once:true});
+document.addEventListener("touchstart", initAudio, {once:true});
+
+function playTone(frequency, duration, type = "sine", volume = 0.18){
+    if(!audioContext) return;
+
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = type;
+    oscillator.frequency.value = frequency;
+
+    gain.gain.setValueAtTime(volume, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + duration);
+}
+
+function playWinSound(){
+    playTone(523, 0.12, "sine");
+    setTimeout(()=>playTone(659, 0.12, "sine"), 120);
+    setTimeout(()=>playTone(784, 0.18, "sine"), 240);
+}
+
+function playLoseSound(){
+    playTone(220, 0.18, "sawtooth", 0.12);
+    setTimeout(()=>playTone(160, 0.22, "sawtooth", 0.1), 160);
+}
+
+function playErrorSound(){
+    playTone(120, 0.12, "square", 0.1);
+    setTimeout(()=>playTone(100, 0.12, "square", 0.1), 130);
+}
+
+function playRewardSound(){
+    playTone(440, 0.1, "triangle");
+    setTimeout(()=>playTone(660, 0.1, "triangle"), 100);
+    setTimeout(()=>playTone(880, 0.18, "triangle"), 200);
+}
 
 function updateBalance(){
     balanceEl.innerText = "$" + balance;
@@ -407,6 +462,8 @@ function updateDailyButton(){
 }
 
 dailyBtn.addEventListener("click",()=>{
+    initAudio();
+
     const lastReward = Number(localStorage.getItem("luckyGameLastDailyReward")) || 0;
     const now = Date.now();
 
@@ -415,9 +472,11 @@ dailyBtn.addEventListener("click",()=>{
         localStorage.setItem("luckyGameLastDailyReward", now);
         updateBalance();
         updateDailyButton();
+        playRewardSound();
         showPopup("🎁", "حصلت على $1000", 2000);
     }else{
         updateDailyButton();
+        playErrorSound();
     }
 });
 
@@ -520,6 +579,9 @@ function showResult(){
         const winAmount = betAmount * multiplier;
         balance += winAmount;
         message = "ربحت $" + winAmount;
+        playWinSound();
+    }else{
+        playLoseSound();
     }
 
     updateBalance();
@@ -538,17 +600,23 @@ function showResult(){
 
 document.querySelectorAll(".chip").forEach(chip=>{
     chip.addEventListener("click",()=>{
+        initAudio();
+
         document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
         chip.classList.add("active");
         selectedChip = Number(chip.dataset.value);
+        playTone(700, 0.06, "triangle", 0.08);
     });
 });
 
 document.querySelectorAll(".bet-box").forEach(box=>{
     box.addEventListener("click",()=>{
+        initAudio();
+
         if(spinning) return;
 
         if(balance < selectedChip){
+            playErrorSound();
             showPopup("❌", "الرصيد غير كافي", 1500);
             return;
         }
@@ -558,6 +626,7 @@ document.querySelectorAll(".bet-box").forEach(box=>{
         balance -= selectedChip;
         bets[emoji] += selectedChip;
 
+        playTone(520, 0.07, "triangle", 0.08);
         updateBalance();
         box.querySelector(".amount").innerText = bets[emoji];
     });
