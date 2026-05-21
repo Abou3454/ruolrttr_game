@@ -30,6 +30,26 @@ body{
     text-shadow:0 0 24px gold;
 }
 
+.daily-btn{
+    margin-top:8px;
+    padding:12px 24px;
+    border:none;
+    border-radius:18px;
+    background:linear-gradient(#ffe066,#ff9900);
+    color:#3b1400;
+    font-size:clamp(18px,5vw,26px);
+    font-weight:bold;
+    box-shadow:0 0 22px gold;
+    cursor:pointer;
+}
+
+.daily-btn:disabled{
+    background:linear-gradient(#999,#555);
+    color:#ddd;
+    box-shadow:none;
+    cursor:not-allowed;
+}
+
 .pointer{
     width:0;
     height:0;
@@ -216,6 +236,12 @@ body{
         margin-top:0;
     }
 
+    .daily-btn{
+        padding:8px 18px;
+        font-size:18px;
+        margin-top:4px;
+    }
+
     .wheel-container{
         width:245px;
         height:245px;
@@ -245,6 +271,8 @@ body{
 <body>
 
 <div class="balance" id="balance">$5000</div>
+
+<button class="daily-btn" id="dailyBtn">مكافأة يومية +1000</button>
 
 <div class="pointer"></div>
 
@@ -305,6 +333,7 @@ const popup = document.getElementById("popup");
 const popupEmoji = document.getElementById("popupEmoji");
 const popupText = document.getElementById("popupText");
 const historyEl = document.getElementById("history");
+const dailyBtn = document.getElementById("dailyBtn");
 
 const sections = [
     "🍉","🍎","🍉","7️⃣",
@@ -321,6 +350,9 @@ const colors = [
     "#1488ff",
     "#1488ff"
 ];
+
+const dailyRewardAmount = 1000;
+const dailyRewardTime = 24 * 60 * 60 * 1000;
 
 let savedBalance = localStorage.getItem("luckyGameBalance");
 let balance = savedBalance !== null ? Number(savedBalance) : 5000;
@@ -340,6 +372,54 @@ function updateBalance(){
     balanceEl.innerText = "$" + balance;
     localStorage.setItem("luckyGameBalance", balance);
 }
+
+function showPopup(emoji, text, duration = 2000){
+    popup.style.display = "flex";
+    popupEmoji.innerText = emoji;
+    popupText.innerText = text;
+
+    setTimeout(()=>{
+        popup.style.display = "none";
+    }, duration);
+}
+
+function formatTime(ms){
+    const totalSeconds = Math.ceil(ms / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    return hours + "س " + minutes + "د " + seconds + "ث";
+}
+
+function updateDailyButton(){
+    const lastReward = Number(localStorage.getItem("luckyGameLastDailyReward")) || 0;
+    const now = Date.now();
+    const remaining = dailyRewardTime - (now - lastReward);
+
+    if(remaining <= 0){
+        dailyBtn.disabled = false;
+        dailyBtn.innerText = "مكافأة يومية +1000";
+    }else{
+        dailyBtn.disabled = true;
+        dailyBtn.innerText = "المكافأة بعد " + formatTime(remaining);
+    }
+}
+
+dailyBtn.addEventListener("click",()=>{
+    const lastReward = Number(localStorage.getItem("luckyGameLastDailyReward")) || 0;
+    const now = Date.now();
+
+    if(now - lastReward >= dailyRewardTime){
+        balance += dailyRewardAmount;
+        localStorage.setItem("luckyGameLastDailyReward", now);
+        updateBalance();
+        updateDailyButton();
+        showPopup("🎁", "حصلت على $1000", 2000);
+    }else{
+        updateDailyButton();
+    }
+});
 
 function drawWheel(){
     const center = 250;
@@ -469,14 +549,7 @@ document.querySelectorAll(".bet-box").forEach(box=>{
         if(spinning) return;
 
         if(balance < selectedChip){
-            popup.style.display = "flex";
-            popupEmoji.innerText = "❌";
-            popupText.innerText = "الرصيد غير كافي";
-
-            setTimeout(()=>{
-                popup.style.display = "none";
-            },1500);
-
+            showPopup("❌", "الرصيد غير كافي", 1500);
             return;
         }
 
@@ -501,8 +574,11 @@ setInterval(()=>{
     }
 },1000);
 
+setInterval(updateDailyButton,1000);
+
 drawWheel();
 updateBalance();
+updateDailyButton();
 </script>
 
 </body>
