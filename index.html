@@ -7,11 +7,11 @@
 <title>لعبة الحظ</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <style>
-*{
-    box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
 body{
     margin:0;
@@ -93,9 +93,7 @@ body{
     border-radius:50%;
     border:clamp(7px,2vw,14px) solid gold;
     background:#1488ff;
-    box-shadow:
-    0 0 35px gold,
-    0 0 55px #ff00ff;
+    box-shadow:0 0 35px gold,0 0 55px #ff00ff;
     display:block;
 }
 
@@ -158,9 +156,7 @@ body{
     user-select:none;
 }
 
-.bet-box:hover{
-    transform:scale(1.03);
-}
+.bet-box:hover{ transform:scale(1.03); }
 
 .bet-box .emoji{
     font-size:clamp(42px,12vw,75px);
@@ -235,67 +231,31 @@ body{
     margin:0 0 12px;
 }
 
-.popup-emoji{
-    font-size:clamp(76px,22vw,120px);
-}
-
-.popup-text{
-    font-size:clamp(28px,8vw,45px);
-}
+.popup-emoji{ font-size:clamp(76px,22vw,120px); }
+.popup-text{ font-size:clamp(28px,8vw,45px); }
 
 @media(max-height:700px){
-    body{
-        padding:4px;
-    }
-
-    .balance{
-        font-size:34px;
-        margin-top:0;
-    }
-
-    .player-id{
-        padding:6px 10px;
-        font-size:14px;
-    }
-
-    .daily-btn{
-        padding:8px 18px;
-        font-size:18px;
-        margin-top:4px;
-    }
-
-    .wheel-container{
-        width:245px;
-        height:245px;
-    }
-
+    body{ padding:4px; }
+    .balance{ font-size:34px; margin-top:0; }
+    .player-id{ padding:6px 10px; font-size:14px; }
+    .daily-btn{ padding:8px 18px; font-size:18px; margin-top:4px; }
+    .wheel-container{ width:245px; height:245px; }
     .pointer{
         border-left-width:18px;
         border-right-width:18px;
         border-top-width:38px;
     }
-
-    .history{
-        margin-top:8px;
-    }
-
-    .bets{
-        margin-top:8px;
-    }
-
-    .chips{
-        margin-top:10px;
-    }
+    .history{ margin-top:8px; }
+    .bets{ margin-top:8px; }
+    .chips{ margin-top:10px; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="balance" id="balance">$5000</div>
-
-<div class="player-id" id="playerIdBox">ID الشحن: guest</div>
-
+<div class="balance" id="balance">$0</div>
+<div class="player-id" id="playerIdBox">ID الشحن: ...</div>
 <button class="daily-btn" id="dailyBtn">مكافأة يومية +1000</button>
 
 <div class="pointer"></div>
@@ -312,7 +272,6 @@ body{
 </div>
 
 <div class="bets">
-
     <div class="bet-box" data-emoji="🍉" data-multi="2">
         <div class="emoji">🍉</div>
         <div class="multi">x2</div>
@@ -330,7 +289,6 @@ body{
         <div class="multi">x2</div>
         <div class="amount">0</div>
     </div>
-
 </div>
 
 <div class="chips">
@@ -348,6 +306,19 @@ body{
 </div>
 
 <script>
+const firebaseConfig = {
+    apiKey: "AIzaSyAivahrO2GOmZ5L3djdPJp2-eD8g0B1Aa8",
+    authDomain: "lucky-game-332e1.firebaseapp.com",
+    databaseURL: "https://lucky-game-332e1-default-rtdb.firebaseio.com",
+    projectId: "lucky-game-332e1",
+    storageBucket: "lucky-game-332e1.firebasestorage.app",
+    messagingSenderId: "376359612059",
+    appId: "1:376359612059:web:30e2612f92f1c4a494a03e"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
 if(window.Telegram && Telegram.WebApp){
     Telegram.WebApp.ready();
     Telegram.WebApp.expand();
@@ -361,10 +332,17 @@ if(
     Telegram.WebApp.initDataUnsafe &&
     Telegram.WebApp.initDataUnsafe.user
 ){
-    playerId = Telegram.WebApp.initDataUnsafe.user.id;
+    playerId = String(Telegram.WebApp.initDataUnsafe.user.id);
+}else{
+    let guestId = localStorage.getItem("luckyGameGuestId");
+    if(!guestId){
+        guestId = "guest_" + Date.now();
+        localStorage.setItem("luckyGameGuestId", guestId);
+    }
+    playerId = guestId;
 }
 
-const storagePrefix = "luckyGame_" + playerId + "_";
+const playerRef = db.ref("players/" + playerId);
 
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
@@ -380,33 +358,13 @@ const playerIdBox = document.getElementById("playerIdBox");
 
 playerIdBox.innerText = "ID الشحن: " + playerId;
 
-playerIdBox.addEventListener("click",()=>{
-    navigator.clipboard.writeText(String(playerId));
-    showPopup("✅", "تم نسخ ID", 1200);
-});
-
-const sections = [
-    "🍉","🍎","🍉","7️⃣",
-    "🍎","🍉","🍎","🍉"
-];
-
-const colors = [
-    "#1488ff",
-    "#1488ff",
-    "#1488ff",
-    "#ff00cc",
-    "#1488ff",
-    "#1488ff",
-    "#1488ff",
-    "#1488ff"
-];
+const sections = ["🍉","🍎","🍉","7️⃣","🍎","🍉","🍎","🍉"];
+const colors = ["#1488ff","#1488ff","#1488ff","#ff00cc","#1488ff","#1488ff","#1488ff","#1488ff"];
 
 const dailyRewardAmount = 1000;
 const dailyRewardTime = 24 * 60 * 60 * 1000;
 
-let savedBalance = localStorage.getItem(storagePrefix + "balance");
-let balance = savedBalance !== null ? Number(savedBalance) : 5000;
-
+let balance = 0;
 let currentAngle = 0;
 let timeLeft = 15;
 let selectedChip = 100;
@@ -418,6 +376,39 @@ let bets = {
     "🍎": 0,
     "7️⃣": 0
 };
+
+function initPlayer(){
+    playerRef.once("value").then(snapshot=>{
+        if(!snapshot.exists()){
+            playerRef.set({
+                balance: 5000,
+                lastDailyReward: 0
+            });
+        }
+    });
+
+    playerRef.on("value", snapshot=>{
+        const data = snapshot.val();
+
+        if(data && typeof data.balance !== "undefined"){
+            balance = Number(data.balance);
+            balanceEl.innerText = "$" + balance;
+        }
+
+        updateDailyButton();
+    });
+}
+
+function saveBalance(){
+    playerRef.update({
+        balance: balance
+    });
+}
+
+function updateBalance(){
+    balanceEl.innerText = "$" + balance;
+    saveBalance();
+}
 
 function initAudio(){
     if(!audioContext){
@@ -473,11 +464,6 @@ function playRewardSound(){
     setTimeout(()=>playTone(880, 0.18, "triangle"), 200);
 }
 
-function updateBalance(){
-    balanceEl.innerText = "$" + balance;
-    localStorage.setItem(storagePrefix + "balance", balance);
-}
-
 function showPopup(emoji, text, duration = 2000){
     popup.style.display = "flex";
     popupEmoji.innerText = emoji;
@@ -498,36 +484,50 @@ function formatTime(ms){
 }
 
 function updateDailyButton(){
-    const lastReward = Number(localStorage.getItem(storagePrefix + "lastDailyReward")) || 0;
-    const now = Date.now();
-    const remaining = dailyRewardTime - (now - lastReward);
+    playerRef.once("value").then(snapshot=>{
+        const data = snapshot.val() || {};
+        const lastReward = Number(data.lastDailyReward) || 0;
+        const now = Date.now();
+        const remaining = dailyRewardTime - (now - lastReward);
 
-    if(remaining <= 0){
-        dailyBtn.disabled = false;
-        dailyBtn.innerText = "مكافأة يومية +1000";
-    }else{
-        dailyBtn.disabled = true;
-        dailyBtn.innerText = "المكافأة بعد " + formatTime(remaining);
-    }
+        if(remaining <= 0){
+            dailyBtn.disabled = false;
+            dailyBtn.innerText = "مكافأة يومية +1000";
+        }else{
+            dailyBtn.disabled = true;
+            dailyBtn.innerText = "المكافأة بعد " + formatTime(remaining);
+        }
+    });
 }
 
 dailyBtn.addEventListener("click",()=>{
     initAudio();
 
-    const lastReward = Number(localStorage.getItem(storagePrefix + "lastDailyReward")) || 0;
-    const now = Date.now();
+    playerRef.once("value").then(snapshot=>{
+        const data = snapshot.val() || {};
+        const lastReward = Number(data.lastDailyReward) || 0;
+        const now = Date.now();
 
-    if(now - lastReward >= dailyRewardTime){
-        balance += dailyRewardAmount;
-        localStorage.setItem(storagePrefix + "lastDailyReward", now);
-        updateBalance();
-        updateDailyButton();
-        playRewardSound();
-        showPopup("🎁", "حصلت على $1000", 2000);
-    }else{
-        updateDailyButton();
-        playErrorSound();
-    }
+        if(now - lastReward >= dailyRewardTime){
+            balance += dailyRewardAmount;
+
+            playerRef.update({
+                balance: balance,
+                lastDailyReward: now
+            });
+
+            playRewardSound();
+            showPopup("🎁", "حصلت على $1000", 2000);
+        }else{
+            updateDailyButton();
+            playErrorSound();
+        }
+    });
+});
+
+playerIdBox.addEventListener("click",()=>{
+    navigator.clipboard.writeText(String(playerId));
+    showPopup("✅", "تم نسخ ID", 1200);
 });
 
 function drawWheel(){
@@ -655,6 +655,7 @@ document.querySelectorAll(".chip").forEach(chip=>{
         document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
         chip.classList.add("active");
         selectedChip = Number(chip.dataset.value);
+
         playTone(700, 0.06, "triangle", 0.08);
     });
 });
@@ -696,8 +697,7 @@ setInterval(()=>{
 setInterval(updateDailyButton,1000);
 
 drawWheel();
-updateBalance();
-updateDailyButton();
+initPlayer();
 </script>
 
 </body>
