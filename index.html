@@ -239,7 +239,7 @@ body{
         margin-top:10px;
     }
 }
-</style>style>
+</style>
 </head>
 
 <body>
@@ -322,7 +322,9 @@ const colors = [
     "#1488ff"
 ];
 
-let balance = 5000;
+let savedBalance = localStorage.getItem("luckyGameBalance");
+let balance = savedBalance !== null ? Number(savedBalance) : 5000;
+
 let currentAngle = 0;
 let timeLeft = 15;
 let selectedChip = 100;
@@ -336,6 +338,7 @@ let bets = {
 
 function updateBalance(){
     balanceEl.innerText = "$" + balance;
+    localStorage.setItem("luckyGameBalance", balance);
 }
 
 function drawWheel(){
@@ -398,14 +401,8 @@ function updateHistory(result){
 
 function getResultFromWheel(){
     const sectionAngle = 360 / sections.length;
-
-    /*
-        السهم في الأعلى، والكانفاس يبدأ من جهة اليمين.
-        لذلك نستخدم زاوية 270 درجة لأنها تمثل أعلى الدائرة.
-    */
     const normalizedAngle = ((currentAngle % 360) + 360) % 360;
     const pointerAngle = (270 - normalizedAngle + 360) % 360;
-
     const index = Math.floor(pointerAngle / sectionAngle);
 
     return sections[index];
