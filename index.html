@@ -620,7 +620,7 @@ function initPlayer(){
     playerRef.once("value").then(snapshot=>{
         if(!snapshot.exists()){
             playerRef.set({
-                balance:5000,
+                balance:0,
                 lastDailyReward:0
             });
         }
