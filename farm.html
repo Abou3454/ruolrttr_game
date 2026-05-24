@@ -18,8 +18,6 @@
     --cream:#fff4cf;
     --gold:#ffd84d;
     --orange:#ff935f;
-    --sky:#56d7f4;
-    --green:#5fca71;
 }
 
 body{
@@ -32,8 +30,7 @@ body{
     background:
         radial-gradient(circle at 18% 18%,rgba(255,255,255,.42),transparent 13%),
         radial-gradient(circle at 80% 25%,rgba(255,255,255,.30),transparent 14%),
-        radial-gradient(circle at 28% 45%,rgba(255,255,255,.18),transparent 12%),
-        linear-gradient(180deg,#55d8f3 0%,#5bdcf4 62%,#ff9a6b 62%,#f47b50 100%);
+        linear-gradient(180deg,#55d8f3 0%,#5bdcf4 60%,#ff9a6b 60%,#f47b50 100%);
 }
 
 .app{
@@ -47,7 +44,7 @@ body{
 }
 
 .topbar{
-    height:60px;
+    height:58px;
     display:grid;
     grid-template-columns:84px 1fr 84px;
     gap:6px;
@@ -82,7 +79,7 @@ body{
 
 .player-panel{
     min-width:0;
-    height:52px;
+    height:50px;
     border-radius:17px;
     border:3px solid var(--ink);
     background:linear-gradient(180deg,#fff8c9,#f6d767);
@@ -107,7 +104,7 @@ body{
 
 .balance{
     width:100%;
-    font-size:15px;
+    font-size:14px;
     font-weight:900;
     color:#231700;
     white-space:nowrap;
@@ -127,26 +124,26 @@ body{
 }
 
 .playfield{
-    flex:1;
+    flex:0 0 420px;
     min-height:0;
     position:relative;
 }
 
 .board{
     position:absolute;
-    top:4px;
+    top:0;
     left:50%;
     transform:translateX(-50%);
-    width:min(92vw,386px);
-    height:min(92vw,386px);
+    width:min(88vw,350px);
+    height:min(88vw,350px);
 }
 
 .wood-stand{
     position:absolute;
     left:50%;
-    bottom:2px;
-    width:160px;
-    height:160px;
+    bottom:0;
+    width:140px;
+    height:145px;
     transform:translateX(-50%);
     background:linear-gradient(90deg,#c98c51,#f5cd91,#c98c51);
     clip-path:polygon(30% 0,70% 0,98% 100%,2% 100%);
@@ -156,10 +153,10 @@ body{
 
 .spin-hand{
     position:absolute;
-    top:45%;
+    top:47%;
     left:50%;
     width:34px;
-    height:150px;
+    height:128px;
     transform-origin:center bottom;
     transform:translate(-50%,-100%) rotate(0deg);
     z-index:8;
@@ -177,6 +174,10 @@ body{
     filter:drop-shadow(0 3px 2px rgba(0,0,0,.35));
 }
 
+.spin-hand.fast{
+    animation:handSpin .65s linear infinite;
+}
+
 .spin-hand.paused{
     animation-play-state:paused;
 }
@@ -188,11 +189,11 @@ body{
 
 .center-choice{
     position:absolute;
-    top:45%;
+    top:47%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:132px;
-    height:132px;
+    width:120px;
+    height:120px;
     border-radius:50%;
     border:5px solid var(--ink);
     background:radial-gradient(circle at 50% 35%,#fff,#ffe3bf);
@@ -205,22 +206,22 @@ body{
 }
 
 .center-face{
-    font-size:60px;
+    font-size:54px;
     line-height:1;
 }
 
 .center-label{
     margin-top:2px;
-    font-size:19px;
+    font-size:18px;
     font-weight:900;
 }
 
 .timer{
     position:absolute;
     right:-8px;
-    bottom:15px;
-    width:44px;
-    height:44px;
+    bottom:13px;
+    width:43px;
+    height:43px;
     border-radius:50%;
     border:3px solid var(--ink);
     background:var(--gold);
@@ -234,8 +235,8 @@ body{
 
 .slot{
     position:absolute;
-    width:88px;
-    height:88px;
+    width:82px;
+    height:82px;
     border-radius:50%;
     border:4px solid var(--ink);
     background:#fff6dd;
@@ -255,7 +256,7 @@ body{
     left:0;
     right:0;
     bottom:0;
-    height:31px;
+    height:29px;
     background:var(--orange);
     border-radius:0 0 42px 42px;
     border-top:2px solid rgba(79,42,22,.25);
@@ -264,7 +265,7 @@ body{
 .slot .emoji{
     position:relative;
     z-index:1;
-    font-size:36px;
+    font-size:33px;
     line-height:1;
     margin-bottom:8px;
 }
@@ -272,7 +273,7 @@ body{
 .slot .multi{
     position:relative;
     z-index:1;
-    font-size:19px;
+    font-size:18px;
     font-weight:900;
 }
 
@@ -305,14 +306,19 @@ body{
     box-shadow:0 0 20px var(--gold),0 5px 0 #a8653a;
 }
 
+.slot.winner{
+    outline:6px solid #19ff69;
+    box-shadow:0 0 24px #19ff69,0 5px 0 #a8653a;
+}
+
 .slot.s1{top:0;left:50%;transform:translateX(-50%)}
-.slot.s2{top:55px;right:12px}
-.slot.s3{top:158px;right:0}
-.slot.s4{bottom:33px;right:66px}
+.slot.s2{top:48px;right:18px}
+.slot.s3{top:146px;right:8px}
+.slot.s4{bottom:34px;right:66px}
 .slot.s5{bottom:0;left:50%;transform:translateX(-50%)}
-.slot.s6{bottom:33px;left:66px}
-.slot.s7{top:158px;left:0}
-.slot.s8{top:55px;left:12px}
+.slot.s6{bottom:34px;left:66px}
+.slot.s7{top:146px;left:8px}
+.slot.s8{top:48px;left:18px}
 
 .panel{
     flex-shrink:0;
@@ -321,6 +327,7 @@ body{
     background:linear-gradient(180deg,#ffd09a,#f48c5d);
     box-shadow:0 -4px 0 rgba(0,0,0,.16);
     padding:8px;
+    margin-top:0;
 }
 
 .history{
@@ -492,23 +499,24 @@ body{
     .player-id{font-size:10px}
     .balance{font-size:12px}
     .ping{top:58px}
-    .board{width:315px;height:315px;top:2px}
-    .center-choice{width:108px;height:108px}
-    .center-face{font-size:48px}
+    .playfield{flex:0 0 360px}
+    .board{width:300px;height:300px;top:0}
+    .center-choice{width:102px;height:102px}
+    .center-face{font-size:46px}
     .center-label{font-size:16px}
-    .timer{width:39px;height:39px;font-size:12px}
-    .spin-hand{height:122px}
+    .timer{width:38px;height:38px;font-size:12px}
+    .spin-hand{height:112px}
     .spin-hand::before{font-size:30px}
-    .slot{width:78px;height:78px}
-    .slot .emoji{font-size:31px}
-    .slot .multi{font-size:17px}
-    .slot.s2{top:45px;right:8px}
-    .slot.s3{top:137px;right:0}
-    .slot.s4{bottom:22px;right:55px}
-    .slot.s6{bottom:22px;left:55px}
-    .slot.s7{top:137px;left:0}
-    .slot.s8{top:45px;left:8px}
-    .wood-stand{height:130px;width:134px}
+    .slot{width:72px;height:72px}
+    .slot .emoji{font-size:29px}
+    .slot .multi{font-size:16px}
+    .slot.s2{top:42px;right:16px}
+    .slot.s3{top:126px;right:6px}
+    .slot.s4{bottom:30px;right:54px}
+    .slot.s6{bottom:30px;left:54px}
+    .slot.s7{top:126px;left:6px}
+    .slot.s8{top:42px;left:16px}
+    .wood-stand{height:120px;width:120px}
     .panel{padding:6px}
     .history{height:34px;margin-bottom:6px}
     .history div{width:28px;height:28px;font-size:19px}
@@ -522,7 +530,7 @@ body{
 @media(max-width:360px){
     .topbar{grid-template-columns:68px 1fr 68px}
     .icon-btn{width:31px;height:31px;font-size:18px}
-    .board{width:300px;height:300px}
+    .board{width:292px;height:292px}
 }
 </style>
 </head>
@@ -554,42 +562,18 @@ body{
             <div class="wood-stand"></div>
             <div class="spin-hand" id="spinHand"></div>
 
-            <button class="slot s1" data-emoji="🐔" data-multi="45">
-                <span class="bet-badge">0</span>
-                <span class="emoji">🐔</span><span class="multi">x45</span>
-            </button>
-            <button class="slot s2" data-emoji="🐮" data-multi="25">
-                <span class="bet-badge">0</span>
-                <span class="emoji">🐮</span><span class="multi">x25</span>
-            </button>
-            <button class="slot s3" data-emoji="🦀" data-multi="15">
-                <span class="bet-badge">0</span>
-                <span class="emoji">🦀</span><span class="multi">x15</span>
-            </button>
-            <button class="slot s4" data-emoji="🐟" data-multi="10">
-                <span class="bet-badge">0</span>
-                <span class="emoji">🐟</span><span class="multi">x10</span>
-            </button>
-            <button class="slot s5" data-emoji="🥕" data-multi="5">
-                <span class="bet-badge">0</span>
-                <span class="emoji">🥕</span><span class="multi">x5</span>
-            </button>
-            <button class="slot s6" data-emoji="🍅" data-multi="5">
-                <span class="bet-badge">0</span>
-                <span class="emoji">🍅</span><span class="multi">x5</span>
-            </button>
-            <button class="slot s7" data-emoji="🌽" data-multi="5">
-                <span class="bet-badge">0</span>
-                <span class="emoji">🌽</span><span class="multi">x5</span>
-            </button>
-            <button class="slot s8" data-emoji="🌶️" data-multi="5">
-                <span class="bet-badge">0</span>
-                <span class="emoji">🌶️</span><span class="multi">x5</span>
-            </button>
+            <button class="slot s1" data-emoji="🐔" data-multi="45"><span class="bet-badge">0</span><span class="emoji">🐔</span><span class="multi">x45</span></button>
+            <button class="slot s2" data-emoji="🐮" data-multi="25"><span class="bet-badge">0</span><span class="emoji">🐮</span><span class="multi">x25</span></button>
+            <button class="slot s3" data-emoji="🦀" data-multi="15"><span class="bet-badge">0</span><span class="emoji">🦀</span><span class="multi">x15</span></button>
+            <button class="slot s4" data-emoji="🐟" data-multi="10"><span class="bet-badge">0</span><span class="emoji">🐟</span><span class="multi">x10</span></button>
+            <button class="slot s5" data-emoji="🥕" data-multi="5"><span class="bet-badge">0</span><span class="emoji">🥕</span><span class="multi">x5</span></button>
+            <button class="slot s6" data-emoji="🍅" data-multi="5"><span class="bet-badge">0</span><span class="emoji">🍅</span><span class="multi">x5</span></button>
+            <button class="slot s7" data-emoji="🌽" data-multi="5"><span class="bet-badge">0</span><span class="emoji">🌽</span><span class="multi">x5</span></button>
+            <button class="slot s8" data-emoji="🌶️" data-multi="5"><span class="bet-badge">0</span><span class="emoji">🌶️</span><span class="multi">x5</span></button>
 
             <div class="center-choice">
-                <div class="center-face">🐱</div>
-                <div class="center-label">اختر الرمز</div>
+                <div class="center-face" id="centerFace">🐱</div>
+                <div class="center-label" id="centerLabel">وقت الرهان</div>
                 <div class="timer" id="timer">20s</div>
             </div>
         </div>
@@ -597,13 +581,7 @@ body{
 
     <section class="panel">
         <div class="history" id="history">
-            <div>🌶️</div>
-            <div>🦀</div>
-            <div>🥕</div>
-            <div>🍅</div>
-            <div>🌽</div>
-            <div>🐔</div>
-            <div>🐮</div>
+            <div>🌶️</div><div>🦀</div><div>🥕</div><div>🍅</div><div>🌽</div><div>🐔</div><div>🐮</div>
         </div>
 
         <div class="chips">
@@ -628,11 +606,7 @@ body{
             <div>رهانك: <span id="popupBet">0</span></div>
             <div>ربحك: <span id="popupWin">0</span></div>
         </div>
-        <div class="reward-row">
-            <div class="coin-medal"></div>
-            <div class="coin-medal"></div>
-            <div class="coin-medal"></div>
-        </div>
+        <div class="reward-row"><div class="coin-medal"></div><div class="coin-medal"></div><div class="coin-medal"></div></div>
     </div>
 </div>
 
@@ -643,8 +617,7 @@ body{
         <div class="help">
             اختر قيمة الرهان من الأسفل.<br>
             يمكنك الرهان على أكثر من رمز في نفس الجولة.<br>
-            اليد الدوارة تعمل طوال وقت الرهان.<br>
-            عند انتهاء الوقت تظهر النتيجة.<br>
+            بعد انتهاء وقت الرهان يبدأ عداد 5 ثواني لإظهار النتيجة.<br>
             إذا ظهر رمز راهنت عليه تربح حسب المضاعف.
         </div>
         <button class="close-btn" id="closeHelp">إغلاق</button>
@@ -691,6 +664,8 @@ const totalBetEl = document.getElementById("totalBet");
 const selectedText = document.getElementById("selectedText");
 const historyEl = document.getElementById("history");
 const spinHand = document.getElementById("spinHand");
+const centerLabel = document.getElementById("centerLabel");
+const centerFace = document.getElementById("centerFace");
 
 const popup = document.getElementById("popup");
 const popupEmoji = document.getElementById("popupEmoji");
@@ -717,20 +692,13 @@ let balance = 0;
 let selectedChip = 100;
 let selectedEmoji = null;
 let totalBet = 0;
-let timeLeft = 20;
+let betTime = 20;
+let revealTime = 5;
+let phase = "bet";
 let locked = false;
 let audioContext = null;
 
-let bets = {
-    "🐔":0,
-    "🐮":0,
-    "🦀":0,
-    "🐟":0,
-    "🥕":0,
-    "🍅":0,
-    "🌽":0,
-    "🌶️":0
-};
+let bets = {"🐔":0,"🐮":0,"🦀":0,"🐟":0,"🥕":0,"🍅":0,"🌽":0,"🌶️":0};
 
 const options = [
     {emoji:"🐔", multi:45},
@@ -830,22 +798,21 @@ function updateInfo(){
 function resetRound(){
     selectedEmoji = null;
     totalBet = 0;
-    bets = {
-        "🐔":0,
-        "🐮":0,
-        "🦀":0,
-        "🐟":0,
-        "🥕":0,
-        "🍅":0,
-        "🌽":0,
-        "🌶️":0
-    };
+    bets = {"🐔":0,"🐮":0,"🦀":0,"🐟":0,"🥕":0,"🍅":0,"🌽":0,"🌶️":0};
 
+    phase = "bet";
     locked = false;
-    document.querySelectorAll(".slot").forEach(o=>o.classList.remove("active","has-bet"));
+    betTime = 20;
+    revealTime = 5;
+
+    centerFace.innerText = "🐱";
+    centerLabel.innerText = "وقت الرهان";
+    timerEl.innerText = betTime + "s";
+
+    document.querySelectorAll(".slot").forEach(o=>o.classList.remove("active","has-bet","winner"));
     updateInfo();
 
-    spinHand.classList.remove("paused");
+    spinHand.classList.remove("paused","fast");
     spinHand.style.animation = "none";
     spinHand.offsetHeight;
     spinHand.style.animation = "";
@@ -880,7 +847,7 @@ document.querySelectorAll(".chip").forEach(chip=>{
 
 document.querySelectorAll(".slot").forEach(option=>{
     option.addEventListener("click",()=>{
-        if(locked) return;
+        if(locked || phase !== "bet") return;
 
         if(balance < selectedChip){
             tone(110,.12,"square",.1);
@@ -902,12 +869,34 @@ document.querySelectorAll(".slot").forEach(option=>{
     });
 });
 
-function finishRound(){
+function startRevealCountdown(){
+    phase = "reveal";
     locked = true;
+    revealTime = 5;
+
+    centerFace.innerText = "⏳";
+    centerLabel.innerText = "إظهار النتيجة";
+    timerEl.innerText = revealTime + "s";
+
+    spinHand.classList.add("fast");
+}
+
+function finishRound(){
+    phase = "result";
+    spinHand.classList.remove("fast");
     spinHand.classList.add("paused");
 
     const result = options[Math.floor(Math.random() * options.length)];
     updateHistory(result.emoji);
+
+    document.querySelectorAll(".slot").forEach(slot=>{
+        if(slot.dataset.emoji === result.emoji){
+            slot.classList.add("winner");
+        }
+    });
+
+    centerFace.innerText = result.emoji;
+    centerLabel.innerText = "النتيجة";
 
     const betAmount = bets[result.emoji] || 0;
     let win = 0;
@@ -926,26 +915,34 @@ function finishRound(){
     saveBalance();
     showPopup(result.emoji,title,totalBet,win,3200);
 
-    setTimeout(()=>{
-        resetRound();
-        timeLeft = 20;
-        timerEl.innerText = timeLeft + "s";
-    },3300);
+    setTimeout(resetRound,3500);
 }
 
 setInterval(()=>{
-    if(locked) return;
-    timeLeft--;
-    timerEl.innerText = timeLeft + "s";
+    if(phase === "bet"){
+        betTime--;
+        timerEl.innerText = betTime + "s";
 
-    if(timeLeft <= 0){
-        finishRound();
+        if(betTime <= 0){
+            startRevealCountdown();
+        }
+
+        return;
+    }
+
+    if(phase === "reveal"){
+        revealTime--;
+        timerEl.innerText = revealTime + "s";
+
+        if(revealTime <= 0){
+            finishRound();
+        }
     }
 },1000);
 
 initPlayer();
 updateInfo();
-timerEl.innerText = timeLeft + "s";
+timerEl.innerText = betTime + "s";
 </script>
 
 </body>
