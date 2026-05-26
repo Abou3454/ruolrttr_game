@@ -1,462 +1,524 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>برق الحظ</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>كنوز البرق</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
 
-:root{
-    --gold:#ffd76a;
-    --gold2:#ff9f1c;
-    --purple:#3a0b6e;
-    --deep:#090018;
-    --blue:#24c8ff;
-    --red:#ff3b55;
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial, Tahoma, sans-serif;
+    color:#fff;
+    background:#160025;
 }
 
 body{
-    margin:0;
-    width:100vw;
-    height:100dvh;
-    overflow:hidden;
-    font-family:Arial,sans-serif;
-    color:white;
-    text-align:center;
-    background:
-        radial-gradient(circle at 50% 10%,rgba(255,215,106,.28),transparent 24%),
-        radial-gradient(circle at 15% 55%,rgba(36,200,255,.2),transparent 28%),
-        radial-gradient(circle at 85% 55%,rgba(255,59,212,.25),transparent 28%),
-        linear-gradient(180deg,#160035,#070010 65%,#020006);
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-.app{
+.game{
     width:min(100vw,430px);
     height:100dvh;
-    margin:0 auto;
-    padding:8px;
-    display:flex;
-    flex-direction:column;
+    max-height:920px;
     position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 12%, rgba(255,190,90,.35), transparent 26%),
+        linear-gradient(180deg,#22126f 0%,#4c1575 34%,#22002e 72%,#120017 100%);
+}
+
+.sky{
+    position:absolute;
+    inset:0 0 auto 0;
+    height:42%;
+    background:
+        radial-gradient(circle at 50% 65%, rgba(255,255,255,.45), transparent 22%),
+        linear-gradient(180deg,#2442a6,#9e4fbc 58%,#f2a65a);
+    opacity:.95;
+}
+
+.temple{
+    position:absolute;
+    top:86px;
+    left:50%;
+    transform:translateX(-50%);
+    width:92%;
+    height:190px;
+    border-radius:30px 30px 0 0;
+    background:
+        linear-gradient(90deg, transparent 0 7%, rgba(255,235,178,.75) 7% 12%, transparent 12% 22%, rgba(255,235,178,.75) 22% 27%, transparent 27% 73%, rgba(255,235,178,.75) 73% 78%, transparent 78% 88%, rgba(255,235,178,.75) 88% 93%, transparent 93%),
+        linear-gradient(180deg,rgba(255,226,160,.9),rgba(180,91,70,.05));
+    filter:drop-shadow(0 14px 25px rgba(0,0,0,.35));
+    opacity:.78;
+}
+
+.zeus{
+    position:absolute;
+    top:108px;
+    left:50%;
+    transform:translateX(-50%);
+    width:178px;
+    height:178px;
+    border-radius:45% 45% 22% 22%;
+    background:
+        radial-gradient(circle at 35% 28%,#fff 0 12%,transparent 13%),
+        radial-gradient(circle at 64% 28%,#fff 0 12%,transparent 13%),
+        linear-gradient(180deg,#f5d2b3 0 42%,#c88a5b 43% 100%);
+    border:5px solid #f8d56b;
+    box-shadow:0 0 25px rgba(255,224,116,.75);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:74px;
+    z-index:2;
+}
+
+.zeus:before{
+    content:"☁️";
+    position:absolute;
+    top:-35px;
+    font-size:72px;
+    filter:drop-shadow(0 4px 3px rgba(0,0,0,.25));
 }
 
 .topbar{
-    height:58px;
-    display:grid;
-    grid-template-columns:76px 1fr 76px;
-    gap:6px;
-    align-items:center;
-    flex-shrink:0;
-}
-
-.icon-row{
+    position:absolute;
+    top:8px;
+    left:10px;
+    right:10px;
+    height:54px;
     display:flex;
-    gap:7px;
     align-items:center;
+    justify-content:space-between;
+    z-index:10;
 }
 
-.icon-row.left{justify-content:flex-start}
-.icon-row.right{justify-content:flex-end}
+.logo{
+    height:44px;
+    min-width:122px;
+    padding:4px 12px;
+    border-radius:14px;
+    background:linear-gradient(180deg,#6d1d9d,#28003f);
+    border:2px solid #f5c94f;
+    color:#ffe070;
+    font-weight:900;
+    line-height:1.05;
+    text-shadow:0 2px #5d2600;
+    box-shadow:0 0 12px rgba(255,213,74,.45);
+}
 
 .icon-btn{
-    width:36px;
-    height:36px;
+    width:44px;
+    height:44px;
     border-radius:50%;
-    border:2px solid var(--gold);
-    background:linear-gradient(180deg,#6a21c9,#22004d);
-    color:var(--gold);
-    font-size:20px;
+    border:2px solid #f8d56b;
+    background:linear-gradient(180deg,#ffe9a2,#c56a20);
+    color:#441700;
+    font-size:24px;
     font-weight:900;
-    box-shadow:0 0 12px rgba(255,215,106,.45);
-    cursor:pointer;
-}
-
-.player-panel{
-    min-width:0;
-    height:50px;
-    border-radius:16px;
-    border:2px solid var(--gold);
-    background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05));
-    box-shadow:0 0 18px rgba(255,215,106,.26);
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
-    padding:4px 8px;
-    overflow:hidden;
+    box-shadow:0 3px 0 #773612,0 0 10px rgba(255,218,90,.65);
 }
 
-.player-id{
-    width:100%;
-    font-size:11px;
+.menu-group{
+    display:flex;
+    gap:8px;
+}
+
+.info-card{
+    position:absolute;
+    top:62px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:9;
+    width:70%;
+    min-height:44px;
+    padding:5px 10px;
+    border-radius:12px;
+    border:2px solid #5c2a12;
+    background:linear-gradient(180deg,#fff0b7,#d98537);
+    color:#361300;
     font-weight:900;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    color:rgba(255,255,255,.78);
-}
-
-.balance{
-    width:100%;
-    font-size:15px;
-    font-weight:900;
-    color:var(--gold);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    text-shadow:0 0 10px rgba(255,215,106,.7);
-}
-
-.title{
-    flex-shrink:0;
-    margin:5px 0 6px;
-}
-
-.title h1{
-    margin:0;
-    font-size:31px;
-    color:var(--gold);
-    text-shadow:0 0 18px rgba(255,215,106,.75);
-}
-
-.title p{
-    margin:3px 0 0;
     font-size:13px;
-    color:rgba(255,255,255,.68);
+    box-shadow:0 4px 0 #5c2a12;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.net{
+    position:absolute;
+    top:118px;
+    right:16px;
+    z-index:9;
+    color:#4cff64;
+    font-weight:900;
+    font-size:14px;
+    text-shadow:0 2px 3px #003b08;
+}
+
+.banner{
+    position:absolute;
+    top:294px;
+    left:14px;
+    right:14px;
+    height:42px;
+    z-index:4;
+    border-radius:12px;
+    border:3px solid #f8c64d;
+    background:linear-gradient(180deg,#6c190e,#30000d);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:#ffe37a;
+    font-weight:900;
+    box-shadow:0 5px 0 #200006,0 0 12px rgba(255,210,82,.4);
+}
+
+.multiplier{
+    color:#ffd34c;
+    font-size:24px;
+    min-width:54px;
 }
 
 .board-wrap{
-    flex:1;
-    min-height:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.slot-frame{
-    border:3px solid var(--gold);
-    border-radius:20px;
+    position:absolute;
+    top:344px;
+    left:10px;
+    right:10px;
+    height:344px;
+    z-index:5;
+    padding:10px;
+    border-radius:10px;
+    border:4px solid #f6c84d;
     background:
-        radial-gradient(circle at 50% 0%,rgba(255,215,106,.22),transparent 45%),
-        linear-gradient(180deg,#300069,#12002d);
-    box-shadow:
-        0 0 22px rgba(255,215,106,.35),
-        inset 0 0 22px rgba(0,0,0,.35);
-    padding:8px;
+        linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px),
+        linear-gradient(180deg,#3d0d55,#1d092c);
+    background-size:16.66% 100%,100% 100%;
+    box-shadow:0 6px 0 #5c2607,0 0 20px rgba(255,220,84,.45);
 }
 
-.reels{
+.grid{
+    width:100%;
+    height:100%;
     display:grid;
     grid-template-columns:repeat(6,1fr);
+    grid-template-rows:repeat(5,1fr);
     gap:5px;
 }
 
 .cell{
-    aspect-ratio:1;
-    border-radius:12px;
-    border:1px solid rgba(255,215,106,.42);
-    background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(0,0,0,.18));
+    border-radius:10px;
+    background:radial-gradient(circle at 50% 35%,#64236f,#260430 70%);
+    border:1px solid rgba(255,210,95,.28);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:30px;
-    box-shadow:inset 0 0 12px rgba(0,0,0,.28);
+    font-size:34px;
+    position:relative;
+    box-shadow:inset 0 0 14px rgba(0,0,0,.45);
+}
+
+.cell.drop{
+    animation:drop .34s cubic-bezier(.15,.75,.24,1.15);
+}
+
+.cell.break{
+    animation:break .34s ease forwards;
 }
 
 .cell.win{
-    background:radial-gradient(circle,#fff7a8,#ffb321);
-    color:#180020;
-    box-shadow:0 0 16px var(--gold);
-    transform:scale(1.05);
+    box-shadow:0 0 18px #fff06a,inset 0 0 16px rgba(255,235,110,.6);
+    border-color:#fff06a;
 }
 
-.multiplier-row{
-    height:44px;
-    margin-top:8px;
-    border-radius:14px;
-    border:2px solid rgba(255,215,106,.65);
-    background:rgba(0,0,0,.28);
+@keyframes drop{
+    from{transform:translateY(-95px) scale(.78);opacity:0}
+    to{transform:translateY(0) scale(1);opacity:1}
+}
+
+@keyframes break{
+    0%{transform:scale(1);opacity:1;filter:brightness(1)}
+    45%{transform:scale(1.25);opacity:1;filter:brightness(2)}
+    100%{transform:scale(.1) rotate(20deg);opacity:0}
+}
+
+.status{
+    position:absolute;
+    top:694px;
+    left:16px;
+    right:16px;
+    height:46px;
+    z-index:6;
+    border-radius:12px;
+    border:3px solid #f8c64d;
+    background:linear-gradient(180deg,#fff2c4,#c67a38);
+    color:#682200;
+    font-weight:900;
+    font-size:22px;
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:8px;
+    box-shadow:0 4px 0 #5c2607;
+}
+
+.bottom{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:178px;
+    z-index:7;
+    padding:10px 14px 12px;
+    background:linear-gradient(180deg,#6b5d93,#352352);
+    border-top:4px solid #f8c64d;
+    box-shadow:0 -8px 22px rgba(0,0,0,.35);
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:7px;
+    height:34px;
+    margin-bottom:8px;
+}
+
+.stat{
+    border-radius:8px;
+    border:2px solid #d6aa48;
+    background:linear-gradient(180deg,#4d345e,#271530);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    color:#ffe89a;
     font-weight:900;
-    color:var(--gold);
-    font-size:18px;
+    font-size:14px;
+    overflow:hidden;
 }
 
-.multiplier-pill{
-    min-width:58px;
-    padding:5px 10px;
-    border-radius:999px;
-    background:linear-gradient(180deg,#ffef83,#ff9f1c);
-    color:#2b1000;
-    box-shadow:0 0 14px rgba(255,215,106,.6);
+.controls{
+    display:grid;
+    grid-template-columns:58px 58px 1fr 58px 58px;
+    align-items:center;
+    gap:8px;
 }
 
-.panel{
-    flex-shrink:0;
-    margin-top:8px;
-    border:3px solid var(--gold);
-    border-radius:18px;
-    background:linear-gradient(180deg,#371174,#14002f);
-    box-shadow:0 0 18px rgba(255,215,106,.23);
-    padding:8px;
+.small-control{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    border:3px solid #c7d4e5;
+    background:linear-gradient(180deg,#eaf7ff,#6e7287);
+    color:#2d2340;
+    font-size:28px;
+    font-weight:900;
+    box-shadow:inset 0 0 10px rgba(255,255,255,.5),0 4px 0 #202033;
+}
+
+.spin{
+    height:92px;
+    border-radius:50%;
+    border:5px solid #ffd96a;
+    background:
+        radial-gradient(circle,#fff39d 0 12%,#ffbe28 13% 55%,#b45d00 56% 100%);
+    color:#7b2400;
+    font-size:42px;
+    font-weight:900;
+    box-shadow:0 0 24px rgba(255,220,90,.9),0 7px 0 #6e2f00;
+}
+
+.spin:disabled{
+    filter:grayscale(.6);
+    opacity:.7;
 }
 
 .chips{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:7px;
+    margin-top:9px;
 }
 
 .chip{
-    height:55px;
-    border-radius:14px;
-    border:2px solid rgba(255,215,106,.72);
-    background:linear-gradient(180deg,#fff8d8,#f7b12d);
-    color:#2b1000;
+    height:38px;
+    border-radius:11px;
+    border:2px solid #633214;
+    background:linear-gradient(180deg,#fff9cd,#f0a93b);
+    color:#321302;
+    font-size:16px;
     font-weight:900;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    user-select:none;
-    box-shadow:0 4px 0 #7b3a00;
+    box-shadow:0 3px 0 #5c2607;
 }
 
 .chip.active{
-    outline:4px solid #fff;
-    box-shadow:0 0 18px #fff,0 4px 0 #7b3a00;
+    border-color:#fff45a;
+    box-shadow:0 0 14px #fff45a,0 3px 0 #5c2607;
 }
 
-.controls{
-    margin-top:8px;
-    display:grid;
-    grid-template-columns:1fr 1.15fr;
-    gap:8px;
-}
-
-.info-box{
-    height:48px;
-    border-radius:14px;
-    border:2px solid rgba(255,215,106,.72);
-    background:rgba(0,0,0,.26);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:16px;
-    font-weight:900;
-}
-
-.spin-btn{
-    height:48px;
-    border-radius:14px;
-    border:2px solid var(--gold);
-    background:linear-gradient(180deg,#fff088,#ff9f1c);
-    color:#351400;
-    font-size:24px;
-    font-weight:900;
-    box-shadow:0 4px 0 #8a4300,0 0 18px rgba(255,215,106,.6);
-    cursor:pointer;
-}
-
-.spin-btn:disabled{
-    filter:grayscale(1);
-    opacity:.7;
-    cursor:not-allowed;
-}
-
-.message{
-    margin-top:7px;
-    min-height:26px;
-    color:var(--gold);
-    font-size:16px;
-    font-weight:900;
-}
-
-.paytable{
-    margin-top:7px;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:5px;
-    font-size:12px;
-    color:rgba(255,255,255,.78);
-}
-
-.pay{
-    border-radius:10px;
-    background:rgba(255,255,255,.08);
-    padding:5px 2px;
-}
-
-.modal{
-    position:fixed;
+.popup{
+    position:absolute;
     inset:0;
     background:rgba(0,0,0,.72);
-    z-index:99;
+    z-index:50;
     display:none;
     align-items:center;
     justify-content:center;
-    padding:18px;
+    padding:22px;
 }
 
-.modal-card{
-    width:min(88vw,380px);
-    border-radius:24px;
-    border:3px solid var(--gold);
-    background:
-        radial-gradient(circle at 50% 0%,rgba(255,215,106,.35),transparent 45%),
-        linear-gradient(180deg,#4a0c88,#14002f);
-    box-shadow:0 0 38px rgba(255,215,106,.45);
-    padding:22px 16px;
+.popup-box{
+    width:100%;
+    max-width:330px;
+    border-radius:18px;
+    border:4px solid #ffe06a;
+    background:linear-gradient(180deg,#6d1689,#26002f);
+    box-shadow:0 0 28px rgba(255,225,98,.75);
+    padding:20px;
+    text-align:center;
 }
 
-.modal-icon{
+.popup-box h2{
+    margin:0 0 12px;
+    color:#ffe36f;
+    font-size:28px;
+}
+
+.popup-icon{
     font-size:72px;
+    margin:8px 0;
 }
 
-.modal-title{
-    margin-top:8px;
-    color:var(--gold);
-    font-size:36px;
-    font-weight:900;
-}
-
-.modal-text{
-    margin-top:10px;
+.popup-text{
     font-size:22px;
     font-weight:900;
+    line-height:1.6;
 }
 
-.close-btn{
+.close{
     margin-top:16px;
     width:100%;
     height:44px;
-    border-radius:14px;
-    border:2px solid var(--gold);
-    background:linear-gradient(180deg,#fff088,#ff9f1c);
-    color:#351400;
-    font-size:20px;
+    border-radius:12px;
+    border:2px solid #ffe06a;
+    background:linear-gradient(180deg,#edf8ff,#748294);
+    color:#fff;
     font-weight:900;
-    cursor:pointer;
+    font-size:18px;
 }
 
-@keyframes spinPulse{
-    0%{transform:scale(1)}
-    50%{transform:scale(.86)}
-    100%{transform:scale(1)}
+@media (max-height:760px){
+    .temple{top:70px;height:150px}
+    .zeus{top:92px;width:145px;height:145px;font-size:58px}
+    .banner{top:250px}
+    .board-wrap{top:296px;height:286px}
+    .status{top:588px;height:38px;font-size:18px}
+    .bottom{height:164px}
+    .spin{height:78px;font-size:35px}
+    .cell{font-size:28px}
 }
 
-.spinning .cell{
-    animation:spinPulse .22s linear infinite;
-}
-
-@media(max-height:720px){
-    .app{padding:6px}
-    .topbar{height:50px}
-    .icon-btn{width:32px;height:32px;font-size:18px}
-    .player-panel{height:43px}
-    .title h1{font-size:25px}
-    .title p{display:none}
-    .cell{font-size:25px;border-radius:10px}
-    .multiplier-row{height:38px;font-size:16px}
-    .chip{height:48px}
-    .controls .info-box,.spin-btn{height:43px}
-    .paytable{display:none}
+@media (max-width:360px){
+    .cell{font-size:27px}
+    .info-card{font-size:12px;width:74%}
+    .controls{grid-template-columns:50px 50px 1fr 50px 50px}
+    .small-control{width:50px;height:50px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="game">
+
+    <div class="sky"></div>
+    <div class="temple"></div>
+    <div class="zeus">⚡</div>
+
     <div class="topbar">
-        <div class="icon-row left">
-            <button class="icon-btn" id="backBtn">↩</button>
-            <button class="icon-btn" id="helpBtn">?</button>
+        <div class="menu-group">
+            <button class="icon-btn" onclick="location.href='games.html'">↩</button>
+            <button class="icon-btn" onclick="toggleSound()">🔊</button>
         </div>
 
-        <div class="player-panel">
-            <div class="player-id" id="playerIdBox">ID: ...</div>
-            <div class="balance" id="balance">رصيدك: 0</div>
+        <div class="logo">
+            كنوز<br>البرق
         </div>
 
-        <div class="icon-row right">
-            <button class="icon-btn">🔇</button>
-            <button class="icon-btn">☰</button>
+        <div class="menu-group">
+            <button class="icon-btn" onclick="showHelp()">؟</button>
+            <button class="icon-btn" onclick="location.href='games.html'">☰</button>
         </div>
     </div>
 
-    <div class="title">
-        <h1>برق الحظ ⚡</h1>
-        <p>اجمع الرموز واربح مع المضاعفات</p>
+    <div class="info-card">
+        ID: <span id="playerId">...</span><br>
+        رصيدك: <span id="balance">0</span>
+    </div>
+
+    <div class="net">225ms</div>
+
+    <div class="banner">
+        <span class="multiplier" id="multiText">1X</span>
+        <span id="bannerText">اضغط ابدأ وانظر إلى الكنوز</span>
     </div>
 
     <div class="board-wrap">
-        <div class="slot-frame" id="slotFrame">
-            <div class="reels" id="reels"></div>
-
-            <div class="multiplier-row">
-                <span>المضاعف</span>
-                <span class="multiplier-pill" id="multiplierBox">x1</span>
-            </div>
-        </div>
+        <div class="grid" id="grid"></div>
     </div>
 
-    <div class="panel">
-        <div class="chips">
-            <div class="chip" data-value="100">🪙<span>100</span></div>
-            <div class="chip" data-value="1000">🪙<span>1K</span></div>
-            <div class="chip" data-value="10000">🪙<span>10K</span></div>
-            <div class="chip active" data-value="100000">🪙<span>100K</span></div>
+    <div class="status" id="status">حظا سعيدا</div>
+
+    <div class="bottom">
+        <div class="stats">
+            <div class="stat">المحفظة: <span id="walletText">0</span></div>
+            <div class="stat">الرهان: <span id="betText">100</span></div>
+            <div class="stat">فوز: <span id="winText">0</span></div>
         </div>
 
         <div class="controls">
-            <div class="info-box">الرهان: <span id="betText">100K</span></div>
-            <button class="spin-btn" id="spinBtn">SPIN</button>
+            <button class="small-control" onclick="toggleAuto()">⏵</button>
+            <button class="small-control" onclick="changeBet(-1)">−</button>
+            <button class="spin" id="spinBtn" onclick="startSpin()">↻</button>
+            <button class="small-control" onclick="changeBet(1)">+</button>
+            <button class="small-control" onclick="toggleSound()">⚡</button>
         </div>
 
-        <div class="message" id="message">اضغط SPIN للبدء</div>
-
-        <div class="paytable">
-            <div class="pay">8+ رموز = ربح</div>
-            <div class="pay">12+ = ربح أكبر</div>
-            <div class="pay">مضاعف عشوائي</div>
+        <div class="chips">
+            <button class="chip active" onclick="selectBet(100,this)">100</button>
+            <button class="chip" onclick="selectBet(1000,this)">1K</button>
+            <button class="chip" onclick="selectBet(10000,this)">10K</button>
+            <button class="chip" onclick="selectBet(100000,this)">100K</button>
         </div>
     </div>
-</div>
 
-<div class="modal" id="popup">
-    <div class="modal-card">
-        <div class="modal-icon" id="popupIcon">⚡</div>
-        <div class="modal-title" id="popupTitle">النتيجة</div>
-        <div class="modal-text" id="popupText">...</div>
-        <button class="close-btn" id="closePopup">حسناً</button>
-    </div>
-</div>
-
-<div class="modal" id="helpPopup">
-    <div class="modal-card">
-        <div class="modal-icon">?</div>
-        <div class="modal-title">شرح اللعبة</div>
-        <div class="modal-text" style="font-size:17px;line-height:1.8;text-align:right">
-            اختر قيمة الرهان ثم اضغط SPIN.<br>
-            إذا ظهر نفس الرمز 8 مرات أو أكثر تربح.<br>
-            كلما زاد عدد الرمز زاد الربح.<br>
-            أحياناً يظهر مضاعف عشوائي يزيد الجائزة.<br>
-            الرصيد مشترك بين كل الألعاب.
+    <div class="popup" id="popup">
+        <div class="popup-box">
+            <h2 id="popupTitle">النتيجة</h2>
+            <div class="popup-icon" id="popupIcon">⚡</div>
+            <div class="popup-text" id="popupText"></div>
+            <button class="close" onclick="closePopup()">حسنا</button>
         </div>
-        <button class="close-btn" id="closeHelp">إغلاق</button>
     </div>
+
 </div>
 
 <script>
@@ -473,294 +535,377 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-if(window.Telegram && Telegram.WebApp){
-    Telegram.WebApp.ready();
-    Telegram.WebApp.expand();
+const tg = window.Telegram?.WebApp;
+if(tg){
+    tg.ready();
+    tg.expand();
 }
 
-let playerId = "guest";
-if(window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user){
-    playerId = String(Telegram.WebApp.initDataUnsafe.user.id);
-}else{
-    let guestId = localStorage.getItem("luckyGameGuestId");
-    if(!guestId){
-        guestId = "guest_" + Date.now();
-        localStorage.setItem("luckyGameGuestId", guestId);
-    }
-    playerId = guestId;
+let playerId = "guest_" + localStorage.getItem("guest_id");
+if(!localStorage.getItem("guest_id")){
+    localStorage.setItem("guest_id", Math.floor(Math.random() * 999999999));
+    playerId = "guest_" + localStorage.getItem("guest_id");
 }
+
+if(tg?.initDataUnsafe?.user?.id){
+    playerId = String(tg.initDataUnsafe.user.id);
+}
+
+document.getElementById("playerId").innerText = playerId;
 
 const playerRef = db.ref("players/" + playerId);
 
-const reels = document.getElementById("reels");
-const slotFrame = document.getElementById("slotFrame");
-const balanceEl = document.getElementById("balance");
-const playerIdBox = document.getElementById("playerIdBox");
-const betText = document.getElementById("betText");
-const spinBtn = document.getElementById("spinBtn");
-const message = document.getElementById("message");
-const multiplierBox = document.getElementById("multiplierBox");
-
-const popup = document.getElementById("popup");
-const popupIcon = document.getElementById("popupIcon");
-const popupTitle = document.getElementById("popupTitle");
-const popupText = document.getElementById("popupText");
-const closePopup = document.getElementById("closePopup");
-
-const helpPopup = document.getElementById("helpPopup");
-const helpBtn = document.getElementById("helpBtn");
-const closeHelp = document.getElementById("closeHelp");
-const backBtn = document.getElementById("backBtn");
-
-playerIdBox.innerText = "ID: " + playerId;
-playerIdBox.onclick = ()=>{
-    navigator.clipboard.writeText(playerId);
-    showPopup("✅","تم نسخ ID","تم نسخ ID الخاص بك");
-};
-
-helpBtn.onclick = ()=> helpPopup.style.display = "flex";
-closeHelp.onclick = ()=> helpPopup.style.display = "none";
-closePopup.onclick = ()=> popup.style.display = "none";
-backBtn.onclick = ()=> location.href = "games.html";
-
 let balance = 0;
-let selectedBet = 100000;
+let bet = 100;
+let currentWin = 0;
 let spinning = false;
-let audioContext = null;
+let soundOn = true;
+let autoMode = false;
 
-const symbols = ["⚡","👑","💎","🏺","🦅","🔱","🟣","🟢"];
-const symbolPay = {
-    "⚡": 1.8,
-    "👑": 1.6,
-    "💎": 1.45,
-    "🏺": 1.25,
-    "🦅": 1.1,
-    "🔱": 1,
-    "🟣": .8,
-    "🟢": .7
-};
+const rows = 5;
+const cols = 6;
 
-function initGrid(){
-    reels.innerHTML = "";
-    for(let i=0;i<30;i++){
-        const cell = document.createElement("div");
-        cell.className = "cell";
-        cell.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-        reels.appendChild(cell);
-    }
+const symbols = [
+    { icon:"⚡", pay:6 },
+    { icon:"👑", pay:5 },
+    { icon:"💎", pay:4 },
+    { icon:"🏺", pay:3 },
+    { icon:"🦅", pay:3 },
+    { icon:"🔱", pay:2 },
+    { icon:"🟣", pay:2 },
+    { icon:"🟢", pay:2 }
+];
+
+let gridData = [];
+
+const grid = document.getElementById("grid");
+const spinBtn = document.getElementById("spinBtn");
+
+function formatNumber(num){
+    num = Number(num || 0);
+    if(num >= 1000000000) return (num / 1000000000).toFixed(1) + "B";
+    if(num >= 1000000) return (num / 1000000).toFixed(1) + "M";
+    if(num >= 1000) return (num / 1000).toFixed(1) + "K";
+    return String(num);
 }
 
-function initPlayer(){
-    balanceEl.innerText = "تحميل";
-    playerRef.once("value").then(snapshot=>{
-        if(!snapshot.exists()){
-            return playerRef.set({balance:0,lastDailyReward:0});
-        }
-    }).then(()=>{
-        playerRef.on("value", snapshot=>{
-            const data = snapshot.val() || {};
-            balance = Number(data.balance || 0);
-            balanceEl.innerText = "رصيدك: " + formatMoney(balance);
+function updateTexts(){
+    document.getElementById("balance").innerText = formatNumber(balance);
+    document.getElementById("walletText").innerText = formatNumber(balance);
+    document.getElementById("betText").innerText = formatNumber(bet);
+    document.getElementById("winText").innerText = formatNumber(currentWin);
+}
+
+playerRef.once("value").then(snap=>{
+    if(!snap.exists()){
+        playerRef.set({
+            balance:0,
+            createdAt:Date.now()
         });
-    });
-}
-
-function saveBalance(){
-    balanceEl.innerText = "رصيدك: " + formatMoney(balance);
-    playerRef.update({balance:balance});
-}
-
-function formatMoney(value){
-    value = Number(value) || 0;
-    if(value >= 1e18) return (value / 1e18).toFixed(1).replace(".0","") + "Qi";
-    if(value >= 1e15) return (value / 1e15).toFixed(1).replace(".0","") + "Q";
-    if(value >= 1e12) return (value / 1e12).toFixed(1).replace(".0","") + "T";
-    if(value >= 1e9) return (value / 1e9).toFixed(1).replace(".0","") + "B";
-    if(value >= 1e6) return (value / 1e6).toFixed(1).replace(".0","") + "M";
-    if(value >= 1e3) return (value / 1e3).toFixed(1).replace(".0","") + "K";
-    return String(Math.floor(value));
-}
-
-function initAudio(){
-    if(!audioContext){
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
-    if(audioContext.state === "suspended") audioContext.resume();
-}
-
-document.addEventListener("click",initAudio,{once:true});
-document.addEventListener("touchstart",initAudio,{once:true});
-
-function tone(freq,duration,type="sine",vol=.12){
-    if(!audioContext) return;
-    const osc = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    osc.type = type;
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(vol,audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(audioContext.destination);
-    osc.start();
-    osc.stop(audioContext.currentTime + duration);
-}
-
-function winSound(){
-    tone(523,.1);
-    setTimeout(()=>tone(659,.1),120);
-    setTimeout(()=>tone(880,.18),240);
-}
-
-function loseSound(){
-    tone(190,.18,"sawtooth",.1);
-    setTimeout(()=>tone(130,.22,"sawtooth",.1),150);
-}
-
-function showPopup(icon,title,text){
-    popupIcon.innerText = icon;
-    popupTitle.innerText = title;
-    popupText.innerText = text;
-    popup.style.display = "flex";
-}
-
-document.querySelectorAll(".chip").forEach(chip=>{
-    chip.addEventListener("click",()=>{
-        if(spinning) return;
-
-        document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
-        chip.classList.add("active");
-
-        selectedBet = Number(chip.dataset.value);
-        betText.innerText = formatMoney(selectedBet);
-
-        tone(700,.06,"triangle",.08);
-    });
 });
 
-function getRandomMultiplier(){
-    const roll = Math.random();
+playerRef.on("value", snap=>{
+    const data = snap.val() || {};
+    balance = Number(data.balance || 0);
+    updateTexts();
+});
 
-    if(roll < .04) return 10;
-    if(roll < .10) return 5;
-    if(roll < .22) return 2;
-
-    return 1;
+function setBalance(value){
+    balance = Math.max(0, Math.floor(Number(value || 0)));
+    playerRef.update({ balance: balance });
+    updateTexts();
 }
 
-function calculateWin(grid, multiplier){
-    const counts = {};
-    grid.forEach(symbol=>{
-        counts[symbol] = (counts[symbol] || 0) + 1;
-    });
+function randomSymbol(){
+    return symbols[Math.floor(Math.random() * symbols.length)];
+}
 
+function createGrid(){
+    grid.innerHTML = "";
+    gridData = [];
+
+    for(let r=0;r<rows;r++){
+        const row = [];
+        for(let c=0;c<cols;c++){
+            const s = randomSymbol();
+            row.push(s);
+
+            const cell = document.createElement("div");
+            cell.className = "cell drop";
+            cell.dataset.r = r;
+            cell.dataset.c = c;
+            cell.innerText = s.icon;
+            grid.appendChild(cell);
+        }
+        gridData.push(row);
+    }
+}
+
+function renderGrid(drop=false){
+    const cells = grid.querySelectorAll(".cell");
+
+    for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+            const index = r * cols + c;
+            const cell = cells[index];
+            cell.className = drop ? "cell drop" : "cell";
+            cell.innerText = gridData[r][c].icon;
+        }
+    }
+}
+
+function sleep(ms){
+    return new Promise(resolve=>setTimeout(resolve,ms));
+}
+
+function playTone(freq, duration, type="sine"){
+    if(!soundOn) return;
+
+    try{
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audio = new AudioContext();
+        const osc = audio.createOscillator();
+        const gain = audio.createGain();
+
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.value = .08;
+
+        osc.connect(gain);
+        gain.connect(audio.destination);
+        osc.start();
+
+        setTimeout(()=>{
+            osc.stop();
+            audio.close();
+        }, duration);
+    }catch(e){}
+}
+
+function findMatches(){
+    const counts = {};
+    const positions = {};
+
+    for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+            const icon = gridData[r][c].icon;
+            counts[icon] = (counts[icon] || 0) + 1;
+            if(!positions[icon]) positions[icon] = [];
+            positions[icon].push({r,c});
+        }
+    }
+
+    let matched = [];
     let bestSymbol = null;
     let bestCount = 0;
 
-    Object.keys(counts).forEach(symbol=>{
-        if(counts[symbol] > bestCount){
-            bestSymbol = symbol;
-            bestCount = counts[symbol];
+    Object.keys(counts).forEach(icon=>{
+        if(counts[icon] >= 8){
+            matched = matched.concat(positions[icon]);
+
+            if(counts[icon] > bestCount){
+                bestCount = counts[icon];
+                bestSymbol = icon;
+            }
         }
     });
 
-    if(bestCount < 8){
-        return {
-            win:0,
-            symbol:bestSymbol,
-            count:bestCount
-        };
-    }
-
-    const base = symbolPay[bestSymbol] || 1;
-    const countBonus = bestCount / 8;
-    const win = Math.floor(selectedBet * base * countBonus * multiplier);
-
-    return {
-        win,
-        symbol:bestSymbol,
-        count:bestCount
-    };
+    return { matched, bestSymbol, bestCount };
 }
 
-function highlightWins(symbol){
-    document.querySelectorAll(".cell").forEach(cell=>{
-        cell.classList.toggle("win", cell.innerText === symbol);
+function getPayByIcon(icon){
+    const item = symbols.find(s=>s.icon === icon);
+    return item ? item.pay : 1;
+}
+
+function randomMultiplier(){
+    const x = Math.random();
+
+    if(x < .04) return 10;
+    if(x < .10) return 5;
+    if(x < .24) return 2;
+    return 1;
+}
+
+async function breakMatches(matched){
+    const cells = grid.querySelectorAll(".cell");
+
+    matched.forEach(pos=>{
+        const index = pos.r * cols + pos.c;
+        cells[index].classList.add("win");
     });
+
+    playTone(760,120,"triangle");
+    await sleep(220);
+
+    matched.forEach(pos=>{
+        const index = pos.r * cols + pos.c;
+        cells[index].classList.remove("win");
+        cells[index].classList.add("break");
+    });
+
+    await sleep(360);
 }
 
-function spin(){
+function collapseGrid(matched){
+    const removeMap = new Set(matched.map(p=>p.r + "-" + p.c));
+
+    for(let c=0;c<cols;c++){
+        const remaining = [];
+
+        for(let r=rows-1;r>=0;r--){
+            if(!removeMap.has(r + "-" + c)){
+                remaining.push(gridData[r][c]);
+            }
+        }
+
+        for(let r=rows-1;r>=0;r--){
+            if(remaining.length){
+                gridData[r][c] = remaining.shift();
+            }else{
+                gridData[r][c] = randomSymbol();
+            }
+        }
+    }
+}
+
+async function startSpin(){
     if(spinning) return;
 
-    if(balance < selectedBet){
-        tone(110,.12,"square",.1);
-        showPopup("❌","الرصيد غير كافي","اشحن رصيدك أو اختر رهاناً أصغر");
+    if(balance < bet){
+        showPopup("لا يوجد رصيد", "💰", "رصيدك غير كاف للرهان.");
         return;
     }
 
     spinning = true;
     spinBtn.disabled = true;
-    slotFrame.classList.add("spinning");
-    message.innerText = "جاري الدوران...";
-    multiplierBox.innerText = "x?";
+    currentWin = 0;
+    updateTexts();
 
-    balance -= selectedBet;
-    saveBalance();
+    setBalance(balance - bet);
 
-    let ticks = 0;
-    const spinInterval = setInterval(()=>{
-        document.querySelectorAll(".cell").forEach(cell=>{
-            cell.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-            cell.classList.remove("win");
-        });
+    document.getElementById("status").innerText = "الرموز تنزل...";
+    document.getElementById("bannerText").innerText = "انتظر النتيجة";
+    document.getElementById("multiText").innerText = "1X";
 
-        ticks++;
-        tone(400 + ticks * 10,.025,"triangle",.04);
+    createGrid();
+    playTone(430,120,"square");
+    await sleep(650);
 
-        if(ticks >= 18){
-            clearInterval(spinInterval);
-            finishSpin();
+    let tumble = 0;
+    let totalWin = 0;
+
+    while(tumble < 6){
+        const result = findMatches();
+
+        if(result.matched.length === 0){
+            break;
         }
-    },90);
-}
 
-function finishSpin(){
-    const finalGrid = [];
+        tumble++;
 
-    document.querySelectorAll(".cell").forEach(cell=>{
-        const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-        cell.innerText = symbol;
-        finalGrid.push(symbol);
-    });
+        const multi = randomMultiplier();
+        const pay = getPayByIcon(result.bestSymbol);
+        const countBonus = Math.max(1, result.bestCount - 7);
+        const roundWin = bet * pay * countBonus * multi;
 
-    const multiplier = getRandomMultiplier();
-    multiplierBox.innerText = "x" + multiplier;
+        totalWin += roundWin;
+        currentWin = totalWin;
 
-    const result = calculateWin(finalGrid, multiplier);
+        document.getElementById("multiText").innerText = multi + "X";
+        document.getElementById("bannerText").innerText = "تطابق " + result.bestSymbol + " وفزت";
+        document.getElementById("status").innerText = "انكسار الكنوز " + tumble;
+        updateTexts();
 
-    slotFrame.classList.remove("spinning");
+        await breakMatches(result.matched);
+        collapseGrid(result.matched);
+        renderGrid(true);
+        await sleep(520);
+    }
 
-    if(result.win > 0){
-        balance += result.win;
-        saveBalance();
-        highlightWins(result.symbol);
-        message.innerText = "ربحت " + formatMoney(result.win) + " على " + result.symbol;
-        winSound();
-        showPopup(result.symbol,"مبروك","ربحت " + formatMoney(result.win) + " | عدد الرموز: " + result.count + " | x" + multiplier);
+    if(totalWin > 0){
+        setBalance(balance + totalWin);
+        document.getElementById("status").innerText = "فوز جميل";
+        playTone(880,130,"triangle");
+        await sleep(120);
+        playTone(1100,160,"triangle");
+        showPopup("مبروك", "🏆", "ربحت " + formatNumber(totalWin) + " نقطة");
     }else{
-        message.innerText = "لم تربح هذه المرة";
-        loseSound();
-        showPopup("⚡","حظ أوفر","أعلى تكرار: " + result.symbol + " × " + result.count);
+        document.getElementById("status").innerText = "حظا أوفر";
+        playTone(180,180,"sawtooth");
+        showPopup("لم تربح", "⚡", "لم تظهر مجموعة كافية هذه الجولة.");
     }
 
     spinning = false;
     spinBtn.disabled = false;
+
+    if(autoMode){
+        setTimeout(()=>{
+            if(autoMode) startSpin();
+        },1200);
+    }
 }
 
-spinBtn.onclick = spin;
+function selectBet(value, btn){
+    if(spinning) return;
+    bet = value;
 
-initGrid();
-initPlayer();
-betText.innerText = formatMoney(selectedBet);
+    document.querySelectorAll(".chip").forEach(chip=>chip.classList.remove("active"));
+    btn.classList.add("active");
+
+    updateTexts();
+}
+
+function changeBet(dir){
+    const bets = [100,1000,10000,100000];
+    let index = bets.indexOf(bet);
+    if(index === -1) index = 0;
+
+    index += dir;
+    if(index < 0) index = 0;
+    if(index >= bets.length) index = bets.length - 1;
+
+    bet = bets[index];
+
+    document.querySelectorAll(".chip").forEach((chip,i)=>{
+        chip.classList.toggle("active", i === index);
+    });
+
+    updateTexts();
+}
+
+function toggleSound(){
+    soundOn = !soundOn;
+    showPopup("الصوت", soundOn ? "🔊" : "🔇", soundOn ? "تم تشغيل الصوت." : "تم إيقاف الصوت.");
+}
+
+function toggleAuto(){
+    autoMode = !autoMode;
+    showPopup("اللعب التلقائي", "⏵", autoMode ? "تم تشغيل اللعب التلقائي." : "تم إيقاف اللعب التلقائي.");
+}
+
+function showHelp(){
+    showPopup(
+        "شرح اللعبة",
+        "⚡",
+        "اختر قيمة الرهان ثم اضغط زر الدوران. إذا ظهر 8 رموز أو أكثر من نفس النوع ستنكسر وتربح، ثم تنزل رموز جديدة مكانها وقد تربح مرة أخرى."
+    );
+}
+
+function showPopup(title, icon, text){
+    document.getElementById("popupTitle").innerText = title;
+    document.getElementById("popupIcon").innerText = icon;
+    document.getElementById("popupText").innerText = text;
+    document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup(){
+    document.getElementById("popup").style.display = "none";
+}
+
+createGrid();
+updateTexts();
 </script>
 
 </body>
