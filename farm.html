@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>كنوز البرق</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -20,9 +21,9 @@ html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-    font-family:Arial, Tahoma, sans-serif;
-    color:#fff;
-    background:#160025;
+    font-family:Arial,Tahoma,sans-serif;
+    background:#080012;
+    color:white;
 }
 
 body{
@@ -38,62 +39,65 @@ body{
     position:relative;
     overflow:hidden;
     background:
-        radial-gradient(circle at 50% 12%, rgba(255,190,90,.35), transparent 26%),
-        linear-gradient(180deg,#22126f 0%,#4c1575 34%,#22002e 72%,#120017 100%);
+        radial-gradient(circle at 50% 12%,rgba(255,207,89,.45),transparent 22%),
+        linear-gradient(180deg,#183a9e 0%,#6930a5 32%,#2b073f 68%,#120017 100%);
 }
 
 .sky{
     position:absolute;
-    inset:0 0 auto 0;
-    height:42%;
+    inset:0;
+    height:44%;
     background:
-        radial-gradient(circle at 50% 65%, rgba(255,255,255,.45), transparent 22%),
-        linear-gradient(180deg,#2442a6,#9e4fbc 58%,#f2a65a);
-    opacity:.95;
+        radial-gradient(circle at 50% 72%,rgba(255,255,255,.65),transparent 24%),
+        linear-gradient(180deg,#1a45b8,#8d45bb 54%,#f3a75e);
 }
 
 .temple{
     position:absolute;
-    top:86px;
+    top:92px;
     left:50%;
     transform:translateX(-50%);
-    width:92%;
-    height:190px;
-    border-radius:30px 30px 0 0;
-    background:
-        linear-gradient(90deg, transparent 0 7%, rgba(255,235,178,.75) 7% 12%, transparent 12% 22%, rgba(255,235,178,.75) 22% 27%, transparent 27% 73%, rgba(255,235,178,.75) 73% 78%, transparent 78% 88%, rgba(255,235,178,.75) 88% 93%, transparent 93%),
-        linear-gradient(180deg,rgba(255,226,160,.9),rgba(180,91,70,.05));
-    filter:drop-shadow(0 14px 25px rgba(0,0,0,.35));
+    width:94%;
+    height:186px;
     opacity:.78;
+    background:
+        linear-gradient(90deg,
+        transparent 0 7%,rgba(255,229,158,.9) 7% 12%,transparent 12% 21%,
+        rgba(255,229,158,.9) 21% 26%,transparent 26% 74%,
+        rgba(255,229,158,.9) 74% 79%,transparent 79% 88%,
+        rgba(255,229,158,.9) 88% 93%,transparent 93%),
+        linear-gradient(180deg,rgba(255,232,168,.95),rgba(255,232,168,.08));
+    clip-path:polygon(6% 100%,12% 18%,50% 0,88% 18%,94% 100%);
+    filter:drop-shadow(0 18px 20px rgba(0,0,0,.35));
 }
 
-.zeus{
+.hero{
     position:absolute;
-    top:108px;
+    top:112px;
     left:50%;
     transform:translateX(-50%);
     width:178px;
     height:178px;
-    border-radius:45% 45% 22% 22%;
+    border-radius:46% 46% 24% 24%;
+    border:5px solid #ffd869;
     background:
-        radial-gradient(circle at 35% 28%,#fff 0 12%,transparent 13%),
-        radial-gradient(circle at 64% 28%,#fff 0 12%,transparent 13%),
-        linear-gradient(180deg,#f5d2b3 0 42%,#c88a5b 43% 100%);
-    border:5px solid #f8d56b;
-    box-shadow:0 0 25px rgba(255,224,116,.75);
+        radial-gradient(circle at 32% 30%,#ffffff 0 12%,transparent 13%),
+        radial-gradient(circle at 68% 30%,#ffffff 0 12%,transparent 13%),
+        linear-gradient(180deg,#f5d1b1 0 44%,#b96e44 45% 100%);
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:74px;
+    font-size:78px;
     z-index:2;
+    box-shadow:0 0 26px rgba(255,223,112,.85);
 }
 
-.zeus:before{
+.hero:before{
     content:"☁️";
     position:absolute;
-    top:-35px;
-    font-size:72px;
-    filter:drop-shadow(0 4px 3px rgba(0,0,0,.25));
+    top:-38px;
+    font-size:74px;
+    filter:drop-shadow(0 4px 4px rgba(0,0,0,.28));
 }
 
 .topbar{
@@ -101,77 +105,74 @@ body{
     top:8px;
     left:10px;
     right:10px;
-    height:54px;
+    height:52px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    z-index:10;
+    align-items:center;
+    z-index:20;
 }
 
 .logo{
-    height:44px;
-    min-width:122px;
-    padding:4px 12px;
+    min-width:128px;
+    height:45px;
+    padding:5px 12px;
     border-radius:14px;
-    background:linear-gradient(180deg,#6d1d9d,#28003f);
-    border:2px solid #f5c94f;
-    color:#ffe070;
+    border:2px solid #ffe076;
+    background:linear-gradient(180deg,#7a1bb0,#2a073b);
+    color:#ffe36c;
     font-weight:900;
+    text-align:center;
     line-height:1.05;
-    text-shadow:0 2px #5d2600;
-    box-shadow:0 0 12px rgba(255,213,74,.45);
+    text-shadow:0 2px #4a1700;
+    box-shadow:0 0 16px rgba(255,222,105,.55);
 }
 
-.icon-btn{
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    border:2px solid #f8d56b;
-    background:linear-gradient(180deg,#ffe9a2,#c56a20);
-    color:#441700;
-    font-size:24px;
-    font-weight:900;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 3px 0 #773612,0 0 10px rgba(255,218,90,.65);
-}
-
-.menu-group{
+.btns{
     display:flex;
     gap:8px;
 }
 
-.info-card{
+.icon-btn{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    border:2px solid #ffe07a;
+    background:linear-gradient(180deg,#fff1aa,#d17922);
+    color:#3d1600;
+    font-size:23px;
+    font-weight:900;
+    box-shadow:0 3px 0 #6f310b,0 0 10px rgba(255,225,105,.6);
+}
+
+.player{
     position:absolute;
     top:62px;
     left:50%;
     transform:translateX(-50%);
-    z-index:9;
-    width:70%;
-    min-height:44px;
-    padding:5px 10px;
-    border-radius:12px;
-    border:2px solid #5c2a12;
-    background:linear-gradient(180deg,#fff0b7,#d98537);
-    color:#361300;
-    font-weight:900;
+    width:72%;
+    height:48px;
+    border-radius:13px;
+    border:2px solid #5c250b;
+    background:linear-gradient(180deg,#fff2bd,#d98232);
+    color:#321200;
     font-size:13px;
-    box-shadow:0 4px 0 #5c2a12;
+    font-weight:900;
+    z-index:15;
+    padding:5px 10px;
+    text-align:center;
+    box-shadow:0 4px 0 #5c250b;
     overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
 }
 
 .net{
     position:absolute;
     top:118px;
     right:16px;
-    z-index:9;
-    color:#4cff64;
-    font-weight:900;
+    z-index:15;
     font-size:14px;
-    text-shadow:0 2px 3px #003b08;
+    color:#4cff5f;
+    font-weight:900;
+    text-shadow:0 2px 3px #003909;
 }
 
 .banner{
@@ -180,40 +181,41 @@ body{
     left:14px;
     right:14px;
     height:42px;
-    z-index:4;
-    border-radius:12px;
-    border:3px solid #f8c64d;
-    background:linear-gradient(180deg,#6c190e,#30000d);
+    z-index:6;
+    border-radius:13px;
+    border:3px solid #ffd55d;
+    background:linear-gradient(180deg,#7e250d,#2b0008);
+    box-shadow:0 5px 0 #240005,0 0 14px rgba(255,220,96,.55);
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     gap:10px;
-    color:#ffe37a;
+    color:#ffe579;
+    font-size:17px;
     font-weight:900;
-    box-shadow:0 5px 0 #200006,0 0 12px rgba(255,210,82,.4);
 }
 
-.multiplier{
-    color:#ffd34c;
-    font-size:24px;
-    min-width:54px;
+#multiText{
+    font-size:26px;
+    color:#ffd23d;
+    min-width:52px;
 }
 
-.board-wrap{
+.board{
     position:absolute;
     top:344px;
     left:10px;
     right:10px;
     height:344px;
-    z-index:5;
     padding:10px;
-    border-radius:10px;
-    border:4px solid #f6c84d;
+    z-index:8;
+    border-radius:12px;
+    border:4px solid #ffd55d;
     background:
-        linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px),
-        linear-gradient(180deg,#3d0d55,#1d092c);
+        linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),
+        linear-gradient(180deg,#41105b,#190526);
     background-size:16.66% 100%,100% 100%;
-    box-shadow:0 6px 0 #5c2607,0 0 20px rgba(255,220,84,.45);
+    box-shadow:0 6px 0 #5b2607,0 0 24px rgba(255,222,94,.55);
 }
 
 .grid{
@@ -227,38 +229,37 @@ body{
 
 .cell{
     border-radius:10px;
-    background:radial-gradient(circle at 50% 35%,#64236f,#260430 70%);
-    border:1px solid rgba(255,210,95,.28);
+    border:1px solid rgba(255,219,98,.34);
+    background:radial-gradient(circle at 50% 35%,#68257a,#26042f 72%);
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     font-size:34px;
-    position:relative;
-    box-shadow:inset 0 0 14px rgba(0,0,0,.45);
+    box-shadow:inset 0 0 14px rgba(0,0,0,.5);
 }
 
 .cell.drop{
-    animation:drop .34s cubic-bezier(.15,.75,.24,1.15);
+    animation:drop .36s cubic-bezier(.13,.78,.25,1.18);
+}
+
+.cell.win{
+    border-color:#fff572;
+    box-shadow:0 0 20px #fff572,inset 0 0 18px rgba(255,239,118,.65);
 }
 
 .cell.break{
     animation:break .34s ease forwards;
 }
 
-.cell.win{
-    box-shadow:0 0 18px #fff06a,inset 0 0 16px rgba(255,235,110,.6);
-    border-color:#fff06a;
-}
-
 @keyframes drop{
-    from{transform:translateY(-95px) scale(.78);opacity:0}
+    from{transform:translateY(-105px) scale(.78);opacity:0}
     to{transform:translateY(0) scale(1);opacity:1}
 }
 
 @keyframes break{
     0%{transform:scale(1);opacity:1;filter:brightness(1)}
-    45%{transform:scale(1.25);opacity:1;filter:brightness(2)}
-    100%{transform:scale(.1) rotate(20deg);opacity:0}
+    45%{transform:scale(1.28);opacity:1;filter:brightness(2.2)}
+    100%{transform:scale(.08) rotate(22deg);opacity:0}
 }
 
 .status{
@@ -266,18 +267,18 @@ body{
     top:694px;
     left:16px;
     right:16px;
-    height:46px;
-    z-index:6;
-    border-radius:12px;
-    border:3px solid #f8c64d;
-    background:linear-gradient(180deg,#fff2c4,#c67a38);
-    color:#682200;
-    font-weight:900;
+    height:45px;
+    z-index:10;
+    border-radius:13px;
+    border:3px solid #ffd55d;
+    background:linear-gradient(180deg,#fff2c6,#c87935);
+    color:#642100;
     font-size:22px;
+    font-weight:900;
     display:flex;
-    align-items:center;
     justify-content:center;
-    box-shadow:0 4px 0 #5c2607;
+    align-items:center;
+    box-shadow:0 4px 0 #5b2607;
 }
 
 .bottom{
@@ -286,102 +287,101 @@ body{
     right:0;
     bottom:0;
     height:178px;
-    z-index:7;
+    z-index:12;
     padding:10px 14px 12px;
-    background:linear-gradient(180deg,#6b5d93,#352352);
-    border-top:4px solid #f8c64d;
-    box-shadow:0 -8px 22px rgba(0,0,0,.35);
+    background:linear-gradient(180deg,#6e6195,#352352);
+    border-top:4px solid #ffd55d;
+    box-shadow:0 -8px 22px rgba(0,0,0,.38);
 }
 
 .stats{
+    height:34px;
     display:grid;
     grid-template-columns:1fr 1fr 1fr;
     gap:7px;
-    height:34px;
     margin-bottom:8px;
 }
 
 .stat{
     border-radius:8px;
-    border:2px solid #d6aa48;
-    background:linear-gradient(180deg,#4d345e,#271530);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:5px;
-    color:#ffe89a;
-    font-weight:900;
+    border:2px solid #d8ae4f;
+    background:linear-gradient(180deg,#543762,#281630);
+    color:#ffe99d;
     font-size:14px;
+    font-weight:900;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:4px;
     overflow:hidden;
 }
 
 .controls{
     display:grid;
     grid-template-columns:58px 58px 1fr 58px 58px;
-    align-items:center;
     gap:8px;
+    align-items:center;
 }
 
-.small-control{
+.small{
     width:58px;
     height:58px;
     border-radius:50%;
-    border:3px solid #c7d4e5;
-    background:linear-gradient(180deg,#eaf7ff,#6e7287);
-    color:#2d2340;
+    border:3px solid #cbd8e8;
+    background:linear-gradient(180deg,#f0fbff,#747a8f);
+    color:#2e2340;
     font-size:28px;
     font-weight:900;
-    box-shadow:inset 0 0 10px rgba(255,255,255,.5),0 4px 0 #202033;
+    box-shadow:inset 0 0 10px rgba(255,255,255,.55),0 4px 0 #202033;
 }
 
 .spin{
     height:92px;
     border-radius:50%;
-    border:5px solid #ffd96a;
-    background:
-        radial-gradient(circle,#fff39d 0 12%,#ffbe28 13% 55%,#b45d00 56% 100%);
-    color:#7b2400;
+    border:5px solid #ffdd72;
+    background:radial-gradient(circle,#fff49d 0 12%,#ffbe27 13% 55%,#b65e00 56% 100%);
+    color:#762300;
     font-size:42px;
     font-weight:900;
-    box-shadow:0 0 24px rgba(255,220,90,.9),0 7px 0 #6e2f00;
+    box-shadow:0 0 25px rgba(255,222,92,.95),0 7px 0 #6e2f00;
 }
 
 .spin:disabled{
-    filter:grayscale(.6);
     opacity:.7;
+    filter:grayscale(.55);
 }
 
 .chips{
+    margin-top:9px;
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:7px;
-    margin-top:9px;
 }
 
 .chip{
     height:38px;
     border-radius:11px;
     border:2px solid #633214;
-    background:linear-gradient(180deg,#fff9cd,#f0a93b);
-    color:#321302;
+    background:linear-gradient(180deg,#fff9cc,#f0aa3d);
+    color:#301200;
     font-size:16px;
     font-weight:900;
-    box-shadow:0 3px 0 #5c2607;
+    box-shadow:0 3px 0 #5b2607;
 }
 
 .chip.active{
-    border-color:#fff45a;
-    box-shadow:0 0 14px #fff45a,0 3px 0 #5c2607;
+    border-color:#fff45d;
+    box-shadow:0 0 15px #fff45d,0 3px 0 #5b2607;
 }
 
 .popup{
     position:absolute;
     inset:0;
-    background:rgba(0,0,0,.72);
     z-index:50;
+    background:rgba(0,0,0,.72);
     display:none;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     padding:22px;
 }
 
@@ -390,10 +390,10 @@ body{
     max-width:330px;
     border-radius:18px;
     border:4px solid #ffe06a;
-    background:linear-gradient(180deg,#6d1689,#26002f);
-    box-shadow:0 0 28px rgba(255,225,98,.75);
+    background:linear-gradient(180deg,#741895,#26002f);
     padding:20px;
     text-align:center;
+    box-shadow:0 0 30px rgba(255,225,98,.78);
 }
 
 .popup-box h2{
@@ -408,9 +408,9 @@ body{
 }
 
 .popup-text{
-    font-size:22px;
+    font-size:21px;
     font-weight:900;
-    line-height:1.6;
+    line-height:1.7;
 }
 
 .close{
@@ -420,27 +420,27 @@ body{
     border-radius:12px;
     border:2px solid #ffe06a;
     background:linear-gradient(180deg,#edf8ff,#748294);
-    color:#fff;
-    font-weight:900;
+    color:white;
     font-size:18px;
+    font-weight:900;
 }
 
-@media (max-height:760px){
-    .temple{top:70px;height:150px}
-    .zeus{top:92px;width:145px;height:145px;font-size:58px}
+@media(max-height:760px){
+    .temple{top:72px;height:150px}
+    .hero{top:92px;width:145px;height:145px;font-size:58px}
     .banner{top:250px}
-    .board-wrap{top:296px;height:286px}
+    .board{top:296px;height:286px}
     .status{top:588px;height:38px;font-size:18px}
     .bottom{height:164px}
     .spin{height:78px;font-size:35px}
     .cell{font-size:28px}
 }
 
-@media (max-width:360px){
+@media(max-width:360px){
     .cell{font-size:27px}
-    .info-card{font-size:12px;width:74%}
+    .player{font-size:12px;width:75%}
     .controls{grid-template-columns:50px 50px 1fr 50px 50px}
-    .small-control{width:50px;height:50px}
+    .small{width:50px;height:50px}
 }
 </style>
 </head>
@@ -451,25 +451,23 @@ body{
 
     <div class="sky"></div>
     <div class="temple"></div>
-    <div class="zeus">⚡</div>
+    <div class="hero">⚡</div>
 
     <div class="topbar">
-        <div class="menu-group">
+        <div class="btns">
             <button class="icon-btn" onclick="location.href='games.html'">↩</button>
             <button class="icon-btn" onclick="toggleSound()">🔊</button>
         </div>
 
-        <div class="logo">
-            كنوز<br>البرق
-        </div>
+        <div class="logo">كنوز<br>البرق</div>
 
-        <div class="menu-group">
+        <div class="btns">
             <button class="icon-btn" onclick="showHelp()">؟</button>
             <button class="icon-btn" onclick="location.href='games.html'">☰</button>
         </div>
     </div>
 
-    <div class="info-card">
+    <div class="player">
         ID: <span id="playerId">...</span><br>
         رصيدك: <span id="balance">0</span>
     </div>
@@ -477,11 +475,11 @@ body{
     <div class="net">225ms</div>
 
     <div class="banner">
-        <span class="multiplier" id="multiText">1X</span>
+        <span id="multiText">1X</span>
         <span id="bannerText">اضغط ابدأ وانظر إلى الكنوز</span>
     </div>
 
-    <div class="board-wrap">
+    <div class="board">
         <div class="grid" id="grid"></div>
     </div>
 
@@ -495,11 +493,11 @@ body{
         </div>
 
         <div class="controls">
-            <button class="small-control" onclick="toggleAuto()">⏵</button>
-            <button class="small-control" onclick="changeBet(-1)">−</button>
+            <button class="small" onclick="toggleAuto()">⏵</button>
+            <button class="small" onclick="changeBet(-1)">−</button>
             <button class="spin" id="spinBtn" onclick="startSpin()">↻</button>
-            <button class="small-control" onclick="changeBet(1)">+</button>
-            <button class="small-control" onclick="toggleSound()">⚡</button>
+            <button class="small" onclick="changeBet(1)">+</button>
+            <button class="small" onclick="toggleSound()">⚡</button>
         </div>
 
         <div class="chips">
@@ -542,6 +540,7 @@ if(tg){
 }
 
 let playerId = "guest_" + localStorage.getItem("guest_id");
+
 if(!localStorage.getItem("guest_id")){
     localStorage.setItem("guest_id", Math.floor(Math.random() * 999999999));
     playerId = "guest_" + localStorage.getItem("guest_id");
@@ -564,16 +563,18 @@ let autoMode = false;
 
 const rows = 5;
 const cols = 6;
+const WIN_MIN = 10;
 
 const symbols = [
-    { icon:"⚡", pay:6 },
-    { icon:"👑", pay:5 },
-    { icon:"💎", pay:4 },
-    { icon:"🏺", pay:3 },
+    { icon:"⚡", pay:7 },
+    { icon:"👑", pay:6 },
+    { icon:"💎", pay:5 },
+    { icon:"🏺", pay:4 },
     { icon:"🦅", pay:3 },
-    { icon:"🔱", pay:2 },
+    { icon:"🔱", pay:3 },
     { icon:"🟣", pay:2 },
-    { icon:"🟢", pay:2 }
+    { icon:"🟢", pay:2 },
+    { icon:"🔴", pay:2 }
 ];
 
 let gridData = [];
@@ -583,9 +584,11 @@ const spinBtn = document.getElementById("spinBtn");
 
 function formatNumber(num){
     num = Number(num || 0);
+
     if(num >= 1000000000) return (num / 1000000000).toFixed(1) + "B";
     if(num >= 1000000) return (num / 1000000).toFixed(1) + "M";
     if(num >= 1000) return (num / 1000).toFixed(1) + "K";
+
     return String(num);
 }
 
@@ -627,6 +630,7 @@ function createGrid(){
 
     for(let r=0;r<rows;r++){
         const row = [];
+
         for(let c=0;c<cols;c++){
             const s = randomSymbol();
             row.push(s);
@@ -638,6 +642,7 @@ function createGrid(){
             cell.innerText = s.icon;
             grid.appendChild(cell);
         }
+
         gridData.push(row);
     }
 }
@@ -649,6 +654,7 @@ function renderGrid(drop=false){
         for(let c=0;c<cols;c++){
             const index = r * cols + c;
             const cell = cells[index];
+
             cell.className = drop ? "cell drop" : "cell";
             cell.innerText = gridData[r][c].icon;
         }
@@ -659,7 +665,7 @@ function sleep(ms){
     return new Promise(resolve=>setTimeout(resolve,ms));
 }
 
-function playTone(freq, duration, type="sine"){
+function playTone(freq,duration,type="sine"){
     if(!soundOn) return;
 
     try{
@@ -679,7 +685,7 @@ function playTone(freq, duration, type="sine"){
         setTimeout(()=>{
             osc.stop();
             audio.close();
-        }, duration);
+        },duration);
     }catch(e){}
 }
 
@@ -690,8 +696,13 @@ function findMatches(){
     for(let r=0;r<rows;r++){
         for(let c=0;c<cols;c++){
             const icon = gridData[r][c].icon;
+
             counts[icon] = (counts[icon] || 0) + 1;
-            if(!positions[icon]) positions[icon] = [];
+
+            if(!positions[icon]){
+                positions[icon] = [];
+            }
+
             positions[icon].push({r,c});
         }
     }
@@ -701,7 +712,7 @@ function findMatches(){
     let bestCount = 0;
 
     Object.keys(counts).forEach(icon=>{
-        if(counts[icon] >= 8){
+        if(counts[icon] >= WIN_MIN){
             matched = matched.concat(positions[icon]);
 
             if(counts[icon] > bestCount){
@@ -722,9 +733,10 @@ function getPayByIcon(icon){
 function randomMultiplier(){
     const x = Math.random();
 
-    if(x < .04) return 10;
-    if(x < .10) return 5;
-    if(x < .24) return 2;
+    if(x < .025) return 10;
+    if(x < .075) return 5;
+    if(x < .18) return 2;
+
     return 1;
 }
 
@@ -737,7 +749,7 @@ async function breakMatches(matched){
     });
 
     playTone(760,120,"triangle");
-    await sleep(220);
+    await sleep(230);
 
     matched.forEach(pos=>{
         const index = pos.r * cols + pos.c;
@@ -790,13 +802,14 @@ async function startSpin(){
     document.getElementById("multiText").innerText = "1X";
 
     createGrid();
+
     playTone(430,120,"square");
-    await sleep(650);
+    await sleep(680);
 
     let tumble = 0;
     let totalWin = 0;
 
-    while(tumble < 6){
+    while(tumble < 5){
         const result = findMatches();
 
         if(result.matched.length === 0){
@@ -807,34 +820,38 @@ async function startSpin(){
 
         const multi = randomMultiplier();
         const pay = getPayByIcon(result.bestSymbol);
-        const countBonus = Math.max(1, result.bestCount - 7);
-        const roundWin = bet * pay * countBonus * multi;
+        const countBonus = Math.max(1, result.bestCount - (WIN_MIN - 1));
+        const roundWin = Math.floor(bet * pay * countBonus * multi);
 
         totalWin += roundWin;
         currentWin = totalWin;
 
         document.getElementById("multiText").innerText = multi + "X";
-        document.getElementById("bannerText").innerText = "تطابق " + result.bestSymbol + " وفزت";
+        document.getElementById("bannerText").innerText = "تطابق " + result.bestSymbol + " وانكسار";
         document.getElementById("status").innerText = "انكسار الكنوز " + tumble;
+
         updateTexts();
 
         await breakMatches(result.matched);
         collapseGrid(result.matched);
         renderGrid(true);
-        await sleep(520);
+        await sleep(540);
     }
 
     if(totalWin > 0){
         setBalance(balance + totalWin);
+
         document.getElementById("status").innerText = "فوز جميل";
         playTone(880,130,"triangle");
         await sleep(120);
         playTone(1100,160,"triangle");
+
         showPopup("مبروك", "🏆", "ربحت " + formatNumber(totalWin) + " نقطة");
     }else{
         document.getElementById("status").innerText = "حظا أوفر";
         playTone(180,180,"sawtooth");
-        showPopup("لم تربح", "⚡", "لم تظهر مجموعة كافية هذه الجولة.");
+
+        showPopup("لم تربح", "⚡", "لم تظهر 10 رموز متشابهة هذه الجولة.");
     }
 
     spinning = false;
@@ -843,26 +860,31 @@ async function startSpin(){
     if(autoMode){
         setTimeout(()=>{
             if(autoMode) startSpin();
-        },1200);
+        },1300);
     }
 }
 
-function selectBet(value, btn){
+function selectBet(value,btn){
     if(spinning) return;
+
     bet = value;
 
-    document.querySelectorAll(".chip").forEach(chip=>chip.classList.remove("active"));
-    btn.classList.add("active");
+    document.querySelectorAll(".chip").forEach(chip=>{
+        chip.classList.remove("active");
+    });
 
+    btn.classList.add("active");
     updateTexts();
 }
 
 function changeBet(dir){
     const bets = [100,1000,10000,100000];
     let index = bets.indexOf(bet);
+
     if(index === -1) index = 0;
 
     index += dir;
+
     if(index < 0) index = 0;
     if(index >= bets.length) index = bets.length - 1;
 
@@ -889,11 +911,11 @@ function showHelp(){
     showPopup(
         "شرح اللعبة",
         "⚡",
-        "اختر قيمة الرهان ثم اضغط زر الدوران. إذا ظهر 8 رموز أو أكثر من نفس النوع ستنكسر وتربح، ثم تنزل رموز جديدة مكانها وقد تربح مرة أخرى."
+        "اختر الرهان ثم اضغط زر الدوران. الربح يحدث فقط إذا ظهر 10 رموز أو أكثر من نفس النوع، بعدها تنكسر الرموز وتنزل رموز جديدة مكانها."
     );
 }
 
-function showPopup(title, icon, text){
+function showPopup(title,icon,text){
     document.getElementById("popupTitle").innerText = title;
     document.getElementById("popupIcon").innerText = icon;
     document.getElementById("popupText").innerText = text;
